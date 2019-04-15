@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    command: npm start build
+    volumes:
+      - ./frontend:/home/frontend
+    ports:
+      - "3000:3000"
