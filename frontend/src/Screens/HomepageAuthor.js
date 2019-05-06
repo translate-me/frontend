@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from '../Components/NavBar';
 import { Card, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { white, green, lightgreen } from '../colors'
 import Footer from '../Components/Footer'
 

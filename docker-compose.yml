@@ -4,8 +4,8 @@ services:
   frontend:
     build: ./frontend
     container_name: frontend
-    command: npm start build
+    command: npm start
     volumes:
-      - ./frontend:/home/frontend
+      - ./frontend/src:/home/frontend/src
     ports:
       - "3000:3000"

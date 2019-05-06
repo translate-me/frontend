@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Navbar, Nav} from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import {white, green, lightgreen} from '../colors'
+import {white, green } from '../colors'
 
 class NavBar extends Component {
     render() {
