@@ -21,10 +21,20 @@ class NavBar extends Component {
     not_logged_icons(){
         return(
             <Nav className="ml-auto">
-                <Nav.Link>
-                    <FontAwesomeIcon icon={faSignInAlt} style={{ color: white }} />
+                <Nav.Link href="#Como funciona" style={{ fontFamily: "Raleway", color: white }}>Como funciona</Nav.Link>
+                <Nav.Link href="#QuemSomosNos" style={{ fontFamily: "Raleway", color: white }}>Quem somos nós</Nav.Link>
+                <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+                    <FontAwesomeIcon icon={faSignInAlt} style={{marginLeft:"10px", color: white }} />
                 </Nav.Link>
             </Nav>
+        )
+    }
+    explain_pages(){
+        return(
+        <Nav className="mr-auto">
+                <Nav.Link href="#Como funciona" style={{ fontFamily: "Raleway", color: white }}>Como funciona</Nav.Link>
+                <Nav.Link href="#QuemSomosNos" style={{ fontFamily: "Raleway", color: white }}>Quem somos nós</Nav.Link>
+        </Nav>
         )
     }
     render() {
@@ -33,8 +43,12 @@ class NavBar extends Component {
                 <Navbar.Brand href="#home" style={{fontFamily:"Nixie One", fontWeight:"bold", color: white}}>translate.me</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
+                {/* <Nav className="mr-auto">
+                    <Nav.Link href="#Como funciona" style={{ fontFamily: "Raleway", color: white }}>Como funciona</Nav.Link>
+                    <Nav.Link href="#QuemSomosNos" style={{ fontFamily: "Raleway", color: white }}>Quem somos nós</Nav.Link>
+                </Nav> */}
                 {
-                    this.props.logged == true?
+                    this.props.logged === true?
                         this.logged_icons()
                     :
                         this.not_logged_icons()

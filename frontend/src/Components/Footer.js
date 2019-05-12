@@ -63,7 +63,8 @@ const styles={
     },
     container:{
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        backgroundColor: "#FAFAFA"
     }
 }
 
