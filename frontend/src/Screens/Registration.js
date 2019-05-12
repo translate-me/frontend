@@ -59,61 +59,76 @@ class Registration extends Component {
 
     }
 
-    registration_form(){
+    form_group(label, placeholder, onChange, thisref, invalid, warning){
         return(
-            <Form style={styles.half}>
-                <Form.Group>
-                    <Form.Label style={styles.form_text}>Nome</Form.Label>
-                    <Form.Control
-                        style={styles.form_text}
-                        placeholder="ex.: João da Silva"
-                        type="string"
-                        onChange={() => { this.setState({name:this.state.nameref.value})}}
-                        ref={ref => { this.state.nameref = ref;}}
-                        isInvalid={this.state.name_not_ok}
-                    />
-                    <Form.Control.Feedback type="invalid">Nome não pode ser vazio</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label style={styles.form_text}>Email</Form.Label>
-                    <Form.Control
-                        style={styles.form_text}
-                        type="email"
-                        placeholder="ex.: joao@email.com"
-                        onChange={() => { this.setState({ email: this.state.emailref.value }) }}
-                        ref={ref => { this.state.emailref = ref; }}
-                        isInvalid={this.state.email_not_ok}
-                    />
-                    <Form.Control.Feedback type="invalid">Email inválido</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label style={styles.form_text}>Senha</Form.Label>
-                    <Form.Control
-                        type="password"
-                        onChange={() => { this.setState({password:this.state.passwordref.value})}}
-                        ref={ref => { this.state.passwordref = ref;}}
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label style={styles.form_text}>Confirme sua senha</Form.Label>
-                    <Form.Control
-                        type="password"
-                        onChange={() => { this.setState({ confirm_password: this.state.confirmpasswordref.value }) }}
-                        ref={ref => { this.state.confirmpasswordref = ref; }}
-                        isInvalid={this.state.confirm_password_not_ok}
-                    />
-                    <Form.Control.Feedback type="invalid">As senhas estão diferentes</Form.Control.Feedback>
-                </Form.Group>
-                <div style={styles.two_columns}>
+            <Form.Group >
+                <Form.Label style={styles.form_text}>{label}</Form.Label>
+                <Form.Control
+                    style={styles.form_text}
+                    placeholder={placeholder}
+                    type="string"
+                    onChange={onChange}
+                    ref={ref => { thisref = ref; }}
+                    isInvalid={invalid}
+                />
+                <Form.Control.Feedback type="invalid">{warning}</Form.Control.Feedback>
+            </Form.Group >
+        )
+    }
+    button_div(){
+        return(
+            <div style={styles.two_columns}>
                 <Button variant="primary" style={styles.button} onClick={()=>{ this.verify_fields()}} >
                     Cadastrar
                 </Button>
                 <div style={styles.link_div}>
-                <a style={styles.link} href="/">Já tenho cadastro</a>
-                    </div>
-
+                    <a style={styles.link} href="/">Já tenho cadastro</a>
                 </div>
-            </Form>
+            </div>
+        )
+    }
+    name_group(){
+        return(
+            <Form.Group>
+                <Form.Label style={styles.form_text}>Nome</Form.Label>
+                <Form.Control style={styles.form_text} placeholder="ex.: João da Silva"
+                    type="string" onChange={() => { this.setState({name:this.state.nameref.value})}}
+                    ref={ref => { this.state.nameref = ref;}} isInvalid={this.state.name_not_ok}/>
+                <Form.Control.Feedback type="invalid">Nome não pode ser vazio</Form.Control.Feedback>
+            </Form.Group>
+        )
+    }
+    email_group(){
+        return(
+            <Form.Group>
+                <Form.Label style={styles.form_text}>Email</Form.Label>
+                <Form.Control
+                    style={styles.form_text} type="email" placeholder="ex.: joao@email.com"
+                    onChange={() => { this.setState({ email: this.state.emailref.value }) }}
+                    ref={ref => { this.state.emailref = ref; }} isInvalid={this.state.email_not_ok} />
+                <Form.Control.Feedback type="invalid">Email inválido</Form.Control.Feedback>
+            </Form.Group>
+        )
+    }
+
+    pass_group(){
+        return(
+            <div>
+                <Form.Group>
+                    <Form.Label style={styles.form_text}>Senha</Form.Label>
+                    <Form.Control
+                        type="password" ref={ref => { this.state.passwordref = ref; }}
+                        onChange={() => { this.setState({ password: this.state.passwordref.value }) }} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label style={styles.form_text}>Confirme sua senha</Form.Label>
+                    <Form.Control
+                        onChange={() => { this.setState({ confirm_password: this.state.confirmpasswordref.value }) }}
+                        type="password" ref={ref => { this.state.confirmpasswordref = ref; }}
+                        isInvalid={this.state.confirm_password_not_ok} />
+                    <Form.Control.Feedback type="invalid">As senhas estão diferentes</Form.Control.Feedback>
+                </Form.Group>
+            </div>
         )
     }
     text(){
@@ -145,7 +160,12 @@ class Registration extends Component {
                 <div style={styles.screen}>
                     <p style={styles.title}>Cadastro</p>
                     <div style={styles.two_columns}>
-                        {this.registration_form()}
+                        <Form style={styles.half}>
+                            {this.name_group()}
+                            {this.email_group()}
+                            {this.pass_group()}
+                            {this.button_div()}
+                        </Form>
                         {this.text()}
                     </div>
                 </div>
