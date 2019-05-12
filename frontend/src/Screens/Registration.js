@@ -27,8 +27,9 @@ class Registration extends Component {
     verify_fields(){
         var is_ok = true;
         var email_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        var name_regex = /^[a-zA-Z ]+$/;
 
-        if (this.state.name !== "" ){
+        if (this.state.name !== "" && name_regex.test(String(this.state.name))){
             this.setState({name_not_ok:false});
         }else{
             this.setState({ name_not_ok: true });
@@ -42,8 +43,15 @@ class Registration extends Component {
             is_ok = false;
         }
 
+        if (this.state.password !== "" && this.state.password.length > 5){
+            this.setState({password_not_ok:false});
+        }else{
+            this.setState({ password_not_ok: true });
+            is_ok = false;
+        }
+
         if(this.state.password === this.state.confirm_password){
-                this.setState({confirm_password_not_ok: false});
+            this.setState({confirm_password_not_ok: false});
         }else{
             this.setState({ confirm_password_not_ok: true });
             is_ok = false
@@ -94,7 +102,7 @@ class Registration extends Component {
                 <Form.Control style={styles.form_text} placeholder="ex.: João da Silva"
                     type="string" onChange={() => { this.setState({name:this.state.nameref.value})}}
                     ref={ref => { this.state.nameref = ref;}} isInvalid={this.state.name_not_ok}/>
-                <Form.Control.Feedback type="invalid">Nome não pode ser vazio</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Nome inválido</Form.Control.Feedback>
             </Form.Group>
         )
     }
@@ -118,7 +126,9 @@ class Registration extends Component {
                     <Form.Label style={styles.form_text}>Senha</Form.Label>
                     <Form.Control
                         type="password" ref={ref => { this.state.passwordref = ref; }}
-                        onChange={() => { this.setState({ password: this.state.passwordref.value }) }} />
+                        onChange={() => { this.setState({ password: this.state.passwordref.value }) }}
+                        isInvalid={this.state.password_not_ok} />
+                        <Form.Control.Feedback type="invalid">Senha deve ter no minímo 6 caracteres</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label style={styles.form_text}>Confirme sua senha</Form.Label>
