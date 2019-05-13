@@ -1,38 +1,44 @@
 import React, { Component } from 'react';
-import {Form, Button} from 'react-bootstrap';
-import FormControl from 'react-bootstrap/FormControl'
-import { white, green, lightgreen } from '../colors'
+import {Form, Button, Alert} from 'react-bootstrap';
+import { green, lightgreen } from '../colors'
 import NavBar from '../Components/NavBar'
 import Footer from '../Components/Footer';
+import axios from 'axios';
 
 class Registration extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
+            username: "",
             email:"",
             password:"",
             confirm_password: "",
-            name_not_ok: null,
+            username_not_ok: null,
             email_not_ok : null,
             password_not_ok: null,
             confirm_password_not_ok: null,
-            nameref : React.createRef(),
+            usernameref : React.createRef(),
             emailref : React.createRef(),
             passwordref : React.createRef(),
-            confirmpasswordref : React.createRef()
+            confirmpasswordref : React.createRef(),
+            alert:{
+                variant: "",
+                headding: "",
+                text: "",
+                show:false
+            }
         }
     }
 
     verify_fields(){
         var is_ok = true;
         var email_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        var name_regex = /^[a-zA-Z ]+$/;
+        var username_regex = /^[a-zA-Z0-9_]+$/;
 
-        if (this.state.name !== "" && name_regex.test(String(this.state.name))){
-            this.setState({name_not_ok:false});
+        if (this.state.username !== "" && username_regex.test(String(this.state.username))){
+            this.setState({username_not_ok:false});
         }else{
-            this.setState({ name_not_ok: true });
+            this.setState({ username_not_ok: true });
             is_ok = false;
         }
 
@@ -59,9 +65,42 @@ class Registration extends Component {
         return is_ok;
     }
 
-    send(){
+    api_conection(){
+        axios.defaults.withCredentials = true;
+        const url = "http://0.0.0.0:8090/user/api/v0/create/";
+        axios.post(url, {
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password
+        })
+        .then((response) => {
+            console.log("deu bom");
+            console.log(response);
+            var new_alert={
+                variant: "success",
+                headding: "Usuário criado",
+                text: "Seu usuário foi criado com sucesso!",
+                show:true
+            }
+            this.setState({alert:new_alert})
+        })
+        .catch((err) => {
+            console.log("deu ruim");
+            console.log(err);
+            var new_alert = {
+                variant: "danger",
+                headding: "Erro",
+                text: "Seu usuário não pode ser criado!",
+                show: true
+            }
+            this.setState({ alert: new_alert })
+        })
+    }
+
+    async send(){
         if(this.verify_fields()){
             console.log("td certo");
+            await this.api_conection();
             
         }
 
@@ -86,7 +125,7 @@ class Registration extends Component {
     button_div(){
         return(
             <div style={styles.two_columns}>
-                <Button variant="primary" style={styles.button} onClick={()=>{ this.verify_fields()}} >
+                <Button variant="primary" style={styles.button} onClick={()=>{ this.send()}} >
                     Cadastrar
                 </Button>
                 <div style={styles.link_div}>
@@ -95,13 +134,13 @@ class Registration extends Component {
             </div>
         )
     }
-    name_group(){
+    username_group(){
         return(
             <Form.Group>
-                <Form.Label style={styles.form_text}>Nome</Form.Label>
-                <Form.Control style={styles.form_text} placeholder="ex.: João da Silva"
-                    type="string" onChange={() => { this.setState({name:this.state.nameref.value})}}
-                    ref={ref => { this.state.nameref = ref;}} isInvalid={this.state.name_not_ok}/>
+                <Form.Label style={styles.form_text}>Nome de usuário</Form.Label>
+                <Form.Control style={styles.form_text} placeholder="ex.: joao_silva"
+                    type="string" onChange={() => { this.setState({username:this.state.usernameref.value})}}
+                    ref={ref => { this.state.usernameref = ref;}} isInvalid={this.state.username_not_ok}/>
                 <Form.Control.Feedback type="invalid">Nome inválido</Form.Control.Feedback>
             </Form.Group>
         )
@@ -163,15 +202,26 @@ class Registration extends Component {
             </div>
         )
     }
+    show_alert(){
+        return(
+            <Alert  variant={this.state.alert.variant} show={this.state.alert.show}>
+                <Alert.Heading>{this.state.alert.headding}</Alert.Heading>
+                <p>
+                    {this.state.alert.text}
+                </p>
+            </Alert>
+        )
+    }
     render() {
         return (
             <div>
                 <NavBar logged={false} />
                 <div style={styles.screen}>
+                    {this.show_alert()}
                     <p style={styles.title}>Cadastro</p>
                     <div style={styles.two_columns}>
                         <Form style={styles.half}>
-                            {this.name_group()}
+                            {this.username_group()}
                             {this.email_group()}
                             {this.pass_group()}
                             {this.button_div()}
