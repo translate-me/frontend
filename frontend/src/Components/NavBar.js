@@ -3,6 +3,7 @@ import {Navbar, Nav} from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import {white, green } from '../colors'
+import { Link } from "react-router-dom";
 
 class NavBar extends Component {
     render() {
@@ -12,7 +13,17 @@ class NavBar extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
-                        <Nav.Link href="#HomepageTradutor" style={{fontFamily: "Raleway", color: white}}>Espaço do tradutor</Nav.Link>
+                        <Nav.Link style={{fontFamily: "Raleway", color: white}}>
+                            <Link to='/' >
+                                Espaço do tradutor
+                            </Link>
+                        </Nav.Link>
+                        <Nav.Link style={{fontFamily: "Raleway", color: white}}>
+                            <Link to='/text_submission' >
+                                Submissão de texto
+                            </Link>
+                        </Nav.Link>
+
                         <Nav.Link href="#profile">
                             <FontAwesomeIcon icon={faUser} style={{color: white}}/>
                         </Nav.Link>
