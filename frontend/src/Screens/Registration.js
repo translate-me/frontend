@@ -32,7 +32,7 @@ class Registration extends Component {
 
     verify_fields(){
         var is_ok = true;
-        var email_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        var email_regex = /\S+@\S+\.\S+/;
         var username_regex = /^[a-zA-Z0-9_]+$/;
 
         if (this.state.username !== "" && username_regex.test(String(this.state.username))){
