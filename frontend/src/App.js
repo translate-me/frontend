@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Registration from './Screens/Registration';
 import HomepageAuthor from './Screens/HomepageAuthor'
+import Login from './Screens/Login';
 
 class App extends Component {
   render() {
@@ -13,7 +14,8 @@ class App extends Component {
           crossOrigin="anonymous"
         />
         <link href="https://fonts.googleapis.com/css?family=Nixie+One|Raleway" rel="stylesheet"/>
-        <Registration/>
+        <Login/>
+        {/* <Registration/> */}
         {/* <HomepageAuthor /> */}
       </div>
     );

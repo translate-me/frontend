@@ -21,6 +21,7 @@ class NavBar extends Component {
     not_logged_icons(){
         return(
             <Nav className="ml-auto">
+                <Nav.Link href="Login" style={{ fontFamily: "Raleway", color: white }}>Login</Nav.Link>
                 <Nav.Link href="#Como funciona" style={{ fontFamily: "Raleway", color: white }}>Como funciona</Nav.Link>
                 <Nav.Link href="#QuemSomosNos" style={{ fontFamily: "Raleway", color: white }}>Quem somos nós</Nav.Link>
                 <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
