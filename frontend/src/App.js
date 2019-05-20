@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Registration from './Screens/Registration';
-import HomepageAuthor from './Screens/HomepageAuthor'
+/*import Registration from './Screens/Registration';
+import HomepageAuthor from './Screens/HomepageAuthor';*/
 import Login from './Screens/Login';
 
 class App extends Component {
