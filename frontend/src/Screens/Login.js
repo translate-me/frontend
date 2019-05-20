@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Form, Button, Alert} from 'react-bootstrap';
 import NavBar from '../Components/NavBar'
 import Footer from '../Components/Footer';
-import { green, lightgreen } from '../colors'
+import { white, green, lightgreen } from '../colors'
 
 class Login extends Component {
     constructor(props) {
@@ -51,16 +51,16 @@ class Login extends Component {
         return(
             <Form>
                 <Form.Group controlId="formBasicEmail">
-                    <Form.Label style={styles.form_text}>Nome de usuário</Form.Label>
-                    <Form.Control style={styles.form_text} type="text" placeholder="Nome de Usuário" />
+                    {/* <Form.Label style={styles.form_text}>Nome de Usuário</Form.Label> */}
+                    <Form.Control style={styles.form_control} type="text" placeholder="Nome de Usuário" />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label style={styles.form_text}>Senha</Form.Label>
-                    <Form.Control style={styles.form_text} type="password" placeholder="Senha" />
+                    {/* <Form.Label style={styles.form_text}>Senha</Form.Label> */}
+                    <Form.Control style={styles.form_control} type="password" placeholder="Senha" />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button style={styles.button} type="submit">
                     Enviar
                 </Button>
 
@@ -70,18 +70,21 @@ class Login extends Component {
 
     render(){
         return (
-            <div style={styles.screen}>
+            <div>
                 <NavBar logged={false} />
-                <div style={styles.two_columns}>
-                    <p style={styles.centralize_and_form_text}>Login</p>
-                    <div style={styles.centralize}>
-                        <Form>
-                            {this.username_group()}
-                            {/* {this.pass_group()}
-                            {this.button_div()} */}
-                        </Form>
+                <div style={styles.blank_line}>
+                    <div style={styles.border}>
+                        <p style={styles.centralize_and_form_text}>Entrar</p>
+                        <div style={styles.centralize}>
+                            <Form>
+                                {this.username_group()}
+                                {/* {this.pass_group()}
+                                {this.button_div()} */}
+                            </Form>
+                        </div>
                     </div>
                 </div>
+                <div style={styles.blank_line}></div>
                 <Footer/>
             </div>
         );
@@ -93,54 +96,50 @@ const styles={
     screen:{
         margin: "5%"
     },
+    blank_line:{
+        marginTop: "5%"
+    },
     button:{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         fontFamily: "Raleway",
-        backgroundColor: green,
-        borderColor: green,
-        marginTop: "20px",
-        width: "50%"
+        backgroundColor: lightgreen,
+        borderColor: white,
+        fontSize: "20px",
+        marginTop: "60px",
+        marginBottom: "100px",
+        width: "100%",
+        color: white
     },
-    link_div:{
-        width:"40%",
-        marginTop:"25px",
-        marginLeft:"40px"
+    border:{
+        borderStyle: "solid",
+        borderWidth: "5px 5px 5px 5px",
+        borderColor: lightgreen,
+        marginLeft: "35%",
+        marginRight: "35%",
+        backgroundColor: green
     },
-    link:{
+    form_control:{
         fontFamily: "Raleway",
-        color: green
-    },
-    form_text:{
-        fontFamily: "Raleway"
+        fontSize: "18px",
+        marginTop: "30px"
     },
     centralize_and_form_text:{
         fontFamily: "Raleway",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
-    },
-    title:{
-        fontFamily: "Raleway",
-        fontSize: "35px"
+        alignItems: "center",
+        fontSize: "35px",
+        color: white,
+        marginTop: "50px",
+        marginBottom: "50px"
+
     },
     centralize:{
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
-    },
-    half:{
-        width: "50%",
-        marginLeft: "5%",
-        marginRight: "5%",
-        marginBottom:"5%"
-    },
-    description: {
-        fontFamily: "Raleway",
-        color: lightgreen,
-        textAlign: "justify"
-    },
-    titleh1:{
-        fontFamily: "Nixie One",
-        color: green
     }
 
 }
