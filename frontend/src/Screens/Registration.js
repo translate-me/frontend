@@ -29,42 +29,32 @@ class Registration extends Component {
             }
         }
     }
-
     verify_fields(){
         var is_ok = true;
         var email_regex = /\S+@\S+\.\S+/;
         var username_regex = /^[a-zA-Z0-9_]+$/;
-
         if (this.state.username !== "" && username_regex.test(String(this.state.username))){
             this.setState({username_not_ok:false});
         }else{
             this.setState({ username_not_ok: true });
             is_ok = false;
-        }
-
-        if(email_regex.test(String(this.state.email).toLowerCase())){
+        } if(email_regex.test(String(this.state.email).toLowerCase())){
             this.setState({ email_not_ok: false });
         } else {
             this.setState({ email_not_ok: true });
             is_ok = false;
-        }
-
-        if (this.state.password !== "" && this.state.password.length > 5){
+        } if (this.state.password !== "" && this.state.password.length > 5){
             this.setState({password_not_ok:false});
         }else{
             this.setState({ password_not_ok: true });
             is_ok = false;
-        }
-
-        if(this.state.password === this.state.confirm_password){
+        }  if(this.state.password === this.state.confirm_password){
             this.setState({confirm_password_not_ok: false});
-        }else{
+        } else{
             this.setState({ confirm_password_not_ok: true });
             is_ok = false
-        }
-        return is_ok;
+        }   return is_ok;
     }
-
     api_conection(){
         axios.defaults.withCredentials = true;
         const url = "http://0.0.0.0:8090/user/api/v0/create/";
@@ -74,38 +64,28 @@ class Registration extends Component {
             password: this.state.password
         })
         .then((response) => {
-            console.log("deu bom");
-            console.log(response);
             var new_alert={
                 variant: "success",
                 headding: "Usuário criado",
                 text: "Seu usuário foi criado com sucesso!",
                 show:true
-            }
-            this.setState({alert:new_alert})
+            } this.setState({alert:new_alert})
         })
         .catch((err) => {
-            console.log("deu ruim");
-            console.log(err);
             var new_alert = {
                 variant: "danger",
                 headding: "Erro",
                 text: "Seu usuário não pode ser criado!",
                 show: true
-            }
-            this.setState({ alert: new_alert })
+            } this.setState({ alert: new_alert })
         })
     }
-
     async send(){
         if(this.verify_fields()){
             console.log("td certo");
             await this.api_conection();
-            
         }
-
     }
-
     form_group(label, placeholder, onChange, thisref, invalid, warning){
         return(
             <Form.Group >
@@ -157,7 +137,6 @@ class Registration extends Component {
             </Form.Group>
         )
     }
-
     pass_group(){
         return(
             <div>
@@ -185,7 +164,7 @@ class Registration extends Component {
             <div style={styles.half}>
                 <h1 style={styles.titleh1}>translate.me</h1>
                 <p style={styles.description}>
-                    Cadastre-se e comece a traduzir os seus textos. 
+                    Cadastre-se e comece a traduzir os seus textos.
                 </p>
                 <p style={styles.description}>
                     O translate.me fornece uma tradução de qualidade feita por tradutores cadastrados no site.
@@ -239,46 +218,32 @@ const styles={
         margin: "5%"
     },
     button:{
-        fontFamily: "Raleway",
-        backgroundColor: green,
-        borderColor: green,
-        marginTop: "20px",
-        width: "50%"
+        fontFamily: "Raleway", backgroundColor: green, borderColor: green,
+        marginTop: "20px", width: "50%"
     },
     link_div:{
-        width:"40%",
-        marginTop:"25px",
-        marginLeft:"40px"
+        width:"40%", marginTop:"25px", marginLeft:"40px"
     },
     link:{
-        fontFamily: "Raleway",
-        color: green
+        fontFamily: "Raleway", color: green
     },
     form_text:{
         fontFamily: "Raleway"
     },
     title:{
-        fontFamily: "Raleway",
-        fontSize: "35px"
+        fontFamily: "Raleway", fontSize: "35px"
     },
     two_columns:{
-        display: "flex",
-        flexDirection: "row"
+        display: "flex", flexDirection: "row"
     },
     half:{
-        width: "50%",
-        marginLeft: "5%",
-        marginRight: "5%",
-        marginBottom:"5%"
+        width: "50%", marginLeft: "5%", marginRight: "5%", marginBottom:"5%"
     },
     description: {
-        fontFamily: "Raleway",
-        color: lightgreen,
-        textAlign: "justify"
+        fontFamily: "Raleway", color: lightgreen, textAlign: "justify"
     },
     titleh1:{
-        fontFamily: "Nixie One",
-        color: green
+        fontFamily: "Nixie One", color: green
     }
 }
 export default Registration;
