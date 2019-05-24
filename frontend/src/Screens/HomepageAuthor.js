@@ -26,7 +26,7 @@ class HomepageAuthor extends Component {
     render() {
         return (
             <div style={styles.screen}>
-                <NavBar />
+                <NavBar logged= {true}/>
                     <p style={styles.title}>
                         Traduza seus textos acadêmicos com qualidade, com uma tradução profissional! Agora, fácil assim!
                     </p>
