@@ -11,7 +11,7 @@ class TextEditor extends React.Component {
     this.onChange = (editorState) => this.setState({ editorState });
     this.logState = () => console.log(this.state.editorState.toJS());
     this.setDomEditorRef = ref => this.domEditor = ref;
-    
+    this.focus = () => this.domEditor.focus();
   }
 
   componentDidMount() {
