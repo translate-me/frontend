@@ -18,9 +18,16 @@ class NavBar extends Component {
                                 Espaço do tradutor
                             </Link>
                         </Nav.Link>
+
                         <Nav.Link style={{fontFamily: "Raleway", color: white}}>
                             <Link to='/text_submission' >
                                 Submissão de texto
+                            </Link>
+                        </Nav.Link>
+
+                        <Nav.Link style={{fontFamily: "Raleway", color: white}}>
+                            <Link to='/text_editor' >
+                                Editor de textos
                             </Link>
                         </Nav.Link>
 

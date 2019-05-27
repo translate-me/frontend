@@ -4,7 +4,7 @@ import NavBar from './Components/NavBar';
 import Footer from './Components/Footer';
 import HomepageAuthor from './Screens/HomepageAuthor';
 import TextSubmission from './Screens/TextSubmission';
-
+import TextEditor from './Screens/TextEditor'
 
 class App extends Component {
   render() {
@@ -22,6 +22,7 @@ class App extends Component {
           <NavBar />
           <Route exact path="/" component={HomepageAuthor} />
           <Route exact path="/text_submission" component={TextSubmission} />
+          <Route exact path="/text_editor" component={TextEditor} />
           {/* <Footer/> */}
         </div>
       </Router>

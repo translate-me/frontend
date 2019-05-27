@@ -8,6 +8,8 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
     "filepond": "^4.4.6",
+    "draft-js": "^0.10.5",
+    "draft-js-plugins-editor": "^2.1.1",
     "i": "^0.3.6",
     "npm": "^6.9.0",
     "react": "^16.8.5",
