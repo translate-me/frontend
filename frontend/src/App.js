@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import HomepageAuthor from './Screens/HomepageAuthor';
+// import HomepageAuthor from './Screens/HomepageAuthor';
+import NavBar from './Components/NavBar'
+import TextEditor from './Screens/TextEditor'
 
 class App extends Component {
   render() {
@@ -12,7 +14,8 @@ class App extends Component {
           crossOrigin="anonymous"
         />
         <link href="https://fonts.googleapis.com/css?family=Nixie+One|Raleway" rel="stylesheet"/>
-        <HomepageAuthor/>
+        <NavBar />
+        <TextEditor />
       </div>
     );
   }

@@ -13,6 +13,7 @@ class NavBar extends Component {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
                         <Nav.Link href="#HomepageTradutor" style={{fontFamily: "Raleway", color: white}}>Espaço do tradutor</Nav.Link>
+                        <Nav.Link href="#TextEditor" style={{fontFamily: "Raleway", color: white}}>Editor de Texto</Nav.Link>
                         <Nav.Link href="#profile">
                             <FontAwesomeIcon icon={faUser} style={{color: white}}/>
                         </Nav.Link>
