@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import NavBar from '../Components/NavBar';
 import { white, green, lightgreen } from '../colors';
-import Footer from '../Components/Footer';
+
+let styles;
 
 class HomepageAuthor extends Component {
   constructor(props) {
@@ -24,15 +24,19 @@ class HomepageAuthor extends Component {
   }
 
   render() {
+    const { advantages } = this.state;
+    const { steps } = this.state;
+
     return (
       <div style={styles.screen}>
         {/* <NavBar logged= {true}/> */}
         <p style={styles.title}>
-                    Traduza seus textos acadêmicos com qualidade, com uma tradução profissional! Agora, fácil assim!
+          Traduza seus textos acadêmicos com qualidade,
+          com uma tradução profissional! Agora, fácil assim!
         </p>
         <div style={styles.advantages_square}>
-          {this.state.advantages.map((item, i) => (
-            <Card key={i} style={styles.advantages_card}>
+          {advantages.map(item => (
+            <Card style={styles.advantages_card}>
               <Card.Title style={styles.advantages_title}>
                 {item}
               </Card.Title>
@@ -42,15 +46,16 @@ class HomepageAuthor extends Component {
         <Button style={styles.button}>Quero Traduzir Agora!</Button>
 
         <div style={styles.steps_div}>
-          {this.state.steps.map((item, i) => (
-            <div key={i} style={{ display: 'flex', flexDirection: 'collumn' }}>
+          {steps.map(item => (
+            <div style={{ display: 'flex', flexDirection: 'collumn' }}>
               <Card style={styles.steps_card}>
                 <Card.Title style={styles.steps_title}>
                   {item}
                 </Card.Title>
                 <Card.Body>
                   <div style={styles.number}>
-                    <p style={{ color: white }}>{i + 1}</p>
+                    {/* Must be corrected to array position instead of 1 */}
+                    <p style={{ color: white }}>1</p>
                   </div>
                 </Card.Body>
               </Card>
@@ -64,7 +69,7 @@ class HomepageAuthor extends Component {
 }
 
 
-const styles = {
+styles = {
   screen: {
     backgroundColor: white,
     display: 'flex',
