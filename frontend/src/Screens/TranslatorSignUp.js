@@ -7,15 +7,15 @@ import axios from 'axios';
 import { FilePond } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 
-class TranslatorSignIn extends Component {
+class TranslatorSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            term : "",
             cpf: "",
             level:"",
             certified:"",
             language: "",
-            cpf_not_ok: null,
             level_not_ok : null,
             language_not_ok: null,
             cpfref : React.createRef(),
@@ -89,22 +89,6 @@ class TranslatorSignIn extends Component {
             await this.api_conection();
         }
     }
-    form_group(label, placeholder, onChange, thisref, invalid, warning){
-        return(
-            <Form.Group >
-                <Form.Label style={styles.form_text}>{label}</Form.Label>
-                <Form.Control
-                    style={styles.form_text}
-                    placeholder={placeholder}
-                    type="string"
-                    onChange={onChange}
-                    ref={ref => { thisref = ref; }}
-                    isInvalid={invalid}
-                />
-                <Form.Control.Feedback type="invalid">{warning}</Form.Control.Feedback>
-            </Form.Group >
-        )
-    }
     button_div(){
         return(
             <div style={styles.two_columns}>
@@ -117,14 +101,25 @@ class TranslatorSignIn extends Component {
             </div>
         )
     }
+
+gabi
+
+    handle_cpf(){
+        const cpf_regex = /\d+/g;
+        var value = this.state.cpfref.value.match(cpf_regex)
+        if (value !=null ){
+            this.setState({ cpf: value })
+        } else if (this.state.cpfref.value == ""){
+            this.setState({cpf: ""})
+        }
+    }
     cpf_group(){
         return(
             <Form.Group>
                 <Form.Label style={styles.form_text}>CPF</Form.Label>
-                <Form.Control style={styles.form_text} placeholder="ex.: 000.000.000-00"
-                    type="string" onChange={() => { this.setState({cpf:this.state.cpfref.value})}}
-                    ref={ref => { this.state.cpfref = ref;}} isInvalid={this.state.cpf_not_ok}/>
-                <Form.Control.Feedback type="invalid">CPF inválido</Form.Control.Feedback>
+                <Form.Control style={styles.form_text} value={this.state.cpf}
+                    onChange={() => { this.handle_cpf()}} maxLength = "11"
+                    ref={ref => { this.state.cpfref = ref; }}/>
             </Form.Group>
         )
     }
@@ -187,9 +182,7 @@ class TranslatorSignIn extends Component {
         return(
             <Alert  variant={this.state.alert.variant} show={this.state.alert.show}>
                 <Alert.Heading>{this.state.alert.headding}</Alert.Heading>
-                <p>
-                    {this.state.alert.text}
-                </p>
+                <p>{this.state.alert.text}</p>
             </Alert>
         )
     }
@@ -249,4 +242,4 @@ const styles={
         fontFamily: "Nixie One", color: green
     }
 }
-export default TranslatorSignIn;
+export default TranslatorSignUp;
