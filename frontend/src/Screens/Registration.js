@@ -69,7 +69,8 @@ class Registration extends Component {
                 headding: "Usuário criado",
                 text: "Seu usuário foi criado com sucesso!",
                 show:true
-            } this.setState({alert:new_alert})
+            }
+            this.setState({alert:new_alert})
         })
         .catch((err) => {
             var new_alert = {
@@ -77,7 +78,8 @@ class Registration extends Component {
                 headding: "Erro",
                 text: "Seu usuário não pode ser criado!",
                 show: true
-            } this.setState({ alert: new_alert })
+            }
+            this.setState({ alert: new_alert })
         })
     }
     async send(){
