@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,35 +12,32 @@ const privacy = 'Nossa política de privacidade pode mudar com o tempo. Publicar
                 + 'política de privacidade nesta página. Nossas práticas de privacidade estão descritas na '
                 + 'política de privacidade completa.';
 
+let styles;
 
-class Footer extends Component {
-  render() {
-    return (
-      <div style={styles.container}>
-        <div style={styles.left}>
-          <p style={styles.title}>Direitos Autorais</p>
-          <p style={styles.description}>{rights}</p>
-          <p style={styles.description}>Este site é propriedade da marca translate.me.</p>
-          <p style={styles.description}> Lugar de registro: Brasil.</p>
-        </div>
-        <div style={styles.right}>
-          <p style={styles.title}>Sobre o Projeto</p>
-          <p style={styles.description}>{developed}</p>
-          <p style={styles.title}>Contato</p>
-          <p style={styles.title}>
-            <FontAwesomeIcon icon={faEnvelope} style={styles.icon} />
-            {' '}
-welzrenan@gmail.com
-          </p>
-          <a href="#temosDeUso" style={styles.title}>Termos de Uso</a>
-          <p style={styles.description}>{privacy}</p>
-        </div>
-      </div>
-    );
-  }
-}
+export const Footer = () => (
+  <div style={styles.container}>
+    <div style={styles.left}>
+      <p style={styles.title}>Direitos Autorais</p>
+      <p style={styles.description}>{rights}</p>
+      <p style={styles.description}>Este site é propriedade da marca translate.me.</p>
+      <p style={styles.description}> Lugar de registro: Brasil.</p>
+    </div>
+    <div style={styles.right}>
+      <p style={styles.title}>Sobre o Projeto</p>
+      <p style={styles.description}>{developed}</p>
+      <p style={styles.title}>Contato</p>
+      <p style={styles.title}>
+        <FontAwesomeIcon icon={faEnvelope} style={styles.icon} />
+        {' '}
+            welzrenan@gmail.com
+      </p>
+      <a href="#temosDeUso" style={styles.title}>Termos de Uso</a>
+      <p style={styles.description}>{privacy}</p>
+    </div>
+  </div>
+);
 
-const styles = {
+styles = {
   title: {
     fontFamily: 'Raleway',
     fontWeight: 'bold',
