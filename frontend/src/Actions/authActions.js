@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-import { post } from "../Auth/Auth";
+import { post } from "../Utils/Requests";
 
 const cookies = new Cookies();
 
