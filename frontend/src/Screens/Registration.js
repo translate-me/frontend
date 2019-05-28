@@ -196,7 +196,7 @@ class Registration extends Component {
     render() {
         return (
             <div>
-                <NavBar logged={false} />
+                {/* <NavBar logged={false} /> */}
                 <div style={styles.screen}>
                     {this.show_alert()}
                     <p style={styles.title}>Cadastro</p>
@@ -210,7 +210,7 @@ class Registration extends Component {
                         {this.text()}
                     </div>
                 </div>
-                <Footer/>
+                {/* <Footer/> */}
             </div>
         );
     }

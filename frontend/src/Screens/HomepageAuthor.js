@@ -26,21 +26,21 @@ class HomepageAuthor extends Component {
     render() {
         return (
             <div style={styles.screen}>
-                <NavBar logged= {true}/>
-                    <p style={styles.title}>
-                        Traduza seus textos acadêmicos com qualidade, com uma tradução profissional! Agora, fácil assim!
-                    </p>
-                    <div style={styles.advantages_square}>
-                        {this.state.advantages.map((item, i) => {
-                            return (
-                                <Card key={i} style={styles.advantages_card}>
-                                    <Card.Title style={styles.advantages_title}>
-                                        {item}
-                                    </Card.Title>
-                                </Card>)
-                        })}
-                    </div>
-                    <Button style={styles.button}>Quero Traduzir Agora!</Button>
+                {/* <NavBar logged= {true}/> */}
+                <p style={styles.title}>
+                    Traduza seus textos acadêmicos com qualidade, com uma tradução profissional! Agora, fácil assim!
+                </p>
+                <div style={styles.advantages_square}>
+                    {this.state.advantages.map((item, i) => {
+                        return (
+                            <Card key={i} style={styles.advantages_card}>
+                                <Card.Title style={styles.advantages_title}>
+                                    {item}
+                                </Card.Title>
+                            </Card>)
+                    })}
+                </div>
+                <Button style={styles.button}>Quero Traduzir Agora!</Button>
 
                 <div style={styles.steps_div}>
                     {this.state.steps.map((item, i) => {
@@ -60,7 +60,6 @@ class HomepageAuthor extends Component {
                         )
                     })}
                 </div>
-                <Footer/>
             </div>
             
         );
