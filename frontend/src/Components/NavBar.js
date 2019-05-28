@@ -63,6 +63,12 @@ class NavBar extends Component {
                             </Link>
                         </Nav.Link>
 
+                        <Nav.Link style={{fontFamily: "Raleway", color: white}}>
+                            <Link to='/register' >
+                                Cadastro
+                            </Link>
+                        </Nav.Link>
+
                         <Nav.Link href="#profile">
                             <FontAwesomeIcon icon={faUser} style={{color: white}}/>
                         </Nav.Link>
