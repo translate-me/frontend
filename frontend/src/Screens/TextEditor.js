@@ -81,6 +81,8 @@ class TextEditor extends React.Component {
                 </Button>
               </div>
             </Col>
+            <textarea id="text-element"></textarea>
+            <input type="button" id="trigger" value="Check"/>
           </Row>
         </Container>
         <SimpleFooter />

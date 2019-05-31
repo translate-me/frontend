@@ -91,6 +91,12 @@ export const NavBar = () => (
         </Nav.Link>
 
         <Nav.Link style={{ fontFamily: 'Raleway', color: white }}>
+          <Link to="/breakpoints">
+                                Breakpoints
+          </Link>
+        </Nav.Link>
+
+        <Nav.Link style={{ fontFamily: 'Raleway', color: white }}>
           <Link to="/register">
                                 Cadastro
           </Link>
