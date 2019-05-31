@@ -1,89 +1,59 @@
-import React from 'react';
-import { Editor, EditorState } from 'draft-js';
-import {
-  Container, Row, Col, Form, Button,
-} from 'react-bootstrap';
-import { SimpleFooter } from '../Components/SimpleFooter';
+import React from "react";
+import { render } from "react-dom";
 
-let styles;
 
-class TextEditor extends React.Component {
+let breakpoints = [];
+
+const styles = {
+  fontFamily: "sans-serif",
+  textAlign: "center"
+};
+
+export default class Breakpoints extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { editorState: EditorState.createEmpty() };
-    this.onChange = editorState => this.setState({ editorState });
-    this.logState = () => console.log(this.state.editorState.toJS());
-    this.setDomEditorRef = ref => this.domEditor = ref;
-    this.focus = () => this.domEditor.focus();
+    this.state = {
+      value: "hello"
+    };
   }
 
-  componentDidMount() {
-    // this.domEditor.focus(  );
-    document.addEventListener('DOMContentLoaded', function(event) {
-      document.querySelectorAll('.charPosition').forEach(el => {
-        let characters = el['innerText'].split('');
-        el.innerHTML = '';
-        characters.forEach(char => {
-            let span = document.createElement('span');
-            span.innerText = char;
-            span.addEventListener('click', function () {
-                let position = 0;
-                let el = this;
-                while (el.previousSibling !== null) {
-                    position++;
-                    el = el.previousSibling;
-                }
-                this.innerHTML = this.innerHTML + '\u2728'
-                console.log(this.innerHTML + ':' + position);
-            });
-            el.appendChild(span);
-        });
-      });
+  onMouseUp = e => {
+    const position = e.target.selectionStart;
+    const text = e.target.value;
+    
+    breakpoints.push(position)
+
+    console.log(position);
+    console.log('breakpoints: ', breakpoints)
+
+    let array = Array.from(text)
+    array[position - 1] = array[position - 1] + '*'
+    console.log('array: ', array)
+
+    let newArray = array.join('')
+    console.log('newArray: ', newArray)
+
+    this.setState({
+      value: newArray
+    })
+  };
+
+  
+
+  onChange = e => {
+    this.setState({
+      value: e.target.value
     });
-  }
+  };
 
   render() {
-    const { editorState } = this.state;
-
     return (
-      <div style={styles.root}>
-        <Container>
-          <Row>
-            <Col>
-              <div class="charPosition">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <textarea
+        id="my-input"
+        onChange={this.onChange}
+        value={this.state.value}
+        onMouseUp={this.onMouseUp}
+      />
     );
   }
 }
-
-styles = {
-  root: {
-    fontFamily: '\'Helvetica\', sans-serif',
-    padding: 20,
-    width: '100%',
-  },
-  editor: {
-    border: '1px solid #ccc',
-    cursor: 'text',
-    minHeight: '38vh',
-    padding: 10,
-  },
-  button: {
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  center: {
-    textAlign: 'center',
-  },
-  right: {
-    textAlign: 'right',
-  },
-  leftButton: {
-    marginRight: 10,
-  },
-};
-
-export default TextEditor;
