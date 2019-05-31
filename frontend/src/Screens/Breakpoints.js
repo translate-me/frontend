@@ -43,9 +43,9 @@ export class Breakpoints extends React.Component {
 
     this.setState({
       fragments: fragments
-    })
-
-    console.log('state.frags', this.state.fragments)
+    }, function () {
+      console.log('Array de fragmentos enviados para o state: ', this.state.fragments)
+    });
   }
 
   onChange = e => {
