@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {
   Card, Button, Alert, Container, Row, Col, Collapse, Form,
 } from 'react-bootstrap';
-
+import NavBar from '../Components/NavBar';
 import Image from 'react-bootstrap/Image';
 import TextareaAutosize from 'react-textarea-autosize';
 import { FilePond } from 'react-filepond';
 import { white, green, lightgreen } from '../colors';
 import Cloud from './cloud.png';
 import 'filepond/dist/filepond.min.css';
+import SimpleFooter from '../Components/SimpleFooter';
 
 
 class TextSubmission extends Component {
@@ -28,6 +29,7 @@ class TextSubmission extends Component {
     const { upload_toggle } = this.state;
     return (
       <div style={styles.screen}>
+        <NavBar logged={true} author={false} />
         <Container>
           <Row>
             <Col style={styles.title}>
@@ -108,6 +110,7 @@ ou
             </Col>
           </Row>
         </Container>
+        <SimpleFooter/>
       </div>
 
     );

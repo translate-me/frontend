@@ -17,12 +17,10 @@ export const App = () => {
             crossOrigin="anonymous"
           />
           <link href="https://fonts.googleapis.com/css?family=Nixie+One|Raleway" rel="stylesheet" />
-          <NavBar />
           <Route exact path="/" component={HomepageAuthor} />
           <Route exact path="/text_submission" component={TextSubmission} />
           <Route exact path="/text_editor" component={TextEditor} />
           <Route exact path="/register" component={Registration} />
-          {/* <Footer/> */}
         </div>
       </Router>
     )
