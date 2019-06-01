@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { green, lightgreen } from '../colors';
-
-let styles;
+import SimpleFooter from '../Components/SimpleFooter';
+import NavBar from '../Components/NavBar';
 
 class Registration extends Component {
   constructor(props) {
@@ -244,7 +244,7 @@ class Registration extends Component {
   render() {
     return (
       <div>
-        {/* <NavBar logged={false} /> */}
+        <NavBar logged={false} />
         <div style={styles.screen}>
           {this.show_alert()}
           <p style={styles.title}>Cadastro</p>
@@ -258,12 +258,12 @@ class Registration extends Component {
             {this.text()}
           </div>
         </div>
-        {/* <Footer/> */}
+        <SimpleFooter/>
       </div>
     );
   }
 }
-styles = {
+const styles = {
   screen: {
     margin: '5%',
   },

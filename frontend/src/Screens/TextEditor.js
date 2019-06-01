@@ -25,6 +25,8 @@ class TextEditor extends React.Component {
     const { editorState } = this.state;
 
     return (
+      <div>
+        <NavBar logged={true} author={false}/>
       <div style={styles.root}>
         <Container>
           <Row style={styles.center}>
@@ -87,6 +89,8 @@ class TextEditor extends React.Component {
         </Container>
         <SimpleFooter />
       </div>
+      </div>
+
     );
   }
 }
