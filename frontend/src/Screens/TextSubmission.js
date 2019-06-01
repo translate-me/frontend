@@ -96,13 +96,13 @@ class TextSubmission extends React.Component {
                         {/* <Form.Control as="textarea" rows="3" /> */}
                       </Form.Group>
                       <Row>
-                        <Col style={styles.center}>
+                        <Col>
                           <Form.Label>Escreva seu texto ou copie e cole do seu arquivo</Form.Label>
                         </Col>
                       </Row>
 
-                      <Button variant="primary" type="submit">
-                                                    Submit
+                      <Button style={styles.button}>
+                                                    Enviar
                       </Button>
                     </Form>
                   </Collapse>
@@ -126,9 +126,10 @@ styles = {
     flexDirection: 'column',
     alignText: 'center',
     alignSelf: 'center',
+    paddingBottom: '20%'
   },
   title: {
-    marginTop: '2vh',
+    marginTop: '10vh',
     fontFamily: 'Raleway',
     textAlign: 'center',
     fontSize: '35px',
@@ -136,21 +137,35 @@ styles = {
   cloud_image: {
     height: '70px',
     width: '70px',
+    marginTop: '3vh'
   },
   upload_box: {
     textAlign: 'center',
     border: '1px solid black',
     width: '50%',
+    marginTop: '5vh'
   },
   link_toggle: {
     color: 'rgb(43, 66, 62)',
+    marginTop: '10vh'
   },
   medium_width: {
     width: '75%',
+    marginTop: '3vh'
+
   },
   center: {
     textAlign: 'center',
+    marginTop: '3vh'
   },
+  button: {
+    fontFamily: 'Raleway',
+    backgroundColor: green,
+    borderColor: green,
+    marginTop: '20px',
+    width: '10%',
+    marginBottom: '10%'
+  }
 
 };
 
