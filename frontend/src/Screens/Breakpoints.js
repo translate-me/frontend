@@ -50,14 +50,14 @@ export class Breakpoints extends React.Component {
   sendFragment = () => {
     const completeText = this.state.textBody;
     const fragments = completeText.split('🔴');
-
-    // console.log('completeText: ', completeText.length)
+    
+    var fragmentsObject = fragments.map(fragment => ({ body: fragment, type: 'text' }));
 
     this.setState({
-      fragments,
-      wordcount: completeText.length,
+      fragments: fragmentsObject,
+      wordcount: completeText.length
     }, function () {
-      console.log('Array de fragmentos enviados para o state: ', this.state.fragments);
+      console.log('Array de fragmentos enviados para o state: ', this.state);
       console.log('Array de breakpoints enviados para o state: ', this.state.breakpoints);
       console.log('Tamanho do texto enviado para o state: ', this.state.wordcount);
     });
