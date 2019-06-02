@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { white, green, lightgreen } from '../colors';
-
-let styles;
+import NavBar from '../Components/NavBar';
+import Footer from '../Components/Footer';
 
 class HomepageAuthor extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class HomepageAuthor extends Component {
 
     return (
       <div style={styles.screen}>
-        {/* <NavBar logged= {true}/> */}
+        <NavBar logged={false} />
         <p style={styles.title}>
           Traduza seus textos acadêmicos com qualidade,
           com uma tradução profissional! Agora, fácil assim!
@@ -62,14 +62,14 @@ class HomepageAuthor extends Component {
             </div>
           ))}
         </div>
+        <Footer />
       </div>
-
     );
   }
 }
 
 
-styles = {
+const styles = {
   screen: {
     backgroundColor: white,
     display: 'flex',
