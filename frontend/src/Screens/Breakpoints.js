@@ -3,6 +3,7 @@ import {
   Container, Row, Col, Form, Button, ProgressBar,
 } from 'react-bootstrap';
 
+import { green, lightgreen } from '../colors'
 import { sortArrayOfNumbers, calculatePrivacyLevel } from '../Util/util';
 
 const breakpoints = [];
@@ -135,13 +136,15 @@ pontos de quebra
                   <p style={styles.littleText}>Quanto mais pontos de quebra, mais segurança você terá para evitar plágios.</p>
 
                   <ProgressBar
+                    style = {styles.progressBar}
                     variant="success"
+                    max={100}
+                    animated
                     now={calculatePrivacyLevel(this.state.wordcount, this.state.breakpoints.length)}
                   />
 
                   <Button
                     style={styles.button}
-                    variant="primary"
                     onClick={this.sendFragment}
                   >
                         Realizar pagamento
@@ -159,7 +162,7 @@ pontos de quebra
 
 styles = {
   root: {
-    fontFamily: '\'Helvetica\', sans-serif',
+    fontFamily: 'Raleway',
     padding: 20,
     width: '100%',
   },
@@ -179,6 +182,7 @@ styles = {
   button: {
     marginTop: 10,
     textAlign: 'center',
+    backgroundColor: green
   },
   center: {
     textAlign: 'center',
