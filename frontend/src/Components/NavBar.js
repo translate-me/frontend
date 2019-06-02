@@ -2,7 +2,6 @@ import React, { Component} from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignOutAlt, faSignInAlt, faNewspaper, faGraduationCap, faCoins, faInbox, faFeatherAlt, faInfoCircle, faUsers} from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
 import { white, green } from '../colors';
 
 class NavBar extends Component {
