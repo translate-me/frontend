@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Editor, EditorState } from 'draft-js';
 import {
   Container, Row, Col, Form, Button,
 } from 'react-bootstrap';
-import SimpleFooter from '../Components/SimpleFooter';
-import NavBar from '../Components/NavBar';
+import { SimpleFooter } from '../Components/SimpleFooter';
+
+let styles;
 
 class TextEditor extends React.Component {
   constructor(props) {
@@ -21,6 +22,8 @@ class TextEditor extends React.Component {
   }
 
   render() {
+    const { editorState } = this.state;
+
     return (
       <div style={styles.root}>
         <Container>
@@ -28,7 +31,12 @@ class TextEditor extends React.Component {
             <Col>
               <h3><b>Titulo</b></h3>
               <h5>Contexto:</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam justo arcu, lobortis non risus et, tristique suscipit elit. Vestibulum arcu justo, suscipit sed auctor id, sodales ut turpis. Curabitur feugiat est et purus viverra auctor. </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Etiam justo arcu, lobortis non risus et, tristique suscipit elit.
+                Vestibulum arcu justo, suscipit sed auctor id, sodales ut turpis.
+                Curabitur feugiat est et purus viverra auctor.
+              </p>
             </Col>
           </Row>
 
@@ -42,9 +50,15 @@ class TextEditor extends React.Component {
             <Col>
               <Form.Group controlId="originalText">
                 <Form.Label>Texto Traduzido</Form.Label>
-                <div style={styles.editor} onClick={this.focus}>
+                <div
+                  style={styles.editor}
+                  onClick={this.focus}
+                  onKeyDown={this.focus}
+                  role="textbox"
+                  tabIndex={0}
+                >
                   <Editor
-                    editorState={this.state.editorState}
+                    editorState={editorState}
                     onChange={this.onChange}
                     placeholder="Traduza aqui seu texto"
                     ref={this.setDomEditorRef}
@@ -67,6 +81,8 @@ class TextEditor extends React.Component {
                 </Button>
               </div>
             </Col>
+            <textarea id="text-element" />
+            <input type="button" id="trigger" value="Check" />
           </Row>
         </Container>
         <SimpleFooter />
@@ -75,7 +91,7 @@ class TextEditor extends React.Component {
   }
 }
 
-const styles = {
+styles = {
   root: {
     fontFamily: '\'Helvetica\', sans-serif',
     padding: 20,
