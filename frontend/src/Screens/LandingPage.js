@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { white, green, lightgreen } from '../colors';
-
-let styles;
+import NavBar from '../Components/NavBar';
+import Footer from '../Components/Footer';
 
 class HomepageAuthor extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class HomepageAuthor extends Component {
 }
 
 
-styles = {
+const styles = {
   screen: {
     backgroundColor: white,
     display: 'flex',
