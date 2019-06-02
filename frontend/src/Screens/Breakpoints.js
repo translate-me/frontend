@@ -3,6 +3,7 @@ import {
   Container, Row, Col, Form, Button, ProgressBar,
 } from 'react-bootstrap';
 
+import { green, lightgreen } from '../colors';
 import { sortArrayOfNumbers, calculatePrivacyLevel } from '../Util/util';
 
 const breakpoints = [];
@@ -20,7 +21,7 @@ export class Breakpoints extends React.Component {
       textContext: 'Quisque egestas, leo sit amet porttitor vulputate, elit magna tempor enim, suscipit tempus sapien ipsum quis metus. In posuere pretium ullamcorper. Nam venenatis lorem ac dictum ultricies.',
       wordcount: 0,
       breakpoints: [],
-      fragments: []
+      fragments: [],
     };
   }
 
@@ -50,12 +51,12 @@ export class Breakpoints extends React.Component {
   sendFragment = () => {
     const completeText = this.state.textBody;
     const fragments = completeText.split('🔴');
-    
-    var fragmentsObject = fragments.map(fragment => ({ body: fragment, type: 'text' }));
+
+    const fragmentsObject = fragments.map(fragment => ({ body: fragment, type: 'text' }));
 
     this.setState({
       fragments: fragmentsObject,
-      wordcount: completeText.length
+      wordcount: completeText.length,
     }, function () {
       console.log('Array de fragmentos enviados para o state: ', this.state);
       console.log('Array de breakpoints enviados para o state: ', this.state.breakpoints);
@@ -135,13 +136,15 @@ pontos de quebra
                   <p style={styles.littleText}>Quanto mais pontos de quebra, mais segurança você terá para evitar plágios.</p>
 
                   <ProgressBar
+                    style={styles.progressBar}
                     variant="success"
+                    max={100}
+                    animated
                     now={calculatePrivacyLevel(this.state.wordcount, this.state.breakpoints.length)}
                   />
 
                   <Button
                     style={styles.button}
-                    variant="primary"
                     onClick={this.sendFragment}
                   >
                         Realizar pagamento
@@ -159,7 +162,7 @@ pontos de quebra
 
 styles = {
   root: {
-    fontFamily: '\'Helvetica\', sans-serif',
+    fontFamily: 'Raleway',
     padding: 20,
     width: '100%',
   },
@@ -179,6 +182,7 @@ styles = {
   button: {
     marginTop: 10,
     textAlign: 'center',
+    backgroundColor: green,
   },
   center: {
     textAlign: 'center',
