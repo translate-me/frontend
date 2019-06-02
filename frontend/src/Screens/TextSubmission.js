@@ -2,11 +2,11 @@ import React from 'react';
 import {
   Button, Alert, Container, Row, Col, Collapse, Form,
 } from 'react-bootstrap';
-import NavBar from '../Components/NavBar';
 import Image from 'react-bootstrap/Image';
 import TextareaAutosize from 'react-textarea-autosize';
 import { FilePond } from 'react-filepond';
-import { white } from '../colors';
+import NavBar from '../Components/NavBar';
+import { white, green, lightgreen } from '../colors';
 import Cloud from './cloud.png';
 import 'filepond/dist/filepond.min.css';
 import SimpleFooter from '../Components/SimpleFooter';
@@ -111,7 +111,7 @@ class TextSubmission extends React.Component {
             </Col>
           </Row>
         </Container>
-        <SimpleFooter/>
+        <SimpleFooter />
       </div>
 
     );
@@ -126,7 +126,7 @@ styles = {
     flexDirection: 'column',
     alignText: 'center',
     alignSelf: 'center',
-    paddingBottom: '20%'
+    paddingBottom: '20%',
   },
   title: {
     marginTop: '10vh',
@@ -137,26 +137,26 @@ styles = {
   cloud_image: {
     height: '70px',
     width: '70px',
-    marginTop: '3vh'
+    marginTop: '3vh',
   },
   upload_box: {
     textAlign: 'center',
     border: '1px solid black',
     width: '50%',
-    marginTop: '5vh'
+    marginTop: '5vh',
   },
   link_toggle: {
     color: 'rgb(43, 66, 62)',
-    marginTop: '10vh'
+    marginTop: '10vh',
   },
   medium_width: {
     width: '75%',
-    marginTop: '3vh'
+    marginTop: '3vh',
 
   },
   center: {
     textAlign: 'center',
-    marginTop: '3vh'
+    marginTop: '3vh',
   },
   button: {
     fontFamily: 'Raleway',
@@ -164,8 +164,8 @@ styles = {
     borderColor: green,
     marginTop: '20px',
     width: '10%',
-    marginBottom: '10%'
-  }
+    marginBottom: '10%',
+  },
 
 };
 

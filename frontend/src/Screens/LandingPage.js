@@ -29,7 +29,7 @@ class HomepageAuthor extends Component {
 
     return (
       <div style={styles.screen}>
-        <NavBar logged= {true}/>
+        <NavBar logged={false} />
         <p style={styles.title}>
           Traduza seus textos acadêmicos com qualidade,
           com uma tradução profissional! Agora, fácil assim!
@@ -62,7 +62,7 @@ class HomepageAuthor extends Component {
             </div>
           ))}
         </div>
-        <Footer/>
+        <Footer />
       </div>
     );
   }
