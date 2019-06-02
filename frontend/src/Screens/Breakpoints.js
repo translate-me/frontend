@@ -3,7 +3,7 @@ import {
   Container, Row, Col, Form, Button, ProgressBar,
 } from 'react-bootstrap';
 import NavBar from '../Components/NavBar';
-import { green, lightgreen } from '../colors';
+import { green } from '../colors';
 import { sortArrayOfNumbers, calculatePrivacyLevel } from '../Util/util';
 
 const breakpoints = [];

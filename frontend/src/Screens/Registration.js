@@ -133,7 +133,7 @@ class Registration extends Component {
   }
 
   usernameGroup() {
-    const { usernameRef, usernameNotOk } = this.state;
+    const { usernameNotOk } = this.state;
 
     return (
       <Form.Group>
@@ -142,8 +142,8 @@ class Registration extends Component {
           style={styles.form_text}
           placeholder="ex.: joao_silva"
           type="string"
-          onChange={() => { this.setState({ username: usernameRef.value }); }}
-          ref={(ref) => { usernameRef = ref; }}
+          onChange={() => { this.setState({ username: this.usernameRef.value }); }}
+          ref={(ref) => { this.usernameRef = ref; }}
           isInvalid={usernameNotOk}
         />
         <Form.Control.Feedback type="invalid">Nome inválido</Form.Control.Feedback>
@@ -152,7 +152,7 @@ class Registration extends Component {
   }
 
   emailGroup() {
-    const { emailRef, emailNotOk } = this.state;
+    const { emailNotOk } = this.state;
 
     return (
       <Form.Group>
@@ -161,8 +161,8 @@ class Registration extends Component {
           style={styles.form_text}
           type="email"
           placeholder="ex.: joao@email.com"
-          onChange={() => { this.setState({ email: emailRef.value }); }}
-          ref={(ref) => { emailRef = ref; }}
+          onChange={() => { this.setState({ email: this.emailRef.value }); }}
+          ref={(ref) => { this.emailRef = ref; }}
           isInvalid={emailNotOk}
         />
         <Form.Control.Feedback type="invalid">Email inválido</Form.Control.Feedback>
@@ -172,7 +172,7 @@ class Registration extends Component {
 
   passGroup() {
     const {
-      passwordRef, passwordNotOk, confirmPasswordRef, confirmPasswordNotOk,
+      passwordNotOk, confirmPasswordNotOk,
     } = this.state;
 
     return (
@@ -181,8 +181,8 @@ class Registration extends Component {
           <Form.Label style={styles.form_text}>Senha</Form.Label>
           <Form.Control
             type="password"
-            ref={(ref) => { passwordRef = ref; }}
-            onChange={() => { this.setState({ password: passwordRef.value }); }}
+            onChange={() => { this.setState({ password: this.passwordRef.value }); }}
+            ref={(ref) => { this.passwordRef = ref; }}
             isInvalid={passwordNotOk}
           />
           <Form.Control.Feedback type="invalid">Senha deve ter no minímo 6 caracteres</Form.Control.Feedback>
@@ -190,9 +190,9 @@ class Registration extends Component {
         <Form.Group>
           <Form.Label style={styles.form_text}>Confirme sua senha</Form.Label>
           <Form.Control
-            onChange={() => { this.setState({ confirmPassword: confirmPasswordRef.value }); }}
             type="password"
-            ref={(ref) => { confirmPasswordRef = ref; }}
+            onChange={() => { this.setState({ confirmPassword: this.confirmPasswordRef.value }); }}
+            ref={(ref) => { this.confirmPasswordRef = ref; }}
             isInvalid={confirmPasswordNotOk}
           />
           <Form.Control.Feedback type="invalid">As senhas estão diferentes</Form.Control.Feedback>
@@ -246,14 +246,14 @@ class Registration extends Component {
       <div>
         <NavBar logged={false} />
         <div style={styles.screen}>
-          {this.show_alert()}
+          {this.showAlert()}
           <p style={styles.title}>Cadastro</p>
           <div style={styles.two_columns}>
             <Form style={styles.half}>
-              {this.username_group()}
-              {this.email_group()}
-              {this.pass_group()}
-              {this.button_div()}
+              {this.usernameGroup()}
+              {this.emailGroup()}
+              {this.passGroup()}
+              {this.buttonDiv()}
             </Form>
             {this.text()}
           </div>
