@@ -1,125 +1,169 @@
 import React from 'react';
-import { Editor, EditorState } from 'draft-js';
 import {
-  Container, Row, Col, Form, Button,
+    Row, Col, Form, Button,
 } from 'react-bootstrap';
-import { SimpleFooter } from '../Components/SimpleFooter';
-
-let styles;
+import NavBar from '../Components/NavBar';
+import { green } from '../colors'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 class TextEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { editorState: EditorState.createEmpty() };
-    this.onChange = editorState => this.setState({ editorState });
-    this.logState = () => console.log(this.state.editorState.toJS());
-    this.setDomEditorRef = ref => this.domEditor = ref;
-    this.focus = () => this.domEditor.focus();
-  }
+    constructor(props) {
+        super(props);
+        this.state = { trasnlatedText: "", open: false };
+        this.logState = () => console.log(this.state.trasnlatedText);
+        this.editorRef= React.createRef()
+        this.togglePanel = this.togglePanel.bind(this);
+    }
 
-  componentDidMount() {
-    this.domEditor.focus();
-  }
-
-  render() {
-    const { editorState } = this.state;
-
-    return (
-      <div>
-        <NavBar logged={true} author={false}/>
-      <div style={styles.root}>
-        <Container>
-          <Row style={styles.center}>
-            <Col>
-              <h3><b>Titulo</b></h3>
-              <h5>Contexto:</h5>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Etiam justo arcu, lobortis non risus et, tristique suscipit elit.
-                Vestibulum arcu justo, suscipit sed auctor id, sodales ut turpis.
-                Curabitur feugiat est et purus viverra auctor.
-              </p>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <Form.Group controlId="originalText">
-                <Form.Label>Texto Original</Form.Label>
-                <Form.Control as="textarea" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas massa justo, aliquet eu nibh nec, imperdiet maximus nisl. Nunc dapibus, lectus in dapibus euismod, eros ex consequat tellus, vitae placerat orci sem vel leo. Suspendisse varius tortor et elit consectetur euismod. In sit amet finibus metus. Fusce at posuere felis. Maecenas tincidunt pharetra massa. Nullam at lorem nulla. Vivamus consectetur non ligula at interdum. Suspendisse congue, est eu elementum lacinia, felis est tristique purus, nec efficitur orci nunc eget neque. Integer quis aliquet orci, a malesuada libero. Phasellus scelerisque felis et sem rhoncus, eu ultrices augue cursus. " rows="10" />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="originalText">
-                <Form.Label>Texto Traduzido</Form.Label>
-                <div
-                  style={styles.editor}
-                  onClick={this.focus}
-                  onKeyDown={this.focus}
-                  role="textbox"
-                  tabIndex={0}
-                >
-                  <Editor
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    placeholder="Traduza aqui seu texto"
-                    ref={this.setDomEditorRef}
-                  />
+    togglePanel(e) {
+        this.setState({ open: !this.state.open })
+    }
+    myBlockRenderer(contentBlock) {
+        const type = contentBlock.getType();
+        if (type === 'atomic') {
+            return {
+                editable: false,
+                props: {
+                    foo: 'bar',
+                },
+            };
+        }
+    }
+    render() {
+        return (
+            <div>
+                <NavBar logged={true} author={false} />
+                <div style={styles.root}>
+                    <div>
+                        <div>
+                            <Row>
+                                <Col>
+                                    <div style={styles.two_columns} onClick={(e) => this.togglePanel(e)}>
+                                        <p style={styles.title}>Título</p>  
+                                        <FontAwesomeIcon icon={faAngleDown}  style={styles.icon}/>  
+                                    </div>                       
+                                </Col>
+                                <Col>
+                                    <div style={styles.buttondiv}>
+                                        <Button
+                                            onClick={this.logState}
+                                            style={styles.leftButton}
+                                        >Salvar progresso
+                                        </Button>
+                                        <Button
+                                            variant="primary"
+                                            onClick={this.logState}
+                                            style={styles.rightButton}
+                                        >Enviar tradução
+                                        </Button>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                        {
+                            this.state.open ? (
+                                <div>
+                                    <p style={styles.context}>
+                                    <b>Contexto: </b>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam justo arcu, lobortis non risus et, tristique suscipit elit. Vestibulum arcu justo, suscipit sed auctor id, sodales ut turpis. Curabitur feugiat est et purus viverra auctor.
+                                    </p>
+                                </div>
+                            ) : null
+                        }
+                        <hr/>
+                    </div >
+                    <Row>
+                        <Col>
+                            <Form.Group controlId="originalText">
+                                <Form.Label style={styles.boldTitle}>Texto Original</Form.Label>
+                                <Form.Control as="textarea" rows={23} value="Lorem ipsum dlq;dlkwq;kr'pq'RPhAJDolor sit amet, consectetur adipiscing elit. Maecenas massa justo, aliquet eu nibh nec, imperdiet maximus nisl. Nunc dapibus, lectus in dapibus euismod, eros ex consequat tellus, vitae placerat orci sem vel leo. Suspendisse varius tortor et elit consectetur euismod. In sit amet finibus metus. Fusce at posuere felis. Maecenas tincidunt pharetra massa. Nullam at lorem nulla. Vivamus consectetur non ligula at interdum. Suspendisse congue, est eu elementum lacinia, felis est tristique purus, nec efficitur orci nunc eget neque. Integer quis aliquet orci, a malesuada libero. Phasellus scelerisque felis et sem rhoncus, eu ultrices augue cursus. "/>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group controlId="originalText">
+                                <Form.Label style={styles.boldTitle}>Texto Traduzido</Form.Label>
+                                <Form.Control as="textarea" rows={23}
+                                    placeholder="Traduza aqui seu texto"
+                                    onChange={() => { this.setState({ trasnlatedText: this.editorRef.value }); }}
+                                    ref={(ref) => { this.editorRef = ref; }}
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
                 </div>
-              </Form.Group>
-              <div style={styles.center}>
-                <Button
-                  variant="secondary"
-                  onClick={this.logState}
-                  style={styles.leftButton}
-                >
-                      Salvar progresso
-                </Button>
-                <Button
-                  variant="primary"
-                  onClick={this.logState}
-                >
-                      Enviar tradução
-                </Button>
-              </div>
-            </Col>
-            <textarea id="text-element" />
-            <input type="button" id="trigger" value="Check" />
-          </Row>
-        </Container>
-        <SimpleFooter />
-      </div>
-      </div>
-
-    );
-  }
+            </div>
+        );
+    }
 }
 
-styles = {
-  root: {
-    fontFamily: '\'Helvetica\', sans-serif',
-    padding: 20,
-    width: '100%',
-  },
-  editor: {
-    border: '1px solid #ccc',
-    cursor: 'text',
-    minHeight: '38vh',
-    padding: 10,
-  },
-  button: {
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  center: {
-    textAlign: 'center',
-  },
-  right: {
-    textAlign: 'right',
-  },
-  leftButton: {
-    marginRight: 10,
-  },
+const styles = {
+    root: {
+        fontFamily: 'Raleway',
+        padding: 20,
+        width: '100%',
+    },
+    editor: {
+        border: '1px solid #ccc',
+        cursor: 'text',
+        minHeight: '38vh',
+        padding: 10,
+        
+    },
+    button: {
+        marginTop: 10,
+        textAlign: 'center',
+    },
+    center: {
+        textAlign: 'center',
+    },
+    right: {
+        textAlign: 'right',
+    },
+    leftButton: {
+        marginRight: 10,
+        backgroundColor: green,
+        borderColor: green,
+        fontSize: 15
+    },
+    rightButton: {
+        backgroundColor: green,
+        borderColor: green,
+        fontSize: 15
+    },
+    textbox: {
+        height:"100px",
+        padding: '5%'
+    },
+    title:{
+        fontSize: 25,
+        fontFamily: 'Raleway',
+        marginRight: "2%"
+    },
+    context:{
+        fontSize: 16,
+        fontFamily: 'Raleway'
+    },
+    buttondiv:{
+        textAlign: 'right',
+        position: 'relative'
+    },
+    colapse:{
+        borderBottom: 1 ,
+        borderColor: green
+
+    },
+    boldTitle:{
+        fontWeight: 'bold'
+    },
+    two_columns: {
+        display: 'flex', flexDirection: 'row',
+    },
+     icon: {
+         marginTop: 5,
+        fontSize: 30,
+        color: green
+    }
 };
 
 export default TextEditor;
