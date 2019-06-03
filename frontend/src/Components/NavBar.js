@@ -17,7 +17,7 @@ class NavBar extends Component {
               <Nav.Link href="#profile">
             <FontAwesomeIcon icon={faUser} title={"Perfil"} style={styles.icon} />
               </Nav.Link>
-              <Nav.Link>
+              <Nav.Link href="/">
             <FontAwesomeIcon icon={faSignOutAlt} title={"Sair"} style={styles.icon} />
               </Nav.Link>
           </Nav>
@@ -42,10 +42,10 @@ class NavBar extends Component {
   author_links(){
     return(
       <Nav>
-        <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+        <Nav.Link>
           <FontAwesomeIcon icon={faGraduationCap} style={styles.icon} title={'Espaço do Tradutor'}/>
         </Nav.Link>
-        <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+        <Nav.Link href="/follow_translations">
         <FontAwesomeIcon icon={faNewspaper} style={styles.icon} title={'Traduções em Andamento'}/>
         </Nav.Link>
       </Nav>

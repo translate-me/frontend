@@ -30,7 +30,7 @@ class TextSubmission extends React.Component {
     const { uploadToggle, files } = this.state;
     return (
       <div style={styles.screen}>
-        <NavBar logged={true} author={false} />
+        <NavBar logged={true} author={true} />
         <Container>
           <Row>
             <Col style={styles.title}>
