@@ -5,6 +5,7 @@ import TextSubmission from './Screens/TextSubmission';
 import TextEditor from './Screens/TextEditor';
 import Registration from './Screens/Registration';
 import Breakpoints from './Screens/Breakpoints';
+import SubmitTextInformation from './Screens/SubmitTextInformation';
 
 export const App = () => (
   <Router>
@@ -21,6 +22,7 @@ export const App = () => (
       <Route exact path="/text_editor" component={TextEditor} />
       <Route exact path="/register" component={Registration} />
       <Route exact path="/breakpoints" component={Breakpoints} />
+      <Route exact path="/text_information" component={SubmitTextInformation} />
     </div>
   </Router>
 );
