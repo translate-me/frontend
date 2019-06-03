@@ -22,7 +22,7 @@ export const App = () => (
       <Route exact path="/text_editor" component={TextEditor} />
       <Route exact path="/register" component={Registration} />
       <Route exact path="/breakpoints" component={Breakpoints} />
-      <Route exact path="/follow-translations" component={FollowTranslation} />
+      <Route exact path="/follow_translations" component={FollowTranslation} />
     </div>
   </Router>
 );
