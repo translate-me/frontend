@@ -1,21 +1,18 @@
 const noneFunction = () => {}
 
 const request = (url, meta, handleData = noneFunction, handleOk = noneFunction, handleFail = noneFunction) => {
-  console.log('m', meta, url)
-  fetch(url, meta)
+  return fetch(url, meta)
     .then((response) => {
-      console.log('rrrrrrrr', response)
       if (response.ok) {
         handleOk(response)
         return response.json()
-      } else if (response.status === 401 || response.status === 500) {
+      } else if (response.status === 401 || response.status === 404 || response.status === 500) {
         handleFail(response)
         return response.json()
       }
     })
     .then((data) => {
-      console.log('4242', data)
-        handleData(data)
+      handleData(data)
     })
     .catch((error) => { console.error(error) })
 }
@@ -60,4 +57,4 @@ const postData = (url, data, handleData = noneFunction, handleOk = noneFunction,
   )
 }
 
-export { postData }
+export { postData, get }

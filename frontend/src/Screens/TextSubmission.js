@@ -5,8 +5,7 @@ import {
 import Image from 'react-bootstrap/Image';
 import TextareaAutosize from 'react-textarea-autosize';
 import { FilePond } from 'react-filepond';
-import NavBar from '../Components/NavBar';
-import { white, green } from '../colors';
+import { white } from '../colors';
 import Cloud from './cloud.png';
 import 'filepond/dist/filepond.min.css';
 import SimpleFooter from '../Components/SimpleFooter';

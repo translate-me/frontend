@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../Components/NavBar';
 import { green } from '../colors';
+import SimpleFooter from '../Components/SimpleFooter';
 
 class TextEditor extends React.Component {
   constructor(props) {
