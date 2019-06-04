@@ -29,7 +29,12 @@ export class Breakpoints extends React.Component {
     const position = e.target.selectionStart;
     const text = e.target.value;
 
-    breakpoints.push(position);
+    if (position !== text.length){
+      breakpoints.push(position);
+    } else {
+      return console.log('error')
+    }
+    
 
     console.log(position);
     console.log('breakpoints: ', breakpoints);
