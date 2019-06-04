@@ -14,7 +14,7 @@ class AuthorizedRoute extends React.Component {
 
   render() {
     const { isTokenValid } = this.props;
-    console.log('iooio',isTokenValid)
+
     if(isTokenValid === "valid"){
       return <Route {...this.props} />;
     }
