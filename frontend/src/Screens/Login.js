@@ -42,8 +42,9 @@ class Login extends Component {
                 </Form.Group>
 
                 <Button style={styles.button} type="submit">
-                    Enviar
+                    Entrar
                 </Button>
+                <p style={styles.register_text}>Não tem conta? &nbsp; <a href="/register">Registre-se</a></p>
 
             </Form>
         )
@@ -85,8 +86,8 @@ const styles={
         backgroundColor: lightgreen,
         borderColor: white,
         fontSize: "20px",
-        marginTop: "60px",
-        marginBottom: "100px",
+        marginTop: "20px",
+        marginBottom: "20px",
         width: "100%",
         color: white
     },
@@ -118,7 +119,15 @@ const styles={
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
-    }
+    },
+  register_text:{
+        fontFamily: "Raleway",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: "15px",
+        color: white,
+  }
 
 }
 

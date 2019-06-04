@@ -32,11 +32,12 @@ export const validateToken = () => {
 }
 
 export const login = (credentials) => {
-  return dispach => {
+  return dispatch => {
     postData('/user/login/api/v0/login/',
          credentials,
          (data) => {
            cookies.set('token', data.token)
+           dispatch(setTokenStatus("valid"));
            history.push("/")
          },
         (error) => {console.log(error)})

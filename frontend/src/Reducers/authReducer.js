@@ -1,4 +1,4 @@
-const authReducer = (state = {isTokenValid: false}, action) => {
+const authReducer = (state = {isTokenValid: "pending"}, action) => {
   switch(action.type) {
     case "TOKEN_STATUS":
       return {

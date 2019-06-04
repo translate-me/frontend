@@ -19,10 +19,10 @@ export default class Routes extends React.Component {
           exact
           path="/"
           component={HomepageAuthor}
-       />
-          <Route exact path="/text_submission" component={TextSubmission} />
-          <Route exact path="/text_editor" component={TextEditor} />
-          <Route exact path="/register" component={Registration} />
+         />
+        <AuthorizedRoute exact path="/text_submission" component={TextSubmission} />
+        <AuthorizedRoute exact path="/text_editor" component={TextEditor} />
+        <Route exact path="/register" component={Registration} />
         <Route exact path="/login" component={Login} />
         <Route component={NotFoundRoute} />
       </Switch>
