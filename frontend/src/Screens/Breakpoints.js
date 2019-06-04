@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import NavBar from '../Components/NavBar';
 import { green } from '../colors';
-import { sortArrayOfNumbers, calculatePrivacyLevel } from '../Util/util';
+import { calculatePrivacyLevel } from '../Util/util';
 
 const breakpoints = [];
 let styles;
@@ -29,7 +29,12 @@ export class Breakpoints extends React.Component {
     const position = e.target.selectionStart;
     const text = e.target.value;
 
-    breakpoints.push(position);
+    if (position !== text.length){
+      breakpoints.push(position);
+    } else {
+      return console.log('error')
+    }
+    
 
     console.log(position);
     console.log('breakpoints: ', breakpoints);
@@ -43,10 +48,26 @@ export class Breakpoints extends React.Component {
 
     this.setState({
       textBody: newArray,
-      breakpoints: breakpoints.sort(sortArrayOfNumbers),
+      breakpoints: breakpoints,
       wordcount: e.target.value.length,
     });
   };
+
+  removeBreakpoint = () => {
+    const index = breakpoints.pop();
+    console.log(index)
+
+    const array = Array.from(this.state.textBody);
+
+    console.log('array ', array)
+    array[index - 1] = ''
+
+    const newArray = array.join('');
+
+    this.setState({
+      textBody: newArray
+    })    
+  }
 
   sendFragment = () => {
     const completeText = this.state.textBody;
@@ -106,6 +127,12 @@ export class Breakpoints extends React.Component {
                     value={this.state.textBody}
                     onMouseUp={this.onMouseUp}
                   />
+                    <Button
+                      style={styles.button}
+                      onClick={this.removeBreakpoint}
+                    >
+                          Remover último ponto adicionado
+                    </Button>
                 </Form.Group>
 
               </Col>
