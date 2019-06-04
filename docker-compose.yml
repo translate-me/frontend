@@ -1,5 +1,9 @@
 version: '3'
 
+networks:
+  frontend_net:
+    driver: bridge
+
 services:
   frontend:
     build: ./frontend
@@ -7,5 +11,7 @@ services:
     command: npm start
     volumes:
       - ./frontend/src:/home/frontend/src
+    networks:
+      - frontend_net
     ports:
       - "3000:3000"
