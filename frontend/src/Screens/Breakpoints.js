@@ -43,10 +43,26 @@ export class Breakpoints extends React.Component {
 
     this.setState({
       textBody: newArray,
-      breakpoints: breakpoints.sort(sortArrayOfNumbers),
+      breakpoints: breakpoints,
       wordcount: e.target.value.length,
     });
   };
+
+  removeBreakpoint = () => {
+    const index = breakpoints.pop();
+    console.log(index)
+
+    const array = Array.from(this.state.textBody);
+
+    console.log('array ', array)
+    array[index - 1] = ''
+
+    const newArray = array.join('');
+
+    this.setState({
+      textBody: newArray
+    })    
+  }
 
   sendFragment = () => {
     const completeText = this.state.textBody;
@@ -106,6 +122,12 @@ export class Breakpoints extends React.Component {
                     value={this.state.textBody}
                     onMouseUp={this.onMouseUp}
                   />
+                    <Button
+                      style={styles.button}
+                      onClick={this.removeBreakpoint}
+                    >
+                          Remover último ponto adicionado
+                    </Button>
                 </Form.Group>
 
               </Col>
