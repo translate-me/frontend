@@ -1,17 +1,11 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import React from 'react';
-import LandingPage from './Screens/LandingPage';
-import TextSubmission from './Screens/TextSubmission';
-import TextEditor from './Screens/TextEditor';
-import Registration from './Screens/Registration';
-import HomepageAuthor from './Screens/HomepageAuthor'
-import Login from './Screens/Login';
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import React, { Component } from 'react';
+import { createStore, applyMiddleware } from 'redux'
+import thunk from "redux-thunk";
 import { Provider } from 'react-redux'
 import reducers from "./Reducers/index";
 import Routes from "./Routes/Routes";
 
-const store = createStore(reducers)
+const store = createStore(reducers, applyMiddleware(thunk))
 
 class App extends Component {
   render() {

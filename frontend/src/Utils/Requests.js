@@ -1,8 +1,10 @@
 const noneFunction = () => {}
 
 const request = (url, meta, handleData = noneFunction, handleOk = noneFunction, handleFail = noneFunction) => {
+  console.log('m', meta, url)
   fetch(url, meta)
     .then((response) => {
+      console.log('rrrrrrrr', response)
       if (response.ok) {
         handleOk(response)
         return response.json()
@@ -12,6 +14,7 @@ const request = (url, meta, handleData = noneFunction, handleOk = noneFunction, 
       }
     })
     .then((data) => {
+      console.log('4242', data)
         handleData(data)
     })
     .catch((error) => { console.error(error) })
@@ -28,12 +31,24 @@ const get = (url, handleData = noneFunction, handleOk = noneFunction, handleFail
     handleFail)
 }
 
-const post = (url, data, handleData = noneFunction, handleOk = noneFunction, handleFail = noneFunction) => {
+const getHeader = (additional = {}) => {
+  let header
+  if (additional !== undefined && additional !== null) {
+    header = additional
+  }
+  header['Accept'] = 'application/json'
+  header['Content-type'] = 'application/json'
+  header['Accept-Language'] = 'pt-br'
+  return header
+}
+
+const postData = (url, data, handleData = noneFunction, handleOk = noneFunction, handleFail = noneFunction) => {
   request(
     url,
     {
-      method: "post",
-      body: JSON.stringfy(data)
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: getHeader() 
     },
     handleData,
     (response) => {
@@ -45,3 +60,4 @@ const post = (url, data, handleData = noneFunction, handleOk = noneFunction, han
   )
 }
 
+export { postData }

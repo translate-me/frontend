@@ -1,63 +1,44 @@
 import React, { Component } from 'react';
-import {Form, Button, Alert} from 'react-bootstrap';
-import NavBar from '../Components/NavBar'
-import Footer from '../Components/Footer';
+import {Form, Button } from 'react-bootstrap';
 import { white, green, lightgreen } from '../colors'
+import { connect } from "react-redux";
+import { login } from "../Actions/authActions";
+
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
-            email:"",
+            username:"",
             password:"",
-            confirm_password: "",
-            username_not_ok: null,
-            email_not_ok : null,
-            password_not_ok: null,
-            confirm_password_not_ok: null,
-            usernameref : React.createRef(),
-            emailref : React.createRef(),
-            passwordref : React.createRef(),
-            confirmpasswordref : React.createRef(),
-            alert:{
-                variant: "",
-                headding: "",
-                text: "",
-                show:false
-            }
         }
+      this.handleChange = this.handleChange.bind(this)
+      this.handleSubmit = this.handleSubmit.bind(this)
     }
     
-    form_group(label, placeholder, onChange, thisref, invalid, warning){
-        return(
-            <Form.Group >
-                <Form.Label style={styles.form_text}>{label}</Form.Label>
-                <Form.Control
-                    style={styles.form_text}
-                    placeholder={placeholder}
-                    type="string"
-                    onChange={onChange}
-                    ref={ref => { thisref = ref; }}
-                    isInvalid={invalid}
-                />
-                <Form.Control.Feedback type="invalid">{warning}</Form.Control.Feedback>
-            </Form.Group >
-        )
-    }
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.login(this.state)
+  }
+
+  handleChange(event) {
+    let fieldName = event.target.name;
+    let fieldValue = event.target.value;
+    this.setState({[fieldName]: fieldValue})
+  }
 
 
     username_group(){
         return(
-            <Form>
+            <Form  onSubmit={this.handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
                     {/* <Form.Label style={styles.form_text}>Nome de Usuário</Form.Label> */}
-                    <Form.Control style={styles.form_control} type="text" placeholder="Nome de Usuário" />
+                    <Form.Control name="username" onChange={this.handleChange} style={styles.form_control} type="text" placeholder="Nome de Usuário" />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     {/* <Form.Label style={styles.form_text}>Senha</Form.Label> */}
-                    <Form.Control style={styles.form_control} type="password" placeholder="Senha" />
+                    <Form.Control name="password" onChange={this.handleChange} style={styles.form_control} type="password" placeholder="Senha" />
                 </Form.Group>
 
                 <Button style={styles.button} type="submit">
@@ -69,23 +50,20 @@ class Login extends Component {
     }
 
     render(){
+      console.log(this.state)
         return (
             <div>
-                <NavBar logged={false} />
                 <div style={styles.blank_line}>
                     <div style={styles.border}>
                         <p style={styles.centralize_and_form_text}>Entrar</p>
                         <div style={styles.centralize}>
-                            <Form>
                                 {this.username_group()}
                                 {/* {this.pass_group()}
                                 {this.button_div()} */}
-                            </Form>
                         </div>
                     </div>
                 </div>
                 <div style={styles.blank_line}></div>
-                <Footer/>
             </div>
         );
     }
@@ -143,4 +121,10 @@ const styles={
     }
 
 }
-export default Login;
+
+const mapDispatchToProps = dispatch => ({
+  login: value => dispatch(login(value))
+});
+
+
+export default connect(null, mapDispatchToProps)(Login);

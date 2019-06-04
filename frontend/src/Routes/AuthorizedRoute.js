@@ -7,7 +7,6 @@ import { validateToken } from "../Actions/authActions";
 class AuthorizedRoute extends React.Component {
   render() {
     const { isTokenValid } = this.props;
-    console.log('-----', isTokenValid)
 
     if(isTokenValid){
       return <Route {...this.props} />;
@@ -24,4 +23,4 @@ const mapStateToProps = state => ({
   isTokenValid: state.authReducer.isTokenValid
 });
 
-export default connect(mapStateToProps)(AuthorizedRoute);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthorizedRoute);

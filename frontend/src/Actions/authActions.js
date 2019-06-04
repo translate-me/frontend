@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-import { post } from "../Utils/Requests";
+import { postData } from "../Utils/Requests";
 
 const cookies = new Cookies();
 
@@ -10,7 +10,7 @@ export const setTokenStatus = isTokenValid => ({
 
 export const validateToken = () => {
   return dispatch => {
-    post('user/user/login/api/v0/login/',
+    postData('user/user/login/api/v0/validade/',
          {token: cookies.get("token")},
          (data) => {
            if(data.detail === true){
@@ -18,6 +18,19 @@ export const validateToken = () => {
            }  
            dispatch(setTokenStatus(false));
          },
+        (ok) => {console.log(ok)},
         (error) => {console.log(error)})
+  }
+}
+
+export const login = (credentials) => {
+  return dispach => {
+    postData('/user/login/api/v0/login/',
+         credentials,
+         (data) => {
+           console.log('----------------')
+           console.log(data)
+         },
+        (error) => {console.log('00000000',error)})
   }
 }
