@@ -1,8 +1,9 @@
 version: '3'
 
 networks:
-  frontend_net:
-    driver: bridge
+  default:
+    external:
+      name: profile_profile_net
 
 services:
   frontend:
@@ -12,6 +13,6 @@ services:
     volumes:
       - ./frontend/src:/home/frontend/src
     networks:
-      - frontend_net
+      - default
     ports:
       - "3000:3000"
