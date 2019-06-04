@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import NavBar from '../Components/NavBar';
 import { green } from '../colors';
-import { sortArrayOfNumbers, calculatePrivacyLevel } from '../Util/util';
+import { calculatePrivacyLevel } from '../Util/util';
 
 const breakpoints = [];
 let styles;
