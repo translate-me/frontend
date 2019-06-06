@@ -5,15 +5,16 @@ import { white, green, lightgreen } from '../colors';
 import Footer from '../Components/Footer';
 import Avatar from 'react-avatar';
 import StarRatingComponent from 'react-star-rating-component';
-
+import { ButtonGroup } from 'reactstrap';
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       steps: [
-        'Inglês - ',
-        'Mandarim - ',
+        'Tradução 1',
+        'Tradução 2',
+        'Tradução 3',
       ],
     };
   }
@@ -46,7 +47,26 @@ class Profile extends Component {
       <div style={styles.button_position}>
         <Button style={styles.button}>Submeter Certificado</Button>
       </div>	
-    </div>);
+
+    <div style={styles.button_div_translate}>
+      <p>Traduções em Andamento</p>
+      <ButtonGroup vertical>
+        <Button style={styles.button_config}>Tradução 1</Button>
+        <Button style={styles.button_config}>Tradução 2</Button>
+        <Button style={styles.button_config}>Tradução 3</Button>
+      </ButtonGroup>
+    </div>
+
+    <div style={styles.button_div_revisor}>
+      <p>Revisar novos textos</p>
+      <ButtonGroup vertical>
+        <Button style={styles.button_config}>Opção 1</Button>
+        <Button style={styles.button_config}>Opção 2</Button>
+        <Button style={styles.button_config}>Opção 3</Button>
+      </ButtonGroup>
+    </div>
+  </div>
+    )
   }
 }
 
@@ -69,13 +89,13 @@ const styles = {
     fontFamily: 'Raleway',
     fontSize: '50px',
     marginLeft: '11%',
-    marginTop: '-5%'
+    marginTop: '-5%',
   },
   star: {
     fontFamily: 'Raleway',
     fontSize: '50px',
     marginLeft: '32%',
-    marginTop: '-7%'
+    marginTop: '-7%',
   },
   amount: {
     backgroundColor: green,
@@ -110,6 +130,31 @@ const styles = {
     borderRadius: '20%',
     height: '130%',
   },
+  button_div_translate: {
+    backgroundColor: lightgreen,
+    marginTop: '2%',
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '1%',
+    // alignItems: 'center',
+    marginRight: '75%'
+  },
+  button_div_revisor: {
+    backgroundColor: lightgreen,
+    marginTop: '-13.5%',
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '1%',
+    // alignItems: 'center',
+    marginRight: '35%'
+  },
+  button_config: {
+    borderColor: white,
+    borderStyle: 'solid',
+    backgroundColor: green,
+  }
 };
 
 export default Profile;
