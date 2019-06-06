@@ -69,8 +69,10 @@ class NavBar extends Component {
               </Link>
             </Nav.Link>
 
-            <Nav.Link href="#profile">
-              <FontAwesomeIcon icon={faUser} style={{ color: white }} />
+            <Nav.Link>
+			  <Link to="/profile">
+               					<FontAwesomeIcon icon={faUser} style={{ color: white }} />
+	  		  </Link> 
             </Nav.Link>
             <Nav.Link>
               <FontAwesomeIcon icon={faSignOutAlt} style={{ color: white }} />

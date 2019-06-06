@@ -5,6 +5,7 @@ import HomepageAuthor from './Screens/HomepageAuthor';
 import TextSubmission from './Screens/TextSubmission';
 import TextEditor from './Screens/TextEditor';
 import Registration from './Screens/Registration';
+import Profile from './Screens/Profile';
 
 export const App = () => {
     return (
@@ -22,6 +23,7 @@ export const App = () => {
           <Route exact path="/text_submission" component={TextSubmission} />
           <Route exact path="/text_editor" component={TextEditor} />
           <Route exact path="/register" component={Registration} />
+          <Route exact path="/profile" component={Profile} />
           {/* <Footer/> */}
         </div>
       </Router>
