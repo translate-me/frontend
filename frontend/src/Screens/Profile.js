@@ -6,6 +6,7 @@ import Footer from '../Components/Footer';
 import Avatar from 'react-avatar';
 import StarRatingComponent from 'react-star-rating-component';
 import { ButtonGroup } from 'reactstrap';
+import { ListGroup, ListGroupItem, Table } from 'reactstrap';
 
 class Profile extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class Profile extends Component {
     <div style={styles.screen}>
         {/* <NavBar logged= {true}/> */}	
 			  <div style={styles.avatar}>			
-					<Avatar name="Foo Bar" round={true} />
+					<Avatar name="User Name" round={true} />
 			  </div>
         <div style={styles.username}>
           <p>User Name</p>
@@ -38,6 +39,7 @@ class Profile extends Component {
             value={8}
           />
         </div>
+        <hr />
 		  
       <div style={styles.amount}>
 			  <Card/>
@@ -50,21 +52,53 @@ class Profile extends Component {
 
     <div style={styles.button_div_translate}>
       <p>Traduções em Andamento</p>
-      <ButtonGroup vertical>
+      <ListGroup>
+        <ListGroupItem disabled tag="a" href="#">Cras justo odio</ListGroupItem>
+        <ListGroupItem tag="a" href="#">Dapibus ac facilisis in</ListGroupItem>
+        <ListGroupItem tag="a" href="#">Morbi leo risus</ListGroupItem>
+      </ListGroup>
+      {/* <ButtonGroup vertical>
         <Button style={styles.button_config}>Tradução 1</Button>
         <Button style={styles.button_config}>Tradução 2</Button>
         <Button style={styles.button_config}>Tradução 3</Button>
-      </ButtonGroup>
+      </ButtonGroup> */}
     </div>
 
     <div style={styles.button_div_revisor}>
       <p>Revisar novos textos</p>
-      <ButtonGroup vertical>
+      <ListGroup>
+        <ListGroupItem disabled tag="a" href="#">Cras justo odio</ListGroupItem>
+        <ListGroupItem tag="a" href="#">Dapibus ac facilisis in</ListGroupItem>
+        <ListGroupItem tag="a" href="#">Morbi leo risus</ListGroupItem>
+      </ListGroup>
+      {/* <ButtonGroup vertical>
         <Button style={styles.button_config}>Opção 1</Button>
         <Button style={styles.button_config}>Opção 2</Button>
         <Button style={styles.button_config}>Opção 3</Button>
-      </ButtonGroup>
+      </ButtonGroup> */}
     </div>
+
+  {/* <Table>
+    <thead>
+      <tr>
+        <th>Nº</th>
+        <th>Linguas</th>
+        <th>Proficiencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Ingles</td>
+        <td>Basico</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Espanhol</td>
+        <td>Avançado</td>
+      </tr>
+    </tbody>
+  </Table> */}
   </div>
     )
   }
@@ -142,7 +176,7 @@ const styles = {
   },
   button_div_revisor: {
     backgroundColor: lightgreen,
-    marginTop: '-13.5%',
+    marginTop: '-15.9%',
     alignSelf: 'center',
     display: 'flex',
     flexDirection: 'column',
