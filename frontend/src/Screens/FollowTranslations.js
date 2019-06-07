@@ -15,36 +15,46 @@ class FollowTranslation extends Component{
             translations: [
                 {
                     title: "Translation 1",
-                    context: loren_ipsun,
+                    context: 'T1 ' + loren_ipsun,
                     progress: 20,
-                    prazo: "20/06/2019"
+                    prazo: "20/06/2019",
+                    text: loren_ipsun,
+                    trasnlation: loren_ipsun
                 },
                 {
                     title: "Translation 2",
-                    context: loren_ipsun,
-                    progress: 30,
-                    prazo: "15/07/2019"
+                    context: 'T2 ' + loren_ipsun,
+                    progress: 100,
+                    prazo: "15/07/2019",
+                    text: loren_ipsun,
+                    translation: loren_ipsun
 
                 },
                 {
                     title: "Translation 3",
-                    context: loren_ipsun,
+                    context: 'T3 ' + loren_ipsun,
                     progress: 50,
-                    prazo: "30/06/2019"
+                    prazo: "30/06/2019",
+                    text: loren_ipsun,
+                    translation: loren_ipsun
 
                 },
                 {
                     title: "Translation 4",
-                    context: loren_ipsun,
+                    context: 'T4 ' + loren_ipsun,
                     progress: 40,
-                    prazo: "04/07/2019"
+                    prazo: "04/07/2019",
+                    text: loren_ipsun,
+                    translation: loren_ipsun
 
                 },
                 {
                     title: "Translation 5",
-                    context: loren_ipsun,
+                    context: 'T5 ' + loren_ipsun,
                     progress:10,
-                    prazo: "30/07/2019"
+                    prazo: "30/07/2019",
+                    text: loren_ipsun,
+                    translation: loren_ipsun
 
                 },
             ],
@@ -85,7 +95,7 @@ class FollowTranslation extends Component{
                     :null
                 }
                 {currentTranslations.map((item, key) => (
-                    <Card style={styles.card} key={key}>
+                    <Card style={styles.card} key={key} onClick={() => this.goToText(item)}>
                         <Card.Title>{item.title}</Card.Title>
                         <Card.Subtitle>
                             <p style={styles.prazo}> Prazo: 
@@ -106,6 +116,12 @@ class FollowTranslation extends Component{
             </Row>
         );
     }
+
+    goToText(item){
+        let path = '/text_page'        
+        this.props.history.push({pathname: path, text: item})
+    }
+
     newText(){
         let path = `/text_submission`;
         this.props.history.push(path);
