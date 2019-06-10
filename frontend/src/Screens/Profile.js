@@ -12,7 +12,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      steps: [
+      tradution: [
         'Tradução 1',
         'Tradução 2',
         'Tradução 3',
@@ -22,173 +22,189 @@ class Profile extends Component {
 
   render() {
     return (
-    <div style={styles.screen}>
-        {/* <NavBar logged= {true}/> */}	
-			  <div style={styles.avatar}>			
-					<Avatar name="User Name" round={true} />
-			  </div>
-        <div style={styles.username}>
-          <p>User Name</p>
+      <div>
+        <div style={styles.profile}>
+          <Avatar facebookId="100008343750912" round={true} />
+          <div style={styles.user_name}>
+            <h1 fontFamily='Raleway' >User Name</h1>
+            <div style={styles.stars}>
+              <StarRatingComponent 
+                name="rate2" 
+                editing={false}
+                renderStarIcon={() => <span>⭐</span>}
+                starCount={4}
+                value={8}
+              />
+            </div>
+            <div style={styles.languages}>
+              <ul>
+                <li>Inglês - Basico</li>
+                <li>Espanhol - Avançado</li>
+              </ul>
+            </div>  
+          </div>
         </div>
-        <div style={styles.star}>
-          <StarRatingComponent 
-            name="rate2" 
-            editing={false}
-            renderStarIcon={() => <span>⭐</span>}
-            starCount={5}
-            value={8}
-          />
+        <hr/>
+
+
+        <div style={styles.bottons}>
+          <div style={styles.amount}>
+            <p>R$ 35,80</p>
+          </div> 
+
+          <div style={styles.button_position_certified}>
+            <Button style={styles.button}>Submeter Certificado</Button>
+          </div> 
+
+          <div style={styles.button_position_revision}>
+            <Button style={styles.button}>Revisões</Button>
+          </div>    
         </div>
-        <hr />
-		  
-      <div style={styles.amount}>
-			  <Card/>
-    	    <Card.Title style={styles.amount_title}>Saldo</Card.Title>
-      </div> 
 
-      <div style={styles.button_position}>
-        <Button style={styles.button}>Submeter Certificado</Button>
-      </div>	
-
-    <div style={styles.button_div_translate}>
-      <p>Traduções em Andamento</p>
-      <ListGroup>
-        <ListGroupItem disabled tag="a" href="#">Cras justo odio</ListGroupItem>
-        <ListGroupItem tag="a" href="#">Dapibus ac facilisis in</ListGroupItem>
-        <ListGroupItem tag="a" href="#">Morbi leo risus</ListGroupItem>
-      </ListGroup>
-      {/* <ButtonGroup vertical>
-        <Button style={styles.button_config}>Tradução 1</Button>
-        <Button style={styles.button_config}>Tradução 2</Button>
-        <Button style={styles.button_config}>Tradução 3</Button>
-      </ButtonGroup> */}
-    </div>
-
-    <div style={styles.button_div_revisor}>
-      <p>Revisar novos textos</p>
-      <ListGroup>
-        <ListGroupItem disabled tag="a" href="#">Cras justo odio</ListGroupItem>
-        <ListGroupItem tag="a" href="#">Dapibus ac facilisis in</ListGroupItem>
-        <ListGroupItem tag="a" href="#">Morbi leo risus</ListGroupItem>
-      </ListGroup>
-      {/* <ButtonGroup vertical>
-        <Button style={styles.button_config}>Opção 1</Button>
-        <Button style={styles.button_config}>Opção 2</Button>
-        <Button style={styles.button_config}>Opção 3</Button>
-      </ButtonGroup> */}
-    </div>
-
-  {/* <Table>
-    <thead>
-      <tr>
-        <th>Nº</th>
-        <th>Linguas</th>
-        <th>Proficiencia</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Ingles</td>
-        <td>Basico</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Espanhol</td>
-        <td>Avançado</td>
-      </tr>
-    </tbody>
-  </Table> */}
-  </div>
+        <div style={styles.list_position}>
+          <div style={styles.button_div_translate}>
+            <p>Traduções em Andamento</p>
+            <ListGroup>
+              <ListGroupItem tag="a" href="#">Cras justo odio</ListGroupItem>
+              <ListGroupItem tag="a" href="#">Dapibus ac facilisis in</ListGroupItem>
+              <ListGroupItem tag="a" href="#">Morbi leo risus</ListGroupItem>
+            </ListGroup>
+          </div>
+          <div style={styles.button_div_revisor}>
+            <p>Revisar novos textos</p>
+              <ListGroup>
+                <ListGroupItem tag="a" href="#">Cras justo odio</ListGroupItem>
+                <ListGroupItem tag="a" href="#">Dapibus ac facilisis in</ListGroupItem>
+                <ListGroupItem tag="a" href="#">Morbi leo risus</ListGroupItem>
+              </ListGroup>
+          </div>
+        </div>
+      </div>
     )
   }
+
+
 }
 
 
 const styles = {
-  screen: {
-    backgroundColor: white,
+  profile: {
+    // backgroundColor: green,
     display: 'flex',
-    flexDirection: 'column',
-    // alignText: 'center',
-    // alignSelf: 'center',
-  },
-  avatar: {
-    width: '100px',
-    height: '100px',
-    marginLeft: '1%',
+    margin: '1%',
     padding: '1%',
+    width: '98%',
+    height: '98%',
   },
-  username: {
+  user_name: {
     fontFamily: 'Raleway',
-    fontSize: '50px',
-    marginLeft: '11%',
-    marginTop: '-5%',
+    // backgroundColor: lightgreen,
+    display: 'block',
+    marginTop: '1%',
+    width: '98%',
+    height: '98%',
+    marginLeft: '1%',
+    // padding: '1%',
   },
-  star: {
+  stars: {
+    display: 'flex',
+    // marginTop: '1%',
     fontFamily: 'Raleway',
-    fontSize: '50px',
-    marginLeft: '32%',
-    marginTop: '-7%',
+    fontSize: '25px',
+    // width: '10%',
+    // marginLeft: '2%',
+    // margin: '2%',
+    // padding: '1%',
+  },
+  languages: {
+    marginLeft: '20%',
+    marginTop: '-7.5%',
+    width: '20%',
+    height: '20%',
+    display: 'flex'
+  },
+  bottons: {
+    // backgroundColor: green,
+    display: 'flex',
+    margin: '1%',
+    padding: '1%',
+    width: '90%',
+    height: '90%',
+    marginLeft: '8%',
   },
   amount: {
-    backgroundColor: green,
-    margin: '2%',
-    marginLeft: '10%',
-    padding: '2%',
+    // backgroundColor: lightgreen,
+    // margin: '2%',
+    // marginLeft: '10%',
+    // padding: '2%',
     width: '10%',
-    borderRadius: '20%',
+    // borderRadius: '20%',
     height: '10%',
-  },
-  amount_title: {
+    borderStyle: 'solid',
     fontFamily: 'Raleway',
     fontSize: '20px',
-    color: white,
-    justifyContent: 'center',
+    textAlign: 'center',
+    marginLeft: '2%',
   },
-  button_position: {
-    margin: '2%',
-    marginLeft: '23%',
-    padding: '2%',
-    marginTop: '-11%',
+  button_position_certified: {
+    // margin: '2%',
+    marginLeft: '14%',
+    width: '10%',
+    height: '10%',
+    fontFamily: 'Raleway',
+    fontSize: '10px',
+    textAlign: 'center',
+    borderRadius: '20%',
+    // padding: '2%',
+    // marginTop: '-11%',
+  },
+  button_position_revision:{
+    marginLeft: '30%',
+    width: '20%',
+    height: '20%',
+    fontFamily: 'Raleway',
+    fontSize: '20px',
+    textAlign: 'center',
+    borderRadius: '20%',
   },
   button: {
-	  fontFamily: 'Raleway',
-	  // left: '90px',
-	  // top: '70px',
-    fontSize: '20px',
     backgroundColor: '#2B423E',
-    // marginBottom: '2%',
-    width: '15%',
-    borderColor: '#2B423E',
-    borderRadius: '20%',
-    height: '130%',
+    borderColor: '#2B423E'
+  },
+  list_position: {
+    // backgroundColor: lightgreen,
+    display: 'flex',
+    margin: '1%',
+    padding: '1%',
+    width: '90%',
+    height: '90%',
+    marginLeft: '5%'
   },
   button_div_translate: {
     backgroundColor: lightgreen,
-    marginTop: '2%',
+    // marginTop: '2%',
     alignSelf: 'center',
     display: 'flex',
     flexDirection: 'column',
     padding: '1%',
     // alignItems: 'center',
-    marginRight: '75%'
+    // marginRight: '75%'
+    width: '20%',
+    height: '20%',
   },
   button_div_revisor: {
+    marginLeft: '4.5%',
+    width: '20%',
+    height: '20%',
     backgroundColor: lightgreen,
-    marginTop: '-15.9%',
+    // marginTop: '-15.9%',
     alignSelf: 'center',
     display: 'flex',
     flexDirection: 'column',
     padding: '1%',
     // alignItems: 'center',
-    marginRight: '35%'
+    // marginRight: '35%'
   },
-  button_config: {
-    borderColor: white,
-    borderStyle: 'solid',
-    backgroundColor: green,
-  }
 };
 
 export default Profile;
