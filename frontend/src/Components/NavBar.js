@@ -26,13 +26,13 @@ class NavBar extends Component {
   not_logged_icons(){
       return(
           <Nav className="ml-auto">
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link href= "/how_it_works">
             <FontAwesomeIcon icon={faInfoCircle} style={styles.icon} title={'Como Funciona'} />
           </Nav.Link>
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link >
             <FontAwesomeIcon icon={faUsers} style={styles.icon} title={'Quem Somos Nós'} />
           </Nav.Link>
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link >
             <FontAwesomeIcon icon={faSignInAlt} style={styles.icon} title={'Entrar'} />
           </Nav.Link>
           </Nav>
