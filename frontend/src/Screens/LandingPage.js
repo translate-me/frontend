@@ -9,10 +9,10 @@ class HomepageAuthor extends Component {
     super(props);
     this.state = {
       advantages: [
-        'Vantagem 1',
-        'Vantagem 2',
-        'Vantagem 3',
-        'Vantagem 4',
+        'Tradutores capacitados',
+        'Segurança do seu texto',
+        'Você define o prazo',
+        'Acompanhe suas traduções',
       ],
       steps: [
         'Faça o upload do seu texto acadêmico aqui',
@@ -21,6 +21,11 @@ class HomepageAuthor extends Component {
         'Receba seu texto traduzido e revisado com sucesso!',
       ],
     };
+  }
+
+  register() {
+    let path = `/register`;
+    this.props.history.push(path);
   }
 
   render() {
@@ -43,10 +48,10 @@ class HomepageAuthor extends Component {
             </Card>
           ))}
         </div>
-        <Button style={styles.button}>Quero Traduzir Agora!</Button>
+        <Button onClick={() => {this.register()}} style={styles.button}>Quero Traduzir Agora!</Button>
 
         <div style={styles.steps_div}>
-          {steps.map(item => (
+          {steps.map((item, i) => (
             <div style={{ display: 'flex', flexDirection: 'collumn' }}>
               <Card style={styles.steps_card}>
                 <Card.Title style={styles.steps_title}>
@@ -54,8 +59,7 @@ class HomepageAuthor extends Component {
                 </Card.Title>
                 <Card.Body>
                   <div style={styles.number}>
-                    {/* Must be corrected to array position instead of 1 */}
-                    <p style={{ color: white }}>1</p>
+                    <p style={{ color: white }}>{i+1}</p>
                   </div>
                 </Card.Body>
               </Card>
@@ -103,10 +107,10 @@ const styles = {
     width: '100%',
   },
   advantages_title: {
+    textAlign: 'center',
     fontFamily: 'Raleway',
     fontSize: '20px',
     color: white,
-    justifyContent: 'center',
   },
   button: {
     fontFamily: 'Raleway',
