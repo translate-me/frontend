@@ -57,7 +57,7 @@ class NavBar extends Component {
     return(
     <Nav>
       <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
-        <FontAwesomeIcon icon={faFeatherAlt} style={styles.icon} title={'Trabalhos em Andamento'}/>
+        <FontAwesomeIcon icon={faFeatherAlt} style={styles.icon} title={'Espaço do Autor'}/>
       </Nav.Link>
       <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
         <FontAwesomeIcon icon={faCoins} style={styles.icon} title={'Carteira'}/>
