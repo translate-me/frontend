@@ -29,7 +29,7 @@ class NavBar extends Component {
           <Nav.Link href= "/how_it_works">
             <FontAwesomeIcon icon={faInfoCircle} style={styles.icon} title={'Como Funciona'} />
           </Nav.Link>
-          <Nav.Link >
+          <Nav.Link href= "/meet_us">
             <FontAwesomeIcon icon={faUsers} style={styles.icon} title={'Quem Somos Nós'} />
           </Nav.Link>
           <Nav.Link >

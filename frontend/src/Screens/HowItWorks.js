@@ -5,6 +5,7 @@ import { faFeatherAlt, faGraduationCap} from '@fortawesome/free-solid-svg-icons'
 import NavBar from '../Components/NavBar';
 import SimpleFooter from '../Components/SimpleFooter';
 import { intro, author, translator, new_translation} from './HowItWorksTexts';
+import AnotherSimpleFooter from '../Components/AnotherSimpleFooter';
 
 
 class HowItWorks extends Component {
@@ -30,7 +31,7 @@ class HowItWorks extends Component {
                     <h3>O que significa ser um tradutor em nossa plataforma?</h3>
                     <p style={styles.text}>{translator}</p>
                 </Container>
-            <SimpleFooter/>
+                <AnotherSimpleFooter/>
             </div>
         );
     }
@@ -40,7 +41,7 @@ const styles = {
     page:{
         fontFamily: 'Raleway',
     },
-    title: { 
+    title: {
         marginTop: '50px'
     },
     text:{
@@ -50,7 +51,7 @@ const styles = {
         fontSize: "30px",
         marginTop: "10px",
         marginLeft: "10px",
-        marginRight: "20px" 
+        marginRight: "20px"
     }
 }
 export default HowItWorks;
