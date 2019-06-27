@@ -1,13 +1,6 @@
 import React from 'react';
-let styles;
 
-export const SimpleFooter = () => (
-  <div style={styles.container}>
-    <p><b style={styles.logo}>translate.me</b> | 2019</p>
-  </div>
-);
-
-styles = {
+const styles = {
   container: {
     fontFamily: 'Raleway',
     position: 'absolute',
@@ -21,5 +14,12 @@ styles = {
     fontFamily: 'Nixie One'
   }
 };
+
+export const SimpleFooter = () => (
+  <div style={styles.container}>
+    <p><b style={styles.logo}>translate.me</b> | 2019</p>
+  </div>
+);
+
 
 export default SimpleFooter;
