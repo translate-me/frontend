@@ -12,6 +12,7 @@
     "draft-js-plugins-editor": "^2.1.1",
     "filepond": "^4.4.6",
     "i": "^0.3.6",
+    "history": "^4.9.0",
     "npm": "^6.9.0",
     "react": "^16.8.5",
     "react-avatar": "^3.6.0",
@@ -22,7 +23,14 @@
     "react-scripts": "2.1.8",
     "react-star-rating-component": "^1.4.1",
     "react-textarea-autosize": "^7.1.0",
-    "reactstrap": "^8.0.0"
+    "reactstrap": "^8.0.0",
+    "react-textarea-autosize": "^7.1.0",
+    "redux-thunk": "^2.3.0",
+    "react-router": "^5.0.0",
+    "universal-cookie": "3.1.0",
+    "http-proxy-middleware": "0.19.1",
+    "react-redux": "^7.0.3",
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import NavBar from '../Components/NavBar';
 import { white, green, lightgreen } from '../colors';
+import NavBar from '../Components/NavBar';
 import Footer from '../Components/Footer';
 
 class HomepageAuthor extends Component {
@@ -9,10 +9,10 @@ class HomepageAuthor extends Component {
     super(props);
     this.state = {
       advantages: [
-        'Vantagem 1',
-        'Vantagem 2',
-        'Vantagem 3',
-        'Vantagem 4',
+        'Tradutores capacitados',
+        'Segurança do seu texto',
+        'Você define o prazo',
+        'Acompanhe suas traduções',
       ],
       steps: [
         'Faça o upload do seu texto acadêmico aqui',
@@ -23,42 +23,51 @@ class HomepageAuthor extends Component {
     };
   }
 
+  register() {
+    let path = `/register`;
+    this.props.history.push(path);
+  }
+
   render() {
+    const { advantages } = this.state;
+    const { steps } = this.state;
+
     return (
       <div style={styles.screen}>
-        {/* <NavBar logged= {true}/> */}
+        <NavBar logged={false} />
         <p style={styles.title}>
-                    Traduza seus textos acadêmicos com qualidade, com uma tradução profissional! Agora, fácil assim!
+          Traduza seus textos acadêmicos com qualidade,
+          com uma tradução profissional! Agora, fácil assim!
         </p>
         <div style={styles.advantages_square}>
-          {this.state.advantages.map((item, i) => (
-            <Card key={i} style={styles.advantages_card}>
+          {advantages.map(item => (
+            <Card style={styles.advantages_card}>
               <Card.Title style={styles.advantages_title}>
                 {item}
               </Card.Title>
             </Card>
           ))}
         </div>
-        <Button style={styles.button}>Quero Traduzir Agora!</Button>
+        <Button onClick={() => {this.register()}} style={styles.button}>Quero Traduzir Agora!</Button>
 
         <div style={styles.steps_div}>
-          {this.state.steps.map((item, i) => (
-            <div key={i} style={{ display: 'flex', flexDirection: 'collumn' }}>
+          {steps.map((item, i) => (
+            <div style={{ display: 'flex', flexDirection: 'collumn' }}>
               <Card style={styles.steps_card}>
                 <Card.Title style={styles.steps_title}>
                   {item}
                 </Card.Title>
                 <Card.Body>
                   <div style={styles.number}>
-                    <p style={{ color: white }}>{i + 1}</p>
+                    <p style={{ color: white }}>{i+1}</p>
                   </div>
                 </Card.Body>
               </Card>
             </div>
           ))}
         </div>
+        <Footer />
       </div>
-
     );
   }
 }
@@ -98,10 +107,10 @@ const styles = {
     width: '100%',
   },
   advantages_title: {
+    textAlign: 'center',
     fontFamily: 'Raleway',
     fontSize: '20px',
     color: white,
-    justifyContent: 'center',
   },
   button: {
     fontFamily: 'Raleway',

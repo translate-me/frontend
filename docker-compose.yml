@@ -1,5 +1,10 @@
 version: '3'
 
+networks:
+  default:
+    external:
+      name: profile_profile_net
+
 services:
   frontend:
     build: ./frontend
@@ -7,5 +12,7 @@ services:
     command: npm start
     volumes:
       - ./frontend/src:/home/frontend/src
+    networks:
+      - default
     ports:
       - "3000:3000"
