@@ -14,10 +14,10 @@ class NavBar extends Component {
               :
               this.translator_links()
             }
-              <Nav.Link href="#profile">
+              <Nav.Link href="/profile">
             <FontAwesomeIcon icon={faUser} title={"Perfil"} style={styles.icon} />
               </Nav.Link>
-              <Nav.Link>
+              <Nav.Link href="/">
             <FontAwesomeIcon icon={faSignOutAlt} title={"Sair"} style={styles.icon} />
               </Nav.Link>
           </Nav>
@@ -26,13 +26,13 @@ class NavBar extends Component {
   not_logged_icons(){
       return(
           <Nav className="ml-auto">
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link href= "/how_it_works">
             <FontAwesomeIcon icon={faInfoCircle} style={styles.icon} title={'Como Funciona'} />
           </Nav.Link>
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link href= "/meet_us">
             <FontAwesomeIcon icon={faUsers} style={styles.icon} title={'Quem Somos Nós'} />
           </Nav.Link>
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link >
             <FontAwesomeIcon icon={faSignInAlt} style={styles.icon} title={'Entrar'} />
           </Nav.Link>
           </Nav>
@@ -42,10 +42,10 @@ class NavBar extends Component {
   author_links(){
     return(
       <Nav>
-        <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+        <Nav.Link>
           <FontAwesomeIcon icon={faGraduationCap} style={styles.icon} title={'Espaço do Tradutor'}/>
         </Nav.Link>
-        <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+        <Nav.Link href="/follow_translations">
         <FontAwesomeIcon icon={faNewspaper} style={styles.icon} title={'Traduções em Andamento'}/>
         </Nav.Link>
       </Nav>
@@ -57,7 +57,7 @@ class NavBar extends Component {
     return(
     <Nav>
       <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
-        <FontAwesomeIcon icon={faFeatherAlt} style={styles.icon} title={'Trabalhos em Andamento'}/>
+        <FontAwesomeIcon icon={faFeatherAlt} style={styles.icon} title={'Espaço do Autor'}/>
       </Nav.Link>
       <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
         <FontAwesomeIcon icon={faCoins} style={styles.icon} title={'Carteira'}/>

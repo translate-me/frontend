@@ -1,9 +1,15 @@
 import React from 'react';
+let styles;
 
-const styles = {
+export const AnotherSimpleFooter = () => (
+  <div style={styles.container}>
+    <p><b style={styles.logo}>translate.me</b> | 2019</p>
+  </div>
+);
+
+styles = {
   container: {
     fontFamily: 'Raleway',
-    position: 'absolute',
     right: 0,
     bottom: 0,
     left: 0,
@@ -15,11 +21,4 @@ const styles = {
   }
 };
 
-export const SimpleFooter = () => (
-  <div style={styles.container}>
-    <p><b style={styles.logo}>translate.me</b> | 2019</p>
-  </div>
-);
-
-
-export default SimpleFooter;
+export default AnotherSimpleFooter;
