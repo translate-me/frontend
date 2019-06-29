@@ -5,25 +5,165 @@ import { white, green, lightgreen } from '../colors';
 import Footer from '../Components/Footer';
 import Avatar from 'react-avatar';
 import StarRatingComponent from 'react-star-rating-component';
-import { ButtonGroup } from 'reactstrap';
-import { ListGroup, ListGroupItem, Table } from 'reactstrap';
-import SimpleFooter from '../Components/SimpleFooter';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faAngleRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import SimpleFooter from '../Components/AnotherSimpleFooter';
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tradution: [
-                'Tradução 1',
-                'Tradução 2',
-                'Tradução 3',
+            translations: [
+                {
+                    title: "Translation 1",
+                    context: loren_ipsun,
+                    progress: 20,
+                    prazo: "20/06/2019"
+                },
+                {
+                    title: "Translation 2",
+                    context: loren_ipsun,
+                    progress: 30,
+                    prazo: "15/07/2019"
+
+                },
+                {
+                    title: "Translation 3",
+                    context: loren_ipsun,
+                    progress: 50,
+                    prazo: "30/06/2019"
+
+                },
+                {
+                    title: "Translation 4",
+                    context: loren_ipsun,
+                    progress: 40,
+                    prazo: "04/07/2019"
+
+                },
+                {
+                    title: "Translation 5",
+                    context: loren_ipsun,
+                    progress: 10,
+                    prazo: "30/07/2019"
+
+                },
             ],
+            pageTranslations: 1,
+            pageRevisions: 1,
+            translationsPerPage: 3
+        }
         };
+    truncateText(text) {
+        if (text.length > 200) {
+            return text.substring(0, 197) + "..."
+        }
+        return text
+    }
+
+    handleClickT(event) {
+        const page = Number(event.target.id)
+        if (page > 0) {
+            this.setState({
+                pageTranslations: page
+            });
+        }
+    }
+
+    renderTranslation() {
+        const { translations, pageTranslations, translationsPerPage } = this.state;
+        const indexOfLastTranslations = pageTranslations * translationsPerPage;
+        const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
+        const currentTranslations = translations.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(translations.length / translationsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
+        return (
+            <Row style={styles.rowdiv}>
+                {this.state.pageTranslations > 1 ?
+                    <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
+                        id={this.state.pageTranslations - 1}
+                        onClick={(e) => this.handleClickT(e)}
+                    />
+                    : null
+                }
+                {currentTranslations.map((item, key) => (
+                    <Card style={styles.card} key={key}>
+                        <Card.Title>{item.title}</Card.Title>
+                        <Card.Subtitle>
+                            <p style={styles.prazo}> Prazo:
+                            {item.prazo}
+                            </p>
+                        </Card.Subtitle>
+                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
+                    </Card>
+                ))}
+                {this.state.pageTranslations < pageNumbers.length ?
+                    <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
+                        id={this.state.pageTranslations + 1}
+                        onClick={(e) => this.handleClickT(e)}
+                    />
+                    : null
+                }
+            </Row>
+        );
+    }
+
+    handleClickR(event) {
+        const page = Number(event.target.id)
+        if (page > 0) {
+            this.setState({
+                pageRevisions: page
+            });
+        }
+    }
+
+    renderRevisions() {
+        const { translations, pageRevisions, translationsPerPage } = this.state;
+        const indexOfLastTranslations = pageRevisions * translationsPerPage;
+        const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
+        const currentTranslations = translations.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(translations.length / translationsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
+        return (
+            <Row style={styles.rowdiv}>
+                {this.state.pageRevisions > 1 ?
+                    <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
+                        id={this.state.pageRevisions - 1}
+                        onClick={(e) => this.handleClickR(e)}
+                    />
+                    : null
+                }
+                {currentTranslations.map((item, key) => (
+                    <Card style={styles.card} key={key}>
+                        <Card.Title>{item.title}</Card.Title>
+                        <Card.Subtitle>
+                            <p style={styles.prazo}> Prazo:
+                            {item.prazo}
+                            </p>
+                        </Card.Subtitle>
+                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
+                    </Card>
+                ))}
+                {this.state.pageRevisions < pageNumbers.length ?
+                    <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
+                        id={this.state.pageRevisions + 1}
+                        onClick={(e) => this.handleClickR(e)}
+                    />
+                    : null
+                }
+            </Row>
+        );
     }
 
     render() {
         return (
-            <div>
+            <div style={styles.font}>
                 <NavBar logged={false} author={false}/>
                 <Container style={styles.profile}>
                     <Row>
@@ -52,7 +192,6 @@ class Profile extends Component {
                             </Row>
 
                             <div style={styles.buttondiv}>
-
                                 <div style={styles.amount}>
                                     <p>R$ 35,80</p>
                                 </div> 
@@ -61,6 +200,24 @@ class Profile extends Component {
                         <hr/>
                     </div>
                 </Container>
+                <div style={styles.buttondiv}>
+                    <Button style={styles.button}>Revisões</Button>
+                </div>
+                <Container>
+                    <h2 style={styles.title}>Traduções em andamento</h2>
+                    <Row>
+                        {this.renderTranslation()}
+                    </Row>
+                    <br/>
+                    <br/>
+                    <h2 style={styles.title}>Revisar novos textos</h2>
+                    <Row>
+                        {this.renderRevisions()}
+                    </Row>
+                    <br/>
+                    <br/>
+                </Container>
+                <SimpleFooter/>
             </div>
         );
     }
@@ -68,9 +225,19 @@ class Profile extends Component {
             
             
 const styles = {
+    card:{
+        margin: "1%",
+        width: "30%",
+        padding: "1%",
+        textAlign: 'justify'
+    },
+    font:{
+        fontFamily:"Raleway"
+    },
     buttondiv: {
         textAlign: 'right',
         position: 'relative',
+        margin: "10px"
     },
     profile: {
         display: 'flex',
@@ -78,6 +245,7 @@ const styles = {
         padding: '1%',
         width: '98%',
         height: '98%',
+        fontFamily: "Raleway"
     },
     user_name: {
         fontFamily: 'Raleway',
@@ -96,14 +264,6 @@ const styles = {
         marginLeft: '30%',
         marginTop: '-7.5%',
         display: 'flex'
-    },
-    bottons: {
-        display: 'flex',
-        margin: '20%',
-        padding: '1%',
-        width: '90%',
-        height: '90%',
-        marginLeft: '8%',
     },
     amount: {
         width: '100%',
@@ -139,33 +299,20 @@ const styles = {
         height: "40px",
         width: "300px"
     },
-    list_position: {
-        display: 'flex',
-        margin: '1%',
-        padding: '1%',
-        width: '90%',
-        height: '90%',
-        marginLeft: '5%'
+    title:{
+        fontFamily: "Raleway"
     },
-    button_div_translate: {
-        backgroundColor: lightgreen,
-        alignSelf: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '1%',
-        width: '20%',
-        height: '20%',
+    prazo: {
+        textAlign: 'right',
+        color: green
     },
-    button_div_revisor: {
-        marginLeft: '4.5%',
-        width: '20%',
-        height: '20%',
-        backgroundColor: lightgreen,
-        alignSelf: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '1%',
-    },
+    icon: {
+        fontSize: 50,
+        marginTop: "20vh",
+        marginRight: 10,
+        marginLeft: 10
+    }
 };
-            
+const loren_ipsun = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
 export default Profile;
