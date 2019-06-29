@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Link from 'react-router-dom'
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import NavBar from '../Components/NavBar';
 import { white, green } from '../colors';
@@ -57,24 +58,32 @@ class SubmitTextInformation extends Component {
         } else {
             this.setState({ textContextNotOk: true });
             isOk = false;
-        } if (complexityLevel !== "Escolha uma opção") {
+        } if (complexityLevel !== '') {
             this.setState({ complexityLevelNotOk: false });
+            document.getElementById('error0').style.display = "none";
         } else {
+            document.getElementById('error0').style.display = "block";            
             this.setState({ complexityLevelNotOk: true });
             isOk = false;
         } if (knowledgeArea !== '') {
             this.setState({ knowledgeAreaNotOk: false });
+            document.getElementById('error1').style.display = "none";
         } else {
+            document.getElementById('error1').style.display = "block";
             this.setState({ knowledgeAreaNotOk: true });
             isOk = false;
-        } if (originLanguage !== "Escolha uma opção") {
+        } if (originLanguage !== '') {
             this.setState({ originLanguageNotOk: false });
+            document.getElementById('error2').style.display = "none";
         } else {
+            document.getElementById('error2').style.display = "block";
             this.setState({ originLanguageNotOk: true });
             isOk = false;
-        } if (translateLanguage !== "Escolha uma opção") {
+        } if (translateLanguage !== '') {
             this.setState({ translateLanguageNotOk: false });
+            document.getElementById('error3').style.display = "none";
         } else {
+            document.getElementById('error3').style.display = "block";            
             this.setState({ translateLanguageNotOk: true });
             isOk = false;
         }
@@ -109,23 +118,23 @@ class SubmitTextInformation extends Component {
         );
       }
 
-    complexityLevel(){
+    complexityLevel() {
         const { complexityLevelNotOk } = this.state;
-        
+        const options = [
+            { value: '1', label: 'Baixo' },
+            { value: '2', label: 'Médio' },
+            { value: '3', label: 'Alto' }
+        ]
+
         return (
             <Form.Group>
                 <Form.Label>Nível de Complexidade</Form.Label>
-                <Form.Control 
-                as="select"
-                onChange={() => { this.setState({ complexityLevel: this.complexityLevelRef.value }); }}
-                ref={(ref) => { this.complexityLevelRef = ref; }}
-                isInvalid={complexityLevelNotOk}>
-                    <option defaultValue disabled>Escolha uma opção</option>
-                    <option>Baixo</option>
-                    <option>Médio</option>
-                    <option>Alto</option>
-                </Form.Control>
-                <Form.Control.Feedback type="invalid">Nome inválido</Form.Control.Feedback>
+                    <Select
+                    onChange={() => { this.setState({ complexityLevel: this.complexityLevelRef.value }); }}
+                    ref={(ref) => { this.complexityLevelRef = ref; }} 
+                    placeholder='Escolha uma opção' 
+                    options={options} />
+                    <div id="error0" style={styles.error_message}>Escolha o nível de complexidade</div>
             </Form.Group>
         );
     }
@@ -142,59 +151,57 @@ class SubmitTextInformation extends Component {
         return (
             <Form.Group>
                 <Form.Label>Área de Conhecimento</Form.Label>
-                    <Select 
+                    <Select
                     onChange={() => { this.setState({ knowledgeArea: this.knowledgeAreaRef.value }); }}
                     ref={(ref) => { this.knowledgeAreaRef = ref; }} 
                     placeholder='Escolha uma opção' 
-                    options={options} 
-                    isInvalid={knowledgeAreaNotOk}/>
-                <Form.Feedback type="invalid">Nome inválido</Form.Feedback>
+                    options={options} />
+                    <div id="error1" style={styles.error_message}>Escolha a área de conhecimento</div>
           </Form.Group>
         );
     }
 
     originLanguage() {
         const { originLanguageNotOk } = this.state
-        
+        const options = [
+            { value: '1', label: 'Português' },
+            { value: '2', label: 'Espanhol' },
+            { value: '3', label: 'Inglês' }
+        ]
+
         return (
             <Form.Group>
-                <Form.Label>Língua Original</Form.Label>
-                <Form.Control 
-                as="select"
-                onChange={() => { this.setState({ originLanguage: this.originLanguageRef.value }); }}
-                ref={(ref) => { this.originLanguageRef = ref; }}
-                isInvalid={originLanguageNotOk}>
-                    <option defaultValue disabled>Escolha uma opção</option>
-                    <option>Português</option>
-                    <option>Espanhol</option>
-                    <option>Inglês</option>
-                </Form.Control>
-                <Form.Control.Feedback type="invalid">Nome inválido</Form.Control.Feedback>
+                <Form.Label>Língua de Origem</Form.Label>
+                    <Select
+                    onChange={() => { this.setState({ originLanguage: this.originLanguageRef.value }); }}
+                    ref={(ref) => { this.originLanguageRef = ref; }} 
+                    placeholder='Escolha uma opção' 
+                    options={options} />
+                    <div id="error2" style={styles.error_message}>Escolha a língua de origem</div>
           </Form.Group>
         );
     }
 
     translateLanguage() {
         const { translateLanguageNotOk } = this.state
-        
+        const options = [
+            { value: '1', label: 'Português' },
+            { value: '2', label: 'Espanhol' },
+            { value: '3', label: 'Inglês' }
+        ]
+
         return (
             <Form.Group>
                 <Form.Label>Língua de Tradução</Form.Label>
-                <Form.Control 
-                as="select"
-                onChange={() => { this.setState({ translateLanguage: this.translateLanguageRef.value }); }}
-                ref={(ref) => { this.translateLanguageRef = ref; }}
-                isInvalid={translateLanguageNotOk}>
-                    <option defaultValue disabled>Escolha uma opção</option>
-                    <option>Português</option>
-                    <option>Espanhol</option>
-                    <option>Inglês</option>
-                </Form.Control>
-                <Form.Control.Feedback type="invalid">Nome inválido</Form.Control.Feedback>
+                    <Select
+                    onChange={() => { this.setState({ translateLanguage: this.translateLanguageRef.value }); }}
+                    ref={(ref) => { this.translateLanguageRef = ref; }} 
+                    placeholder='Escolha uma opção' 
+                    options={options} />
+                    <div id="error3" style={styles.error_message}>Escolha a língua de tradução</div>
           </Form.Group>
         );
     }
-
     textTitle() {
         const { titleNotOk } = this.state;
         
@@ -298,6 +305,16 @@ const styles = {
     form_text: {
         fontFamily: 'Raleway',
     },
+    error_message: {
+        display: 'None',
+        width: '100%',
+        marginTop: '.25rem',
+        fontSize: '80%',
+        color: '#dc3545'
+    },
+    error_select: {
+        border: '1px solid red'
+    }
 };
 
 export default SubmitTextInformation; 
