@@ -256,7 +256,7 @@ class Registration extends Component {
             {this.text()}
           </div>
         </div>
-        <SimpleFooter />
+        <SimpleFooter/>
       </div>
     );
   }
