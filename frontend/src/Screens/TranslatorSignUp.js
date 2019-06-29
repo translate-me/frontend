@@ -30,64 +30,9 @@ class TranslatorSignUp extends Component {
             }
         }
     }
-    verify_fields(){
-        var is_ok = true;
-        var email_regex = /\S+@\S+\.\S+/;
-        var username_regex = /^[a-zA-Z0-9_]+$/;
-        if (this.state.username !== "" && username_regex.test(String(this.state.username))){
-            this.setState({username_not_ok:false});
-        }else{
-            this.setState({ username_not_ok: true });
-            is_ok = false;
-        } if(email_regex.test(String(this.state.email).toLowerCase())){
-            this.setState({ email_not_ok: false });
-        } else {
-            this.setState({ email_not_ok: true });
-            is_ok = false;
-        } if (this.state.password !== "" && this.state.password.length > 5){
-            this.setState({password_not_ok:false});
-        }else{
-            this.setState({ password_not_ok: true });
-            is_ok = false;
-        }  if(this.state.password === this.state.confirm_password){
-            this.setState({confirm_password_not_ok: false});
-        } else{
-            this.setState({ confirm_password_not_ok: true });
-            is_ok = false
-        }   return is_ok;
-    }
 
-
-    api_conection(){
-        axios.defaults.withCredentials = true;
-        const url = "http://0.0.0.0:8090/user/api/v0/create/";
-        axios.post(url, {
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password
-        })
-        .then((response) => {
-            var new_alert={
-                variant: "success",
-                headding: "Usuário criado",
-                text: "Seu usuário foi criado com sucesso!",
-                show:true
-            }; this.setState({alert:new_alert});
-        })
-        .catch((err) => {
-            var new_alert = {
-                variant: "danger",
-                headding: "Erro",
-                text: "Seu usuário não pode ser criado!",
-                show: true
-            }; this.setState({ alert: new_alert });
-        })
-    }
     async send(){
-        if(this.verify_fields()){
-            console.log("td certo");
-            await this.api_conection();
-        }
+        console.log("send")
     }
     button_div(){
         return(
@@ -144,7 +89,7 @@ gabi
                     <option>Português brasileiro</option>
                     <option>Português</option>
                     <option>Espanhol</option>
-                    <option>ALemão</option>
+                    <option>Alemão</option>
                     <option>Inglês</option>
                     <option>Francês</option>
                     <option>Italiano</option>
@@ -178,20 +123,12 @@ gabi
             </div>
         )
     }
-    show_alert(){
-        return(
-            <Alert  variant={this.state.alert.variant} show={this.state.alert.show}>
-                <Alert.Heading>{this.state.alert.headding}</Alert.Heading>
-                <p>{this.state.alert.text}</p>
-            </Alert>
-        )
-    }
+
     render() {
         return (
             <div>
                 <NavBar logged={true} author={false} />
                 <div style={styles.screen}>
-                    {this.show_alert()}
                     <p style={styles.title}>Cadastre-se como tradutor</p>
                     <div style={styles.two_columns}>
                         <Form style={styles.half}>
