@@ -14,7 +14,7 @@ class NavBar extends Component {
               :
               this.translator_links()
             }
-              <Nav.Link href="#profile">
+              <Nav.Link href="/profile">
             <FontAwesomeIcon icon={faUser} title={"Perfil"} style={styles.icon} />
               </Nav.Link>
               <Nav.Link href="/">

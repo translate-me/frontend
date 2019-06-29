@@ -1,7 +1,7 @@
 import React from 'react';
 let styles;
 
-export const SimpleFooter = () => (
+export const AnotherSimpleFooter = () => (
   <div style={styles.container}>
     <p><b style={styles.logo}>translate.me</b> | 2019</p>
   </div>
@@ -21,4 +21,4 @@ styles = {
   }
 };
 
-export default SimpleFooter;
+export default AnotherSimpleFooter;
