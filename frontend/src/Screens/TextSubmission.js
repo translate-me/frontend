@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  Button, Alert, Container, Row, Col, Collapse, Form,
+  Button, Alert, Container, Row, Col, Collapse, Form, Nav
 } from 'react-bootstrap';
-import NavBar from '../Components/NavBar';
+import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import TextareaAutosize from 'react-textarea-autosize';
 import { FilePond } from 'react-filepond';
@@ -18,8 +18,17 @@ class TextSubmission extends React.Component {
     super(props);
     this.state = {
       files: [],
+      textContent: 'teste',
       uploadToggle: false,
     };
+  }
+
+  handleTextContentChange = (e) => {
+    this.setState({
+      textContent: e.target.value
+    }, () => {
+      console.log('handle ', this.state.textContent)
+    });
   }
 
   handleInit() {
@@ -70,8 +79,7 @@ class TextSubmission extends React.Component {
                           this.setState({
                             files: fileItems.map(fileItem => fileItem.file),
                           });
-                          console.log(files);
-                          // console.log(this.readTextFile(this.state.files[0]))
+                          console.log(this.state.files);
                         }}
                       />
                     </Col>
@@ -90,22 +98,45 @@ class TextSubmission extends React.Component {
                     {uploadToggle ? 'Clique aqui para enviar um arquivo' : 'Clique aqui para digitar o texto'}
                   </Alert.Link>
                   <Collapse in={this.state.uploadToggle}>
-                    <Form>
-                      <Form.Group controlId="exampleForm">
-                        <TextareaAutosize style={styles.medium_width} />
-                        {/* <Form.Control as="textarea" rows="3" /> */}
-                      </Form.Group>
+                    <Form onSubmit={e => this.handleSubmit(e)}>
+                    <Form.Group controlId="form.ControlTextarea1">
+                      <Form.Control type="text" value={this.state.textContent} onChange={this.handleTextContentChange} as="textarea" rows="3" />
+                    </Form.Group>
                       <Row>
                         <Col>
-                          <Form.Label>Escreva seu texto ou copie e cole do seu arquivo</Form.Label>
+                          <Form.Label>
+                              Escreva seu texto ou copie e cole do seu arquivo
+                          </Form.Label>
                         </Col>
                       </Row>
 
-                      <Button style={styles.button}>
-                                                    Enviar
-                      </Button>
+                      <Link to ={{
+                        pathname: "/breakpoints",
+                        state: { 
+                            textContent: this.state.textContent
+                        }
+                      }} >
+                        <Button type="submit" style={styles.button} >
+                          Enviar
+                        </Button>
+                      </Link>
                     </Form>
                   </Collapse>
+                </Col>
+                
+              </Row>
+              <Row style={styles.center}>
+                <Col>
+                <Link to ={{
+                  pathname: "/breakpoints", 
+                  state: { 
+                      files: this.state.files
+                  }
+                }} >
+                  <Button>
+                    Teste
+                  </Button>
+                </Link>
                 </Col>
               </Row>
             </Col>

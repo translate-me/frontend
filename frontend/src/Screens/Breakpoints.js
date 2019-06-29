@@ -13,11 +13,16 @@ export class Breakpoints extends React.Component {
   constructor(props) {
     super(props);
     // must get the previous state from previous screen on user flux, actual values are placeholders
+    
+    const oldState = this.props.location.state
+    console.log('state anterior: ', oldState)
+    // console.log('arquivo: ', oldState.files[0])
+    
     this.state = {
       textTitle: 'Lorem ipsum dolor sit amet',
       fileName: 'arquivo',
       fileExtension: '.odt',
-      textBody: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia nibh ut arcu dignissim malesuada. Cras fermentum cursus augue vitae. ',
+      textBody: oldState.textContent,
       textContext: 'Quisque egestas, leo sit amet porttitor vulputate, elit magna tempor enim, suscipit tempus sapien ipsum quis metus. In posuere pretium ullamcorper. Nam venenatis lorem ac dictum ultricies.',
       wordcount: 0,
       breakpoints: [],
@@ -38,6 +43,7 @@ export class Breakpoints extends React.Component {
 
     console.log(position);
     console.log('breakpoints: ', breakpoints);
+    console.log(this.state)
 
     const array = Array.from(text);
     array[position - 2] = `${array[position - 2]}🔴`;
