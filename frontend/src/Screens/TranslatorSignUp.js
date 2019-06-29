@@ -6,6 +6,7 @@ import Footer from '../Components/Footer';
 import axios from 'axios';
 import { FilePond } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
+import SimpleFooter from '../Components/SimpleFooter';
 
 class TranslatorSignUp extends Component {
     constructor(props) {
@@ -139,7 +140,7 @@ class TranslatorSignUp extends Component {
                         {this.text()}
                     </div>
                 </div>
-                <Footer/>
+                <SimpleFooter/>
             </div>
         );
     }
