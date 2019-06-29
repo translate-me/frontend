@@ -3,6 +3,7 @@ import {Form, Button } from 'react-bootstrap';
 import { white, green, lightgreen } from '../colors'
 import { connect } from "react-redux";
 import { login } from "../Actions/authActions";
+import NavBar from '../Components/NavBar';
 
 
 class Login extends Component {
@@ -13,13 +14,13 @@ class Login extends Component {
             password:"",
         }
       this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
+    //   this.handleSubmit = this.handleSubmit.bind(this)
     }
     
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.login(this.state)
-  }
+//   handleSubmit(event) {
+//     event.preventDefault();
+//     this.props.login(this.state)
+//   }
 
   handleChange(event) {
     let fieldName = event.target.name;
@@ -41,7 +42,7 @@ class Login extends Component {
                     <Form.Control name="password" onChange={this.handleChange} style={styles.form_control} type="password" placeholder="Senha" />
                 </Form.Group>
 
-                <Button style={styles.button} type="submit">
+                <Button style={styles.button} type="submit" onClick={() => this.enter}>
                     Entrar
                 </Button>
                 <p style={styles.register_text}>Não tem conta? &nbsp; <a href="/register">Registre-se</a></p>
@@ -50,21 +51,27 @@ class Login extends Component {
         )
     }
 
+    enter() {
+        let path = `#homepage`;
+        this.props.history.push(path);
+    }
+
     render(){
       console.log(this.state)
         return (
             <div>
+                <NavBar logged={false}/>
                 <div style={styles.blank_line}>
                     <div style={styles.border}>
                         <p style={styles.centralize_and_form_text}>Entrar</p>
                         <div style={styles.centralize}>
                                 {this.username_group()}
-                                {/* {this.pass_group()}
-                                {this.button_div()} */}
                         </div>
                     </div>
                 </div>
-                <div style={styles.blank_line}></div>
+                <div style={styles.blank_line}>
+                
+                </div>
             </div>
         );
     }
@@ -131,9 +138,9 @@ const styles={
 
 }
 
-const mapDispatchToProps = dispatch => ({
-  login: value => dispatch(login(value))
-});
+// const mapDispatchToProps = dispatch => ({
+//   login: value => dispatch(login(value))
+// });
 
 
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

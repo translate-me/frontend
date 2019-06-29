@@ -14,7 +14,7 @@ class NavBar extends Component {
               :
               this.translator_links()
             }
-              <Nav.Link href="#profile">
+              <Nav.Link href="/profile">
             <FontAwesomeIcon icon={faUser} title={"Perfil"} style={styles.icon} />
               </Nav.Link>
               <Nav.Link href="/">
@@ -26,13 +26,13 @@ class NavBar extends Component {
   not_logged_icons(){
       return(
           <Nav className="ml-auto">
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link href= "/how_it_works">
             <FontAwesomeIcon icon={faInfoCircle} style={styles.icon} title={'Como Funciona'} />
           </Nav.Link>
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link href= "/meet_us">
             <FontAwesomeIcon icon={faUsers} style={styles.icon} title={'Quem Somos Nós'} />
           </Nav.Link>
-          <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+          <Nav.Link href="/login" >
             <FontAwesomeIcon icon={faSignInAlt} style={styles.icon} title={'Entrar'} />
           </Nav.Link>
           </Nav>
