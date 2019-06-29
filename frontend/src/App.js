@@ -11,6 +11,7 @@ import FollowTranslation from './Screens/FollowTranslations';
 import WhoAreWe from './Screens/WhoAreWe';
 import HowItWorks from './Screens/HowItWorks';
 import TranslatorSignUp from './Screens/TranslatorSignUp';
+import Login from './Screens/Login';
 
 export const App = () => (
   <Router>
@@ -33,6 +34,7 @@ export const App = () => (
       <Route exact path="/how_it_works" component={HowItWorks} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/translator_sign_in" component={TranslatorSignUp} />
+      <Route exact path="/login" component={Login} />
     </div>
   </Router>
 );
