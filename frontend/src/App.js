@@ -6,10 +6,10 @@ import TextEditor from './Screens/TextEditor';
 import Registration from './Screens/Registration';
 import Profile from './Screens/Profile';
 import Breakpoints from './Screens/Breakpoints';
+import SubmitTextInformation from './Screens/SubmitTextInformation';
 import FollowTranslation from './Screens/FollowTranslations';
 import WhoAreWe from './Screens/WhoAreWe';
 import HowItWorks from './Screens/HowItWorks';
-
 
 export const App = () => (
   <Router>
@@ -26,6 +26,7 @@ export const App = () => (
       <Route exact path="/text_editor" component={TextEditor} />
       <Route exact path="/register" component={Registration} />
       <Route exact path="/breakpoints" component={Breakpoints} />
+      <Route exact path="/text_information" component={SubmitTextInformation} />
       <Route exact path="/follow_translations" component={FollowTranslation} />
       <Route exact path="/meet_us" component={WhoAreWe} />
       <Route exact path="/how_it_works" component={HowItWorks} />
