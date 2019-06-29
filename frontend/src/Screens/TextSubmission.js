@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
-  Card, Button, Alert, Container, Row, Col, Collapse, Form,
+  Button, Alert, Container, Row, Col, Collapse, Form,
 } from 'react-bootstrap';
 import NavBar from '../Components/NavBar';
 import Image from 'react-bootstrap/Image';
 import TextareaAutosize from 'react-textarea-autosize';
 import { FilePond } from 'react-filepond';
-import { white, green, lightgreen } from '../colors';
+import { white, green } from '../colors';
 import Cloud from './cloud.png';
 import 'filepond/dist/filepond.min.css';
 import SimpleFooter from '../Components/SimpleFooter';
 
+let styles;
 
-class TextSubmission extends Component {
+class TextSubmission extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       files: [],
-      upload_toggle: false,
+      uploadToggle: false,
     };
   }
 
@@ -26,10 +27,10 @@ class TextSubmission extends Component {
   }
 
   render() {
-    const { upload_toggle } = this.state;
+    const { uploadToggle, files } = this.state;
     return (
       <div style={styles.screen}>
-        <NavBar logged={true} author={false} />
+        <NavBar logged={true} author={true} />
         <Container>
           <Row>
             <Col style={styles.title}>
@@ -38,7 +39,7 @@ class TextSubmission extends Component {
           </Row>
           <Row>
             <Col>
-              <Collapse in={!this.state.upload_toggle}>
+              <Collapse in={!uploadToggle}>
                 <Container style={styles.upload_box}>
                   <Row>
                     <Col>
@@ -48,10 +49,10 @@ class TextSubmission extends Component {
                   <Row>
                     <Col>
                       <p>
-                                                Arraste seu arquivo para cá
+                          Arraste seu arquivo para cá
                         {' '}
                         <br />
-ou
+                          ou
                       </p>
                     </Col>
                   </Row>
@@ -59,7 +60,7 @@ ou
                     <Col>
                       <FilePond
                         ref={ref => (this.pond = ref)}
-                        files={this.state.files}
+                        files={files}
                         allowMultiple={false}
                         maxFiles={1}
                         server="http://0.0.0.0:9000/filepond/process/"
@@ -69,7 +70,7 @@ ou
                           this.setState({
                             files: fileItems.map(fileItem => fileItem.file),
                           });
-                          console.log(this.state.files);
+                          console.log(files);
                           // console.log(this.readTextFile(this.state.files[0]))
                         }}
                       />
@@ -81,27 +82,27 @@ ou
               <Row>
                 <Col style={styles.center}>
                   <Alert.Link
-                    onClick={() => this.setState({ upload_toggle: !upload_toggle })}
+                    onClick={() => this.setState({ uploadToggle: !uploadToggle })}
                     aria-controls="example-collapse-text"
-                    aria-expanded={upload_toggle}
+                    aria-expanded={uploadToggle}
                     style={styles.link_toggle}
                   >
-                    {upload_toggle ? 'Clique aqui para enviar um arquivo' : 'Clique aqui para digitar o texto'}
+                    {uploadToggle ? 'Clique aqui para enviar um arquivo' : 'Clique aqui para digitar o texto'}
                   </Alert.Link>
-                  <Collapse in={this.state.upload_toggle}>
+                  <Collapse in={this.state.uploadToggle}>
                     <Form>
                       <Form.Group controlId="exampleForm">
                         <TextareaAutosize style={styles.medium_width} />
                         {/* <Form.Control as="textarea" rows="3" /> */}
                       </Form.Group>
                       <Row>
-                        <Col style={styles.center}>
+                        <Col>
                           <Form.Label>Escreva seu texto ou copie e cole do seu arquivo</Form.Label>
                         </Col>
                       </Row>
 
-                      <Button variant="primary" type="submit">
-                                                    Submit
+                      <Button style={styles.button}>
+                                                    Enviar
                       </Button>
                     </Form>
                   </Collapse>
@@ -118,16 +119,17 @@ ou
 }
 
 
-const styles = {
+styles = {
   screen: {
     backgroundColor: white,
     display: 'flex',
     flexDirection: 'column',
     alignText: 'center',
     alignSelf: 'center',
+    paddingBottom: '20%',
   },
   title: {
-    marginTop: '2vh',
+    marginTop: '10vh',
     fontFamily: 'Raleway',
     textAlign: 'center',
     fontSize: '35px',
@@ -135,20 +137,34 @@ const styles = {
   cloud_image: {
     height: '70px',
     width: '70px',
+    marginTop: '3vh',
   },
   upload_box: {
     textAlign: 'center',
     border: '1px solid black',
     width: '50%',
+    marginTop: '5vh',
   },
   link_toggle: {
     color: 'rgb(43, 66, 62)',
+    marginTop: '10vh',
   },
   medium_width: {
     width: '75%',
+    marginTop: '3vh',
+
   },
   center: {
     textAlign: 'center',
+    marginTop: '3vh',
+  },
+  button: {
+    fontFamily: 'Raleway',
+    backgroundColor: green,
+    borderColor: green,
+    marginTop: '20px',
+    width: '10%',
+    marginBottom: '10%',
   },
 
 };

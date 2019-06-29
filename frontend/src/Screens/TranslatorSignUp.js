@@ -47,8 +47,6 @@ class TranslatorSignUp extends Component {
         )
     }
 
-gabi
-
     handle_cpf(){
         const cpf_regex = /\d+/g;
         var value = this.state.cpfref.value.match(cpf_regex)
