@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import SimpleFooter from '../Components/AnotherSimpleFooter';
 
-class Profile extends Component {
+class HomepageTranslator extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,40 +18,51 @@ class Profile extends Component {
                     title: "Translation 1",
                     context: loren_ipsun,
                     progress: 20,
+                    words: 520,
+                    language: "Inglês",
                     prazo: "20/06/2019"
                 },
                 {
                     title: "Translation 2",
+                    language: "Inglês",
                     context: loren_ipsun,
                     progress: 30,
+                    words: 630,
                     prazo: "15/07/2019"
 
                 },
                 {
                     title: "Translation 3",
+                    language: "Espanhol",
                     context: loren_ipsun,
                     progress: 50,
+                    words: 1050,
                     prazo: "30/06/2019"
 
                 },
                 {
                     title: "Translation 4",
+                    language: "Espanhol",
                     context: loren_ipsun,
                     progress: 40,
+                    words: 240,
                     prazo: "04/07/2019"
 
                 },
                 {
                     title: "Translation 5",
+                    language: "Inglês",
                     context: loren_ipsun,
                     progress: 10,
+                    words: 310,
                     prazo: "30/07/2019"
 
                 },
             ],
             pageTranslations: 1,
             pageRevisions: 1,
-            translationsPerPage: 3
+            pageAccept:1,
+            translationsPerPage: 3,
         }
         };
     truncateText(text) {
@@ -90,11 +101,14 @@ class Profile extends Component {
                     : null
                 }
                 {currentTranslations.map((item, key) => (
-                    <Card style={styles.card} key={key}>
+                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/text_editor")}>
                         <Card.Title>{item.title}</Card.Title>
                         <Card.Subtitle>
                             <p style={styles.prazo}> Prazo:
                             {item.prazo}
+                            </p>
+                            <p style={styles.prazo}> Lingua de Origem:
+                            {item.language}
                             </p>
                         </Card.Subtitle>
                         <Card.Body>{this.truncateText(item.context)}</Card.Body>
@@ -146,8 +160,12 @@ class Profile extends Component {
                             <p style={styles.prazo}> Prazo:
                             {item.prazo}
                             </p>
+                            <p style={styles.prazo}> Lingua de Origem:
+                            {item.language}
+                            </p>
                         </Card.Subtitle>
                         <Card.Body>{this.truncateText(item.context)}</Card.Body>
+                        <Button style={styles.acceptButton} onClick = {() => { if (window.confirm('Deseja realizar esta revisão?')) this.props.history.push("/revision")}} >Fazer a Revisão</Button>
                     </Card>
                 ))}
                 {this.state.pageRevisions < pageNumbers.length ?
@@ -161,10 +179,70 @@ class Profile extends Component {
         );
     }
 
+
+    handleClickA(event) {
+        const page = Number(event.target.id)
+        if (page > 0) {
+            this.setState({
+                pageAccept: page
+            });
+        }
+    }
+
+    renderAccepts() {
+        const { translations, pageAccept, translationsPerPage } = this.state;
+        const indexOfLastTranslations = pageAccept * translationsPerPage;
+        const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
+        const currentTranslations = translations.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(translations.length / translationsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
+        return (
+            <Row style={styles.rowdiv}>
+                {this.state.pageAccept > 1 ?
+                    <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
+                        id={this.state.pageAccept - 1}
+                        onClick={(e) => this.handleClickA(e)}
+                    />
+                    : null
+                }
+                {currentTranslations.map((item, key) => (
+                    <Card style={styles.card} key={key}>
+                        <Card.Title>{item.title}</Card.Title>
+                        <Card.Subtitle>
+                            <p style={styles.prazo}> Prazo:
+                            {item.prazo}
+                            </p>
+                            <p style={styles.prazo}> Lingua de Origem:
+                            {item.language}
+                            </p>
+                            <p style={styles.prazo}> Quantidade de Palavras:
+                            {item.words}
+                            </p>
+                        </Card.Subtitle>
+                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
+                        {/* <Button style={styles.acceptButton} onClick={() => this.props.history.push("/text_editor")} >Trabalhar nessa Tradução</Button> */}
+                        <Button style={styles.acceptButton} onClick={() => { if (window.confirm('Deseja realizar esta tradução?')) this.props.history.push("/text_editor") } } >Trabalhar nessa Tradução</Button>
+                    </Card>
+                ))}
+                {this.state.pageAccept < pageNumbers.length ?
+                    <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
+                        id={this.state.pageAccept + 1}
+                        onClick={(e) => this.handleClickA(e)}
+                    />
+                    : null
+                }
+            </Row>
+        );
+    }
+
+
     render() {
         return (
             <div style={styles.font}>
-                <NavBar logged={false} author={false}/>
+                <NavBar logged={true} author={false}/>
                 <Container style={styles.profile}>
                     <Row>
                         <Avatar facebookId="100008055554326" round={true} />
@@ -187,30 +265,24 @@ class Profile extends Component {
                                     <li>Inglês - Basico</li>
                                     <li>Espanhol - Avançado</li>
                                 </ul>
-                            <Row>
-                                <Button style={styles.button}>Submeter Certificado</Button>
-                            </Row>
-
-                            <div style={styles.buttondiv}>
-                                <div style={styles.amount}>
-                                    <p>R$ 35,80</p>
-                                </div> 
-                            </div>
                         </Row>
-                        <hr/>
                     </div>
                 </Container>
-                <div style={styles.buttondiv}>
-                    <Button style={styles.button}>Revisões</Button>
-                </div>
+                <hr/>
                 <Container>
-                    <h2 style={styles.title}>Traduções em andamento</h2>
+                    <h2 style={styles.title}>Suas traduções em andamento</h2>
                     <Row>
                         {this.renderTranslation()}
                     </Row>
                     <br/>
                     <br/>
-                    <h2 style={styles.title}>Revisar novos textos</h2>
+                    <h2 style={styles.title}>Novas Traduções</h2>
+                    <Row>
+                        {this.renderAccepts()}
+                    </Row>
+                    <br />
+                    <br />
+                    <h2 style={styles.title}>Novas Revisões</h2>
                     <Row>
                         {this.renderRevisions()}
                     </Row>
@@ -311,8 +383,11 @@ const styles = {
         marginTop: "20vh",
         marginRight: 10,
         marginLeft: 10
+    },
+    acceptButton:{
+        backgroundColor: green
     }
 };
 const loren_ipsun = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-export default Profile;
+export default HomepageTranslator;

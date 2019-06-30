@@ -38,17 +38,14 @@ class TranslatorSignUp extends Component {
     }
 
     async send(){
-        console.log("send")
+        this.props.history.push("/homepage_translator")
     }
     button_div(){
         return(
-            <div style={styles.two_columns}>
+            <div>
                 <Button variant="primary" style={styles.button} onClick={()=>{ this.send()}} >
                     Cadastrar
                 </Button>
-                <div style={styles.link_div}>
-                    <a style={styles.link} href="/">Já tenho cadastro</a>
-                </div>
             </div>
         )
     }
@@ -156,7 +153,7 @@ const styles={
     },
     button:{
         fontFamily: "Raleway", backgroundColor: green, borderColor: green,
-        marginTop: "20px", width: "50%"
+        marginTop: "20px", width: "100%"
     },
     link_div:{
         width:"40%", marginTop:"25px", marginLeft:"40px"

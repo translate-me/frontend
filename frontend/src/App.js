@@ -4,7 +4,7 @@ import LandingPage from './Screens/LandingPage';
 import TextSubmission from './Screens/TextSubmission';
 import TextEditor from './Screens/TextEditor';
 import Registration from './Screens/Registration';
-import Profile from './Screens/Profile';
+import HomepageTranslator from './Screens/HomepageTranslator';
 import Breakpoints from './Screens/Breakpoints';
 import SubmitTextInformation from './Screens/SubmitTextInformation';
 import FollowTranslation from './Screens/FollowTranslations';
@@ -33,8 +33,8 @@ export const App = () => (
       <Route exact path="/homepage_author" component={FollowTranslation} />
       <Route exact path="/meet_us" component={WhoAreWe} />
       <Route exact path="/how_it_works" component={HowItWorks} />
+      <Route exact path="/homepage_translator" component={HomepageTranslator} />
       <Route exact path="/revision" component={Revision} />
-      <Route exact path="/profile" component={Profile} />
       <Route exact path="/translator_sign_in" component={TranslatorSignUp} />
       <Route exact path="/login" component={Login} />
     </div>
