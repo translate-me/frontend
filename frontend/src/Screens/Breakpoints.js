@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Container, Row, Col, Form, Button, ProgressBar,
 } from 'react-bootstrap';
@@ -16,21 +17,21 @@ export class Breakpoints extends React.Component {
     // must get the previous state from previous screen on user flux, actual values are placeholders
     
     const oldState = this.props.location.state
-    console.log('state anterior: ', oldState)
+    console.log('state anterior: ', props)
     // console.log('arquivo: ', oldState.files[0])
     
     this.state = {
-      textTitle: oldState.textTitle,
+      textTitle: props.textTitle,
       fileName: '',
       fileExtension: '',
-      textContent: oldState.textContent,
-      textContext: oldState.textContext,
+      textContent: props.textContent,
+      textContext: props.textContext,
       
-      complexityLevel: oldState.complexityLevel,
-      knowledgeArea: oldState.knowledgeArea,
-      textContext: oldState.textContext,
-      originLanguage: oldState.originLanguage,
-      translateLanguage: oldState.translateLanguage,
+      complexityLevel: props.complexityLevel,
+      knowledgeArea: props.knowledgeArea,
+      textContext: props.textContext,
+      originLanguage: props.originLanguage,
+      translateLanguage: props.translateLanguage,
 
       wordcount: 0,
       breakpoints: [],
@@ -107,6 +108,7 @@ export class Breakpoints extends React.Component {
   };
 
   render() {
+    console.log(this.state)
     return (
       <div>
         <NavBar logged={true} author={false}/>
@@ -241,5 +243,14 @@ styles = {
   },
 };
 
+const mapStateToProps = state => ({
+  textContent: state.textReducer.textContent, 
+  textTitle: state.textReducer.textTitle,
+  textContext: state.textReducer.textContext,
+  complexityLevel: state.textReducer.complexityLevel,
+  knowledgeArea: state.textReducer.knowledgeArea,
+  originLanguage: state.textReducer.originLanguage,
+  translateLanguage: state.textReducer.translateLanguage,
+})
 
-export default Breakpoints;
+export default connect(mapStateToProps, null)(Breakpoints);

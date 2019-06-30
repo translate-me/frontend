@@ -1,17 +1,20 @@
 import React from 'react';
+import history from "../Utils/history";
 import {
   Button, Alert, Container, Row, Col, Collapse, Form, Nav
 } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
 import TextareaAutosize from 'react-textarea-autosize';
-
+import { connect } from 'react-redux';
 import { FilePond } from 'react-filepond';
 import { white, green } from '../colors';
 import Cloud from './cloud.png';
 import 'filepond/dist/filepond.min.css';
 import NavBar from '../Components/NavBar'
 import SimpleFooter from '../Components/SimpleFooter';
+import { submitText } from "../Actions/textActions";
+
 
 let styles;
 
@@ -23,6 +26,7 @@ class TextSubmission extends React.Component {
       textContent: '',
       uploadToggle: false,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleTextContentChange = (e) => {
@@ -37,8 +41,15 @@ class TextSubmission extends React.Component {
     console.log('FilePond instance has initialised', this.pond);
   }
 
+  handleClick() {
+    history.push('/text_information')
+    console.log('oooo', this.props, this.state)
+    this.props.submitText({textContent: this.state.textContent})
+  }
+
   render() {
     const { uploadToggle, files } = this.state;
+    console.log(this.state)
     return (
       <div style={styles.screen}>
         <NavBar logged={true} author={true} />
@@ -111,17 +122,9 @@ class TextSubmission extends React.Component {
                           </Form.Label>
                         </Col>
                       </Row>
-
-                      <Link to ={{
-                        pathname: "/text_information",
-                        state: { 
-                            textContent: this.state.textContent
-                        }
-                      }} >
-                        <Button type="submit" style={styles.button} >
+                        <Button onClick={this.handleClick} type="submit" style={styles.button} >
                           Enviar
                         </Button>
-                      </Link>
                     </Form>
                   </Collapse>
                 </Col>
@@ -129,13 +132,9 @@ class TextSubmission extends React.Component {
               </Row>
               <Row style={styles.center}>
                 <Col>
-                <Link to ={{
-                  pathname: "/breakpoints", 
-                  state: { 
-                      files: this.state.files
-                  }
-                }} >
-                </Link>
+                  <Button onClick={this.handleClick}>
+                    Enviar 
+                  </Button>
                 </Col>
               </Row>
             </Col>
@@ -199,4 +198,9 @@ styles = {
 
 };
 
-export default TextSubmission;
+const mapDispatchToProps = dispatch => ({
+  submitText: value => dispatch(submitText(value))
+});
+
+
+export default connect(null, mapDispatchToProps)(TextSubmission);

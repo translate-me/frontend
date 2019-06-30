@@ -5,22 +5,29 @@ import NavBar from '../Components/NavBar';
 import { white, green } from '../colors';
 import Select from 'react-select';
 import SimpleFooter from '../Components/SimpleFooter';
+import { connect } from 'react-redux';
+import { submitText } from "../Actions/textActions";
+import history from "../Utils/history";
 
 
 class SubmitTextInformation extends Component {
     constructor(props){
         super(props);
 
+
         const oldState = this.props.location.state
         
         this.state = {
-            title: '',
-            complexityLevel: '',
-            knowledgeArea: '',
-            textContext: '',
-            originLanguage: '',
-            translateLanguage: '',
-            textContent: oldState.textContent,
+            textTitle: props.textTitle,
+            fileName: '',
+            fileExtension: '',
+            textContent: props.textContent,
+            textContext: props.textContext,
+            complexityLevel: props.complexityLevel,
+            knowledgeArea: props.knowledgeArea,
+            textContext: props.textContext,
+            originLanguage: props.originLanguage,
+            translateLanguage: props.translateLanguage,
             titleNotOk: null,
             complexityLevelNotOk: null,
             knowledgeAreaNotOk: null,
@@ -40,12 +47,13 @@ class SubmitTextInformation extends Component {
                 show: false,
             },
         };
-    }
+      this.send = this.send.bind(this);
+    } 
 
     verifyFields() {
         let isOk = true;
         const {
-            title,
+            textTitle,
             complexityLevel,
             knowledgeArea,
             textContext,
@@ -53,7 +61,7 @@ class SubmitTextInformation extends Component {
             translateLanguage,
         } = this.state;
     
-        if (title !== '') {
+        if (textTitle !== '') {
             this.setState({ titleNotOk: false });
         } else {
             this.setState({ titleNotOk: true });
@@ -96,16 +104,25 @@ class SubmitTextInformation extends Component {
         return isOk;
     }
     
-    async send() {
+    send() {
         if (this.verifyFields()) {
-            console.log('td certo');
-            console.log(this.state)
+          console.log('envio', this.state)
+          let textInformation = {
+            textTitle: this.state.textTitle,
+            fileName: this.state.fileName,
+            fileExtension: this.state.fileExtension,
+            textContent: this.state.textContent,
+            textContext: this.state.textContext,
+            complexityLevel: this.state.complexityLevel.label,
+            knowledgeArea: this.state.knowledgeArea.label,
+            textContext: this.state.textContext,
+            originLanguage: this.state.originLanguage.label,
+            translateLanguage: this.state.translateLanguage.label,
+          }
+          this.props.submitText(textInformation)
+          history.push('/breakpoints')
         }
 
-        else {
-            console.log('coisa errada produção');
-            console.log(this.state)
-        }
       }
     
       formGroup(label, placeholder, onChange, thisref, invalid, warning) {
@@ -242,7 +259,7 @@ class SubmitTextInformation extends Component {
             <Form.Control
             placeholder="Ex.: Constitution of the United States"
             type="string"
-            onChange={() => { this.setState({ title: this.titleRef.value }); }}
+            onChange={() => { this.setState({ textTitle: this.titleRef.value }); }}
             ref={(ref) => { this.titleRef = ref; }}
             isInvalid={titleNotOk}/>
             <Form.Control.Feedback type="invalid">Preencha o título</Form.Control.Feedback>
@@ -272,6 +289,8 @@ class SubmitTextInformation extends Component {
 
 
     render() {
+      console.log('state', this.state)
+      console.log('props', this.props)
         return (
           <div>
             <NavBar logged={true} />
@@ -282,22 +301,9 @@ class SubmitTextInformation extends Component {
                 </Col>
                 <Col>
                     <div style={styles.buttondiv}>
-                        <Link to ={{
-                            pathname: "/breakpoints",
-                            state: { 
-                                textContent: this.state.textContent,
-                                textTitle: this.state.title,
-                                complexityLevel: this.state.complexityLevel.label,
-                                knowledgeArea: this.state.knowledgeArea.label,
-                                textContext: this.state.textContext,
-                                originLanguage: this.state.originLanguage.label,
-                                translateLanguage: this.state.translateLanguage.label,
-                            }
-                        }} >
                             <Button type="submit" style={styles.button} onClick={() => { this.send(); }}>   
                                 Enviar
                             </Button>
-                        </Link>
                     </div>
                 </Col>
             </Row>
@@ -347,6 +353,7 @@ const styles = {
         backgroundColor: green,
         borderColor: green,
     },
+
     form_text: {
         fontFamily: 'Raleway',
     },
@@ -362,4 +369,19 @@ const styles = {
     }
 };
 
-export default SubmitTextInformation; 
+const mapDispatchToProps = dispatch => ({
+  submitText: value => dispatch(submitText(value))
+})
+
+const mapStateToProps = state => ({
+  textContent: state.textReducer.textContent, 
+  textTitle: state.textReducer.textTitle,
+  textContext: state.textReducer.textContext,
+  complexityLevel: state.textReducer.complexityLevel,
+  knowledgeArea: state.textReducer.knowledgeArea,
+  originLanguage: state.textReducer.originLanguage,
+  translateLanguage: state.textReducer.translateLanguage,
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubmitTextInformation);
