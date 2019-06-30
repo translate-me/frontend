@@ -20,7 +20,7 @@ class TextSubmission extends React.Component {
     super(props);
     this.state = {
       files: [],
-      textContent: 'teste',
+      textContent: '',
       uploadToggle: false,
     };
   }
@@ -135,9 +135,6 @@ class TextSubmission extends React.Component {
                       files: this.state.files
                   }
                 }} >
-                  <Button>
-                    Teste
-                  </Button>
                 </Link>
                 </Col>
               </Row>
