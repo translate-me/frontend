@@ -14,7 +14,6 @@ import Profile from '../Screens/Profile';
 import FollowTranslation from '../Screens/FollowTranslations';
 import WhoAreWe from '../Screens/WhoAreWe';
 import HowItWorks from '../Screens/HowItWorks';
-import Revision from '../Screens/Revision';
 import TranslatorSignUp from '../Screens/TranslatorSignUp';
 
 
@@ -31,7 +30,6 @@ export default class Routes extends React.Component {
         <AuthorizedRoute exact path="/homepage_author" component={FollowTranslation} />
         <AuthorizedRoute exact path="/meet_us" component={WhoAreWe} />
         <AuthorizedRoute exact path="/how_it_works" component={HowItWorks} />
-        <AuthorizedRoute exact path="/revision" component={Revision} />
         <AuthorizedRoute exact path="/profile" component={Profile} />
         <AuthorizedRoute exact path="/translator_sign_in" component={TranslatorSignUp} />
         <AuthorizedRoute exact path="/text_submission" component={TextSubmission} />
