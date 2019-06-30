@@ -28,6 +28,7 @@ class Registration extends Component {
         show: false,
       },
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   verifyFields() {
@@ -132,7 +133,13 @@ class Registration extends Component {
     );
   }
 
+  handleChange(event) {
+    let fieldName = event.target.name;
+    let fleldVal = event.target.value;
+    this.setState({[fieldName]: fleldVal})
+  }
   usernameGroup() {
+    console.log('t', this.state)
 
     return (
       <Form.Group>
@@ -141,7 +148,8 @@ class Registration extends Component {
           style={styles.form_text}
           placeholder="ex.: joao_silva"
           type="string"
-          onChange={() => { this.setState({ username: this.state.usernameref.value }); }}
+          name="username"
+          onChange={this.handleChange}
           //ref={(ref) => { this.setState({usernameref: ref})}}
           isInvalid={this.state.username_not_ok}
         />
@@ -158,8 +166,9 @@ class Registration extends Component {
         <Form.Control
           style={styles.form_text}
           type="email"
+          name="email"
           placeholder="ex.: joao@email.com"
-          onChange={() => { this.setState({ email: this.state.emailref.value }); }}
+          onChange={this.handleChange}
           //ref={(ref) => { this.setState({emailref: ref})}}
           isInvalid={this.state.email_not_ok}
         />
@@ -179,8 +188,9 @@ class Registration extends Component {
           <Form.Label style={styles.form_text}>Senha</Form.Label>
           <Form.Control
             type="password"
+            name="password"
             //ref={(ref) => { this.setState({passwordref: ref})}}
-            onChange={() => { this.setState({ password: this.state.passwordref.value }); }}
+            onChange={this.handleChange}
             isInvalid={this.state.password_not_ok}
           />
           <Form.Control.Feedback type="invalid">Senha deve ter no minímo 6 caracteres</Form.Control.Feedback>
@@ -189,7 +199,8 @@ class Registration extends Component {
           <Form.Label style={styles.form_text}>Confirme sua senha</Form.Label>
           <Form.Control
             type="password"
-            onChange={() => { this.setState({ confirmPassword: this.confirmPasswordRef.value }); }}
+            name="confirmPassword"
+            onChange={this.handleChange}
             ref={(ref) => { this.confirmPasswordRef = ref; }}
             isInvalid={confirmPasswordNotOk}
           />
