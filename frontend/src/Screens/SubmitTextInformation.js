@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Link from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import NavBar from '../Components/NavBar';
 import { white, green } from '../colors';
@@ -9,6 +9,9 @@ import Select from 'react-select';
 class SubmitTextInformation extends Component {
     constructor(props){
         super(props);
+
+        const oldState = this.props.location.state
+        
         this.state = {
             title: '',
             complexityLevel: '',
@@ -16,6 +19,7 @@ class SubmitTextInformation extends Component {
             textContext: '',
             originLanguage: '',
             translateLanguage: '',
+            textContent: oldState.textContent,
             titleNotOk: null,
             complexityLevelNotOk: null,
             knowledgeAreaNotOk: null,
@@ -94,10 +98,12 @@ class SubmitTextInformation extends Component {
     async send() {
         if (this.verifyFields()) {
             console.log('td certo');
+            console.log(this.state)
         }
 
         else {
             console.log('coisa errada produção');
+            console.log(this.state)
         }
       }
     
@@ -118,8 +124,13 @@ class SubmitTextInformation extends Component {
         );
       }
 
+    handleComplexityLevel = complexityLevel => {
+        this.setState({ complexityLevel });
+        console.log(`Option selected:`, complexityLevel);
+    };
+
     complexityLevel() {
-        const { complexityLevelNotOk } = this.state;
+        const { complexityLevelNotOk, complexityLevel } = this.state;
         const options = [
             { value: '1', label: 'Baixo' },
             { value: '2', label: 'Médio' },
@@ -130,8 +141,9 @@ class SubmitTextInformation extends Component {
             <Form.Group>
                 <Form.Label>Nível de Complexidade</Form.Label>
                     <Select
-                    onChange={() => { this.setState({ complexityLevel: this.complexityLevelRef.value }); }}
+                    onChange={this.handleComplexityLevel}
                     ref={(ref) => { this.complexityLevelRef = ref; }} 
+                    value={complexityLevel}
                     placeholder='Escolha uma opção' 
                     options={options} />
                     <div id="error0" style={styles.error_message}>Escolha o nível de complexidade</div>
@@ -139,8 +151,13 @@ class SubmitTextInformation extends Component {
         );
     }
 
+    handleKnowledgeArea = knowledgeArea => {
+        this.setState({ knowledgeArea });
+        console.log(`Option selected:`, knowledgeArea);
+    };
+
     knowledgeArea() {
-        const { knowledgeAreaNotOk } = this.state;
+        const { knowledgeAreaNotOk, knowledgeArea } = this.state;
         const options = [
             { value: '1', label: 'Ciências Humanas' },
             { value: '2', label: 'Ciências Exatas' },
@@ -152,8 +169,9 @@ class SubmitTextInformation extends Component {
             <Form.Group>
                 <Form.Label>Área de Conhecimento</Form.Label>
                     <Select
-                    onChange={() => { this.setState({ knowledgeArea: this.knowledgeAreaRef.value }); }}
+                    onChange={this.handleKnowledgeArea}
                     ref={(ref) => { this.knowledgeAreaRef = ref; }} 
+                    value={knowledgeArea}
                     placeholder='Escolha uma opção' 
                     options={options} />
                     <div id="error1" style={styles.error_message}>Escolha a área de conhecimento</div>
@@ -161,8 +179,13 @@ class SubmitTextInformation extends Component {
         );
     }
 
+    handleOriginLanguage = originLanguage => {
+        this.setState({ originLanguage });
+        console.log(`Option selected:`, originLanguage);
+    };
+
     originLanguage() {
-        const { originLanguageNotOk } = this.state
+        const { originLanguageNotOk, originLanguage } = this.state
         const options = [
             { value: '1', label: 'Português' },
             { value: '2', label: 'Espanhol' },
@@ -173,17 +196,23 @@ class SubmitTextInformation extends Component {
             <Form.Group>
                 <Form.Label>Língua de Origem</Form.Label>
                     <Select
-                    onChange={() => { this.setState({ originLanguage: this.originLanguageRef.value }); }}
+                    onChange={this.handleOriginLanguage}
                     ref={(ref) => { this.originLanguageRef = ref; }} 
                     placeholder='Escolha uma opção' 
+                    value={originLanguage}
                     options={options} />
                     <div id="error2" style={styles.error_message}>Escolha a língua de origem</div>
           </Form.Group>
         );
     }
 
+    handleTranslateLanguage = translateLanguage => {
+        this.setState({ translateLanguage });
+        console.log(`Option selected:`, translateLanguage);
+    };
+
     translateLanguage() {
-        const { translateLanguageNotOk } = this.state
+        const { translateLanguageNotOk, translateLanguage } = this.state
         const options = [
             { value: '1', label: 'Português' },
             { value: '2', label: 'Espanhol' },
@@ -194,8 +223,9 @@ class SubmitTextInformation extends Component {
             <Form.Group>
                 <Form.Label>Língua de Tradução</Form.Label>
                     <Select
-                    onChange={() => { this.setState({ translateLanguage: this.translateLanguageRef.value }); }}
-                    ref={(ref) => { this.translateLanguageRef = ref; }} 
+                    onChange={this.handleTranslateLanguage}
+                    // ref={(ref) => { this.translateLanguageRef = ref; }}
+                    value={translateLanguage} 
                     placeholder='Escolha uma opção' 
                     options={options} />
                     <div id="error3" style={styles.error_message}>Escolha a língua de tradução</div>
@@ -251,9 +281,22 @@ class SubmitTextInformation extends Component {
                 </Col>
                 <Col>
                     <div style={styles.buttondiv}>
-                        <Button style={styles.button} onClick={() => { this.send(); }}>   
-                            Enviar
-                        </Button>
+                        <Link to ={{
+                            pathname: "/breakpoints",
+                            state: { 
+                                textContent: this.state.textContent,
+                                textTitle: this.state.title,
+                                complexityLevel: this.state.complexityLevel.label,
+                                knowledgeArea: this.state.knowledgeArea.label,
+                                textContext: this.state.textContext,
+                                originLanguage: this.state.originLanguage.label,
+                                translateLanguage: this.state.translateLanguage.label,
+                            }
+                        }} >
+                            <Button type="submit" style={styles.button} onClick={() => { this.send(); }}>   
+                                Enviar
+                            </Button>
+                        </Link>
                     </div>
                 </Col>
             </Row>
