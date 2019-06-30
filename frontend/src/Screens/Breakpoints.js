@@ -19,11 +19,18 @@ export class Breakpoints extends React.Component {
     // console.log('arquivo: ', oldState.files[0])
     
     this.state = {
-      textTitle: 'Lorem ipsum dolor sit amet',
-      fileName: 'arquivo',
-      fileExtension: '.odt',
-      textBody: oldState.textContent,
-      textContext: 'Quisque egestas, leo sit amet porttitor vulputate, elit magna tempor enim, suscipit tempus sapien ipsum quis metus. In posuere pretium ullamcorper. Nam venenatis lorem ac dictum ultricies.',
+      textTitle: oldState.textTitle,
+      fileName: '',
+      fileExtension: '',
+      textContent: oldState.textContent,
+      textContext: oldState.textContext,
+      
+      complexityLevel: oldState.complexityLevel,
+      knowledgeArea: oldState.knowledgeArea,
+      textContext: oldState.textContext,
+      originLanguage: oldState.originLanguage,
+      translateLanguage: oldState.translateLanguage,
+
       wordcount: 0,
       breakpoints: [],
       fragments: [],
@@ -53,7 +60,7 @@ export class Breakpoints extends React.Component {
     // console.log('newArray: ', newArray)
 
     this.setState({
-      textBody: newArray,
+      textContent: newArray,
       breakpoints: breakpoints,
       wordcount: e.target.value.length,
     });
@@ -63,7 +70,7 @@ export class Breakpoints extends React.Component {
     const index = breakpoints.pop();
     console.log(index)
 
-    const array = Array.from(this.state.textBody);
+    const array = Array.from(this.state.textContent);
 
     console.log('array ', array)
     array[index - 1] = ''
@@ -71,12 +78,12 @@ export class Breakpoints extends React.Component {
     const newArray = array.join('');
 
     this.setState({
-      textBody: newArray
+      textContent: newArray
     })    
   }
 
   sendFragment = () => {
-    const completeText = this.state.textBody;
+    const completeText = this.state.textContent;
     const fragments = completeText.split('🔴');
 
     const fragmentsObject = fragments.map(fragment => ({ body: fragment, type: 'text' }));
@@ -93,7 +100,7 @@ export class Breakpoints extends React.Component {
 
   onChange = (e) => {
     this.setState({
-      textBody: e.target.value,
+      textContent: e.target.value,
     });
   };
 
@@ -130,7 +137,7 @@ export class Breakpoints extends React.Component {
                     style={styles.textArea}
                     id="my-input"
                     onChange={this.onChange}
-                    value={this.state.textBody}
+                    value={this.state.textContent}
                     onMouseUp={this.onMouseUp}
                   />
                     <Button
