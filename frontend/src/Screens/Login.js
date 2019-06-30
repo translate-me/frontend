@@ -41,7 +41,7 @@ class Login extends Component {
                     <Form.Control name="password" onChange={this.handleChange} style={styles.form_control} type="password" placeholder="Senha" />
                 </Form.Group>
 
-                <Button style={styles.button} type="submit">
+                <Button style={styles.button} type="submit" onClick={() => this.props.history.push("/homepage_author")}>
                     Entrar
                 </Button>
                 <p style={styles.register_text}>Não tem conta? &nbsp; <a href="/register">Registre-se</a></p>
@@ -59,8 +59,6 @@ class Login extends Component {
                         <p style={styles.centralize_and_form_text}>Entrar</p>
                         <div style={styles.centralize}>
                                 {this.username_group()}
-                                {/* {this.pass_group()}
-                                {this.button_div()} */}
                         </div>
                     </div>
                 </div>
@@ -131,9 +129,4 @@ const styles={
 
 }
 
-const mapDispatchToProps = dispatch => ({
-  login: value => dispatch(login(value))
-});
-
-
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;
