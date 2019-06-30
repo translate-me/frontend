@@ -3,6 +3,7 @@ import {Form, Button } from 'react-bootstrap';
 import { white, green, lightgreen } from '../colors'
 import { connect } from "react-redux";
 import { login } from "../Actions/authActions";
+import NavBar from '../Components/NavBar';
 
 
 class Login extends Component {
@@ -13,13 +14,13 @@ class Login extends Component {
             password:"",
         }
       this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
+    //   this.handleSubmit = this.handleSubmit.bind(this)
     }
     
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.login(this.state)
-  }
+//   handleSubmit(event) {
+//     event.preventDefault();
+//     this.props.login(this.state)
+//   }
 
   handleChange(event) {
     let fieldName = event.target.name;
@@ -41,7 +42,11 @@ class Login extends Component {
                     <Form.Control name="password" onChange={this.handleChange} style={styles.form_control} type="password" placeholder="Senha" />
                 </Form.Group>
 
+<<<<<<< HEAD
                 <Button style={styles.button} type="submit" onClick={() => this.props.history.push("/homepage_author")}>
+=======
+                <Button style={styles.button} type="submit" onClick={() => this.enter}>
+>>>>>>> d73d50858f5a3b68dc57dd7e2cfd0f2d97dee0d5
                     Entrar
                 </Button>
                 <p style={styles.register_text}>Não tem conta? &nbsp; <a href="/register">Registre-se</a></p>
@@ -50,10 +55,16 @@ class Login extends Component {
         )
     }
 
+    enter() {
+        let path = `#homepage`;
+        this.props.history.push(path);
+    }
+
     render(){
       console.log(this.state)
         return (
             <div>
+                <NavBar logged={false}/>
                 <div style={styles.blank_line}>
                     <div style={styles.border}>
                         <p style={styles.centralize_and_form_text}>Entrar</p>
@@ -62,7 +73,9 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-                <div style={styles.blank_line}></div>
+                <div style={styles.blank_line}>
+                
+                </div>
             </div>
         );
     }
@@ -129,4 +142,12 @@ const styles={
 
 }
 
+<<<<<<< HEAD
+=======
+// const mapDispatchToProps = dispatch => ({
+//   login: value => dispatch(login(value))
+// });
+
+
+>>>>>>> d73d50858f5a3b68dc57dd7e2cfd0f2d97dee0d5
 export default Login;

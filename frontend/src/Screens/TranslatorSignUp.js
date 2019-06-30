@@ -32,6 +32,11 @@ class TranslatorSignUp extends Component {
         }
     }
 
+    register() {
+        let path = `#homepage_author`;
+        this.props.history.push(path);
+    }
+
     async send(){
         console.log("send")
     }

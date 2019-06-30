@@ -32,7 +32,7 @@ class NavBar extends Component {
           <Nav.Link href= "/meet_us">
             <FontAwesomeIcon icon={faUsers} style={styles.icon} title={'Quem Somos Nós'} />
           </Nav.Link>
-          <Nav.Link href="/login">
+          <Nav.Link href="/login" >
             <FontAwesomeIcon icon={faSignInAlt} style={styles.icon} title={'Entrar'} />
           </Nav.Link>
           </Nav>
