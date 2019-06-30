@@ -13,6 +13,7 @@ import HowItWorks from './Screens/HowItWorks';
 import Revision from './Screens/Revision';
 import TranslatorSignUp from './Screens/TranslatorSignUp';
 import Login from './Screens/Login';
+import Payment from './Screens/Payment';
 
 export const App = () => (
   <Router>
@@ -37,6 +38,7 @@ export const App = () => (
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/translator_sign_in" component={TranslatorSignUp} />
       <Route exact path="/login" component={Login} />
+      <Route exact path="/payment" component={Payment} />
     </div>
   </Router>
 );

@@ -5,7 +5,6 @@ import { faFeatherAlt, faGraduationCap} from '@fortawesome/free-solid-svg-icons'
 import NavBar from '../Components/NavBar';
 import SimpleFooter from '../Components/SimpleFooter';
 import { intro, author, translator, new_translation} from './HowItWorksTexts';
-import AnotherSimpleFooter from '../Components/AnotherSimpleFooter';
 import { green } from '../colors';
 
 
@@ -93,7 +92,7 @@ class Revision extends Component {
         </Col>
       </Row>
       </div>
-      <AnotherSimpleFooter/>
+      <SimpleFooter/>
   </div>
     );
   }

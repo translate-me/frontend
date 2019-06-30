@@ -4,6 +4,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import NavBar from '../Components/NavBar';
 import { white, green } from '../colors';
 import Select from 'react-select';
+import SimpleFooter from '../Components/SimpleFooter';
 
 
 class SubmitTextInformation extends Component {
@@ -317,6 +318,7 @@ class SubmitTextInformation extends Component {
                 </Col>
             </Row>
             </div>
+            <SimpleFooter/>
           </div>
         );
       }
