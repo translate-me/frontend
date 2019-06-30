@@ -165,7 +165,7 @@ class HomepageTranslator extends Component {
                             </p>
                         </Card.Subtitle>
                         <Card.Body>{this.truncateText(item.context)}</Card.Body>
-                        <Button style={styles.acceptButton} onClick = {() => { if (window.confirm('Deseja realizar esta revisão?')) this.props.history.push("/text_editor")}} >Fazer a Revisão</Button>
+                        <Button style={styles.acceptButton} onClick = {() => { if (window.confirm('Deseja realizar esta revisão?')) this.props.history.push("/revision")}} >Fazer a Revisão</Button>
                     </Card>
                 ))}
                 {this.state.pageRevisions < pageNumbers.length ?

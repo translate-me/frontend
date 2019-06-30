@@ -35,7 +35,6 @@ export const App = () => (
       <Route exact path="/how_it_works" component={HowItWorks} />
       <Route exact path="/homepage_translator" component={HomepageTranslator} />
       <Route exact path="/revision" component={Revision} />
-      <Route exact path="/profile" component={Profile} />
       <Route exact path="/translator_sign_in" component={TranslatorSignUp} />
       <Route exact path="/login" component={Login} />
     </div>

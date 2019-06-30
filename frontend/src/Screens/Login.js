@@ -42,11 +42,7 @@ class Login extends Component {
                     <Form.Control name="password" onChange={this.handleChange} style={styles.form_control} type="password" placeholder="Senha" />
                 </Form.Group>
 
-<<<<<<< HEAD
                 <Button style={styles.button} type="submit" onClick={() => this.props.history.push("/homepage_author")}>
-=======
-                <Button style={styles.button} type="submit" onClick={() => this.enter}>
->>>>>>> d73d50858f5a3b68dc57dd7e2cfd0f2d97dee0d5
                     Entrar
                 </Button>
                 <p style={styles.register_text}>Não tem conta? &nbsp; <a href="/register">Registre-se</a></p>
@@ -142,12 +138,4 @@ const styles={
 
 }
 
-<<<<<<< HEAD
-=======
-// const mapDispatchToProps = dispatch => ({
-//   login: value => dispatch(login(value))
-// });
-
-
->>>>>>> d73d50858f5a3b68dc57dd7e2cfd0f2d97dee0d5
 export default Login;
