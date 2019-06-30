@@ -7,7 +7,8 @@ import Registration from './Screens/Registration';
 import Breakpoints from './Screens/Breakpoints';
 import FollowTranslation from './Screens/FollowTranslations';
 import WhoAreWe from './Screens/WhoAreWe';
-import WhoAreWe from './Screens/HowItWorks';
+import HowItWorks from './Screens/HowItWorks';
+import Revision from './Screens/Revision';
 
 
 export const App = () => (
@@ -28,6 +29,7 @@ export const App = () => (
       <Route exact path="/follow_translations" component={FollowTranslation} />
       <Route exact path="/meet_us" component={WhoAreWe} />
       <Route exact path="/how_it_works" component={HowItWorks} />
+      <Route exact path="/revision" component={Revision} />
     </div>
   </Router>
 );
