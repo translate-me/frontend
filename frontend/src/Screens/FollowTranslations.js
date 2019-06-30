@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Container, Row, Card, ProgressBar, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { green } from '../colors';
+import { faAngleLeft, faAngleRight, faPlusCircle, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
+import { green, white, lightgreen } from '../colors';
 import NavBar from '../Components/NavBar';
 import SimpleFooter from '../Components/SimpleFooter';
 
@@ -12,6 +12,24 @@ class FollowTranslation extends Component{
     constructor(props){
         super(props);
         this.state = {
+            advantages: [
+                {
+                    title:'Tradução de Alta Qualidade',
+                    body:'Para tradução de textos de alto nível, nós exigimos e verificamos as certificações de nossos tradutores. Além de todos os textos passarem por um processo de revisão'
+                },
+                {
+                    title:'Segurança',
+                    body: 'Com a fragmentação do texto garantimos que seu trabalho não possa ser visualizado por completo por nenhum de nossos tradutores.'
+                },
+                {
+                    title:'Prazo',
+                    body:'Tempo de entrega e valor da tradução abaixo da média do mercado.'
+                },
+                {
+                    title:'Acompanhamento',
+                    body: 'Você pode acompanhar o progresso de suas traduções e se comunicar com os tradutores através de um chat, para retirar possíveis dúvidas.'
+                }
+            ],
             translations: [
                 {
                     title: "Translation 1",
@@ -112,22 +130,39 @@ class FollowTranslation extends Component{
     }
 
     render(){
+        const { advantages } = this.state;
+
         return(
             <div style={styles.root}>
                 <NavBar logged={true} author={true}/>
+                <div style={styles.textdiv}>
+                    <p style={styles.title}>Tradução Simples, Rápida e de Qualidade - TranslateMe</p>
+                </div>
+                <div style={styles.advantages_square}>
+                    {advantages.map(item => (
+                    <Card style={styles.advantages_card}>
+                        <Card.Title style={styles.advantages_title}>
+                            {item.title}
+                        </Card.Title>
+                        <Card.Body style={styles.advantages_body}>
+                            {item.body}
+                        </Card.Body>
+                    </Card>
+                    ))}
+                </div>
+                <div style={styles.buttondiv}>
+                    <Button variant="primary" style={styles.button} onClick={() => { this.newText(); }}>
+                        <FontAwesomeIcon icon={faPlusCircle} style={styles.buttonicon} />
+                        Submeter um Novo Texto 
+                    </Button>
+                </div>
                 <Container>
                     <div style={styles.textdiv}>
                         <p style={styles.title}>Traduções em Andamento</p>
                     </div>
                     {this.renderTranslation()}
-                    <div style={styles.buttondiv}>
-                    <Button variant="primary" style={styles.button} onClick={() => { this.newText(); }}>
-                        <FontAwesomeIcon icon={faPlusCircle} style={styles.buttonicon} />
-                        Submeter um Novo Texto 
-                     </Button>
-                    </div>
                 </Container>
-                <SimpleFooter/>
+                <SimpleFooter></SimpleFooter>
             </div>
         );
     }
@@ -169,7 +204,8 @@ const styles = {
     button: {
         backgroundColor: green,
         borderColor: green,
-        marginTop: '10vh',
+        marginTop: '1vh',
+        marginBottom: '3vh',
         width: '25%',
         alignSelf: 'center'
     },
@@ -179,6 +215,32 @@ const styles = {
     prazo:{
         textAlign: 'right',
         color: green
+    },
+    advantages_square: {
+        backgroundColor: lightgreen,
+        alignSelf: 'center',
+        display: 'flex',
+        padding: '2%',
+        marginBottom: '2%',
+        marginTop: '2%'
+    },
+    advantages_card: {
+        backgroundColor: green,
+        margin: '2%',
+        padding: '2%',
+        width: '100%',
+    },
+    advantages_title: {
+        textAlign: 'center',
+        fontFamily: 'Raleway',
+        fontSize: '20px',
+        color: white,
+    },
+    advantages_body: {
+        textAlign: 'center',
+        fontFamily: 'Raleway',
+        fontSize: '15px',
+        color: white,
     }
 
 }

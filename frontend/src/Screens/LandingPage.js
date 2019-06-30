@@ -66,7 +66,7 @@ class HomepageAuthor extends Component {
             </div>
           ))}
         </div>
-        <Footer />
+        <Footer/>
       </div>
     );
   }

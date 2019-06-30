@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignOutAlt, faSignInAlt, faNewspaper, faGraduationCap, faCoins, faInbox, faFeatherAlt, faInfoCircle, faUsers} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSignOutAlt, faSignInAlt, faGraduationCap, faCoins, faInbox, faFeatherAlt, faInfoCircle, faUsers} from '@fortawesome/free-solid-svg-icons';
 import { white, green } from '../colors';
 
 class NavBar extends Component {
@@ -14,7 +14,7 @@ class NavBar extends Component {
               :
               this.translator_links()
             }
-              <Nav.Link href="#profile">
+              <Nav.Link href="/profile">
             <FontAwesomeIcon icon={faUser} title={"Perfil"} style={styles.icon} />
               </Nav.Link>
               <Nav.Link href="/">
@@ -45,9 +45,6 @@ class NavBar extends Component {
         <Nav.Link>
           <FontAwesomeIcon icon={faGraduationCap} style={styles.icon} title={'Espaço do Tradutor'}/>
         </Nav.Link>
-        <Nav.Link href="/follow_translations">
-        <FontAwesomeIcon icon={faNewspaper} style={styles.icon} title={'Traduções em Andamento'}/>
-        </Nav.Link>
       </Nav>
     )
 
@@ -72,7 +69,7 @@ homepage(){
   var path = ""
   if(this.props.logged){
     if (this.props.author) {
-      path = "#author"
+      path = "/homepage_author"
     }else{
       path = "#translator"
     }
