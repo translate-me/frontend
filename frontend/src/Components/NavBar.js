@@ -42,7 +42,7 @@ class NavBar extends Component {
   author_links(){
     return(
       <Nav>
-        <Nav.Link>
+        <Nav.Link href="/homepage_translator">
           <FontAwesomeIcon icon={faGraduationCap} style={styles.icon} title={'Espaço do Tradutor'}/>
         </Nav.Link>
       </Nav>
@@ -71,7 +71,7 @@ homepage(){
     if (this.props.author) {
       path = "/homepage_author"
     }else{
-      path = "#translator"
+      path = "/homepage_translator"
     }
   }else{
     path="/"
