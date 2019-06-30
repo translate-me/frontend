@@ -39,6 +39,7 @@ class Revision extends Component {
       <div style={styles.page}>
       <NavBar logged={true} author={false}/>
       <div style = {styles.insidePage}>
+      <div >
         <div>
           <Row>
             <Col>
@@ -48,7 +49,7 @@ class Revision extends Component {
             </Col>
           </Row>
         </div>
-        <hr />
+        <hr/>
       </div>
       <Row>
         <Col>
@@ -64,15 +65,6 @@ class Revision extends Component {
             ref={(ref) => { this.editorRef = ref; }}
             />
             <Col>
-            <div style={styles.buttondiv}>
-            <Button
-            variant="primary"
-            onClick={this.logState}
-            style={styles.buttonStyle}
-            >
-            Enviar revisão
-            </Button>
-            </div>
             </Col>
           </Form.Group>
         </Col>
@@ -81,8 +73,26 @@ class Revision extends Component {
             <Form.Label style={styles.boldTitle}>Texto Traduzido</Form.Label>
             <Form.Control as="textarea" rows={15} value=" Na engenharia de software, um design pattern é uma solução geral repetível para um problema comumente ocorrido no projeto de software. Um design pattern não é um design acabado que pode ser transformado diretamente em código. É uma descrição ou modelo de como resolver um problema que pode ser usado em muitas situações diferentes. " />
           </Form.Group>
+          <Form.Label style={styles.scoreTitle}> Dê uma nota para essa tradução </Form.Label>
+          <div>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio" checked/> 1 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio"/> 2 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio"/> 3 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio"/> 4 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio"/> 5 </label>
+          </div>
+          <div style={styles.buttondiv}>
+          <Button
+          variant="primary"
+          onClick={this.logState}
+          style={styles.buttonStyle}
+          >
+          Enviar revisão
+          </Button>
+          </div>
         </Col>
       </Row>
+      </div>
       <AnotherSimpleFooter/>
   </div>
     );
@@ -112,16 +122,22 @@ const styles = {
     marginTop: '5%',
   },
   buttondiv: {
-    textAlign: 'right',
     marginTop: '2%',
-    width: '104%'
+    width: '80%'
   },
   buttonStyle: {
     marginRight: 10,
     backgroundColor: green,
     borderColor: green,
     fontSize: 15,
- }
+ },
+  radioStyle: {
+    marginRight: '3%'
+    },
+  scoreTitle: {
+  marginTop: '2%',
+  fontWeight: 'bold'
+  }
 };
 
 export default Revision;
