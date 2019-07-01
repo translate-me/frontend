@@ -43,7 +43,7 @@ class FollowTranslation extends Component{
     }
 
     componentDidMount(){
-        const url = 'http://0.0.0.0:9000/text/api/v0/text/list/texts_by_author/default'
+        const url = 'http://0.0.0.0:9000/text/api/v0/text/list/texts_by_author/' + this.props.location.state.username
         axios.get(url)
         .then(res =>{
             console.log(res);
@@ -108,9 +108,8 @@ class FollowTranslation extends Component{
                 }
                 {currentTranslations.map((item, key) => (
                     <Card style={styles.card} key={key}>
-                        <Card.Title>
-                            <ProgressBar striped variant="success" now={(item["fragments_done"] * 100) / item["total_fragments"]} />
-                        </Card.Title>
+                        <Card.Title>{item.title}</Card.Title>                            
+                        <ProgressBar striped variant="success" now={(item["fragments_done"] * 100) / item["total_fragments"]} />
                         <Card.Subtitle style={styles.prazo}>Idioma: {this.getLanguage(item.language)}</Card.Subtitle>
                         <Card.Body>{this.truncateText(item.context)}</Card.Body>
                     </Card>
@@ -126,8 +125,7 @@ class FollowTranslation extends Component{
         );
     }
     newText(){
-        let path = `/text_submission`;
-        this.props.history.push(path);
+        this.props.history.push({pathname: '/text_submission', state: {username: this.props.location.state.username}});
     }
 
     truncateText(text) {
@@ -300,7 +298,8 @@ const styles = {
     },
     prazo:{
         textAlign: 'right',
-        color: green
+        color: green,
+        marginTop: '1%'
     },
     advantages_square: {
         backgroundColor: lightgreen,

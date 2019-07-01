@@ -7,7 +7,7 @@ import SimpleFooter from '../Components/SimpleFooter';
 class Payment extends Component{
     constructor(props){
         super(props);
-        const oldState = this.props.location.state
+        const oldState = this.props.location.state;
         console.log('state anterior: ', oldState)
 
         this.state = {
@@ -15,6 +15,7 @@ class Payment extends Component{
             fileName: '',
             fileExtension: '',
             textContent: oldState.textContent,
+            username: oldState.username,
 
             complexityLevel: oldState.complexityLevel,
             knowledgeArea: oldState.knowledgeArea,
@@ -32,6 +33,10 @@ class Payment extends Component{
 
     toggleCheckbox(){
         this.setState({checked: !this.state.checked})
+    }
+
+    home(){
+        this.props.history.push({pathname: '/homepage_author', state: {username: this.state.username}});
     }
 
 
@@ -69,7 +74,7 @@ class Payment extends Component{
                             <b>
                                 <Form.Check type="checkbox" checked={this.state.checked} onChange={() => this.toggleCheckbox()} label="Li e concordo com os termos de uso do translate.me" />
                             </b>
-                            <Button disabled={!this.state.checked} style={styles.button} onClick={()=> this.props.history.push('/homepage_author')}>Finalizar pedido de tradução</Button>
+                            <Button disabled={!this.state.checked} style={styles.button} onClick={()=> this.home()}>Finalizar pedido de tradução</Button>
 
                         </Col>
                     </Row>
