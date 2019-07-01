@@ -12,7 +12,11 @@ import axios from 'axios';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { frag: this.props.location.state.frag, open: false, trasnlatedText:'' };
+    this.state = { 
+      frag: this.props.location.state.frag,
+      open: false,
+      trasnlatedText: this.props.location.state.frag.translated_fragment
+    };
     this.logState = () => console.log(this.state.trasnlatedText);
     this.editorRef = React.createRef();
     this.togglePanel = this.togglePanel.bind(this);
@@ -77,7 +81,7 @@ Salvar progresso
                     </Button>
                     <Button
                       variant="primary"
-                      onClick={() => { this.send(false) }}
+                      onClick={() => { this.send(true) }}
                       style={styles.rightButton}
                     >
 Enviar tradução
@@ -112,6 +116,7 @@ Enviar tradução
                   as="textarea"
                   rows={23}
                   placeholder="Traduza aqui seu texto"
+                  value={this.state.trasnlatedText}
                   onChange={() => { this.setState({ trasnlatedText: this.editorRef.value }); }}
                   ref={(ref) => { this.editorRef = ref; }}
                 />

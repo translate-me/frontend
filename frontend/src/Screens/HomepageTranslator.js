@@ -41,8 +41,8 @@ class HomepageTranslator extends Component {
     }
 
     componentDidMount(){        
-        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/default3/"
-        const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/default4/"
+        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/default1/"
+        const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/default/"
         const revision = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/1/"
         const addTranslator = "http://0.0.0.0:9000/text/api/v0/fragment/add_translator/" + 
         axios.get(available)
@@ -82,23 +82,29 @@ class HomepageTranslator extends Component {
                     />
                     : null
                 }
-                {currentTranslations.map((item, key) => (
-                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/text_editor")}>
+                {currentTranslations.map((item, key) => {
+                    var frag = item
+                    return(
+                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/text_editor", {frag})}>
                         <Card.Title>{item.text.title ? item.text.title : 'Titulo'}</Card.Title>
                         <Card.Subtitle>
-                            <p style={styles.prazo}> Título:
-                            {item.text.title ? item.text.title : 'Titulo'}
-                            </p>
                             <p style={styles.prazo}> Prazo:
-                            {item.prazo}
+                            {item.text.deadline ? this.renderDate(item.text.deadline) : 'Indefinido'}
                             </p>
                             <p style={styles.prazo}> Lingua de Origem:
-                            {item.language}
+                                {
+                                    item.text.language == 1 ? 'Português' :
+                                    item.text.language == 2 ? 'Espanhol' :
+                                    item.text.language == 3 ? 'Inglês' :
+                                    item.text.language }
+                            </p>
+                            <p style={styles.prazo}> Quantidade de Palavras:
+                            {item.total_words ? item.total_words : 'Sem palavras'}
                             </p>
                         </Card.Subtitle>
                         <Card.Body>{this.truncateText(item.text.context)}</Card.Body>
                     </Card>
-                ))}
+                )})}
                 {this.state.pageTranslations < pageNumbers.length ?
                     <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
                         id={this.state.pageTranslations + 1}
