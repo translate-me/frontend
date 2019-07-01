@@ -5,6 +5,7 @@ import {
 import NavBar from '../Components/NavBar';
 import { green } from '../colors';
 import { calculatePrivacyLevel } from '../Util/util';
+import SimpleFooter from '../Components/SimpleFooter';
 
 const breakpoints = [];
 let styles;
@@ -95,6 +96,7 @@ export class Breakpoints extends React.Component {
       console.log('Array de fragmentos enviados para o state: ', this.state);
       console.log('Array de breakpoints enviados para o state: ', this.state.breakpoints);
       console.log('Tamanho do texto enviado para o state: ', this.state.wordcount);
+      this.props.history.push("/payment",this.state)
     });
   }
 
@@ -197,6 +199,7 @@ export class Breakpoints extends React.Component {
             </Row>
           </Container>
         </div>
+        <SimpleFooter/>
       </div>
 
     );
