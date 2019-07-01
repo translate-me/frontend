@@ -45,10 +45,10 @@ class Payment extends Component{
                             <div style={styles.textContent}>
 
                             <p><b>Contexto: </b>{this.state.textContext}</p>
-                            <p><b>Nível de Complexidade: </b>{this.state.complexityLevel}</p>
-                            <p><b>Área de Conhecimento: </b>{this.state.knowledgeArea}</p>
-                            <p><b>Lingua de Origem: </b>{this.state.originLanguage}</p>
-                            <p><b>Lingua de Destino: </b>{this.state.translateLanguage}</p>
+                            <p><b>Nível de Complexidade: </b>{this.state.complexityLevel.label}</p>
+                            <p><b>Área de Conhecimento: </b>{this.state.knowledgeArea.label}</p>
+                            <p><b>Lingua de Origem: </b>{this.state.originLanguage.label}</p>
+                            <p><b>Lingua de Destino: </b>{this.state.translateLanguage.label}</p>
                             </div>
                         </Col>
                         <Col style={styles.payment}>

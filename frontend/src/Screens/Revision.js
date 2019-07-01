@@ -12,7 +12,7 @@ class Revision extends Component {
   constructor(props) {
     super(props);
     this.state = { trasnlatedText: '', open: false };
-    this.logState = () => console.log(this.state.trasnlatedText);
+    this.logState = () => this.props.history.push('/homepage_translator');
     this.editorRef = React.createRef();
     this.togglePanel = this.togglePanel.bind(this);
   }

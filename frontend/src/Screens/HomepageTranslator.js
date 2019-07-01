@@ -8,61 +8,65 @@ import StarRatingComponent from 'react-star-rating-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import SimpleFooter from '../Components/AnotherSimpleFooter';
+import axios from 'axios';
 
 class HomepageTranslator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            translations: [
-                {
-                    title: "Translation 1",
-                    context: loren_ipsun,
-                    progress: 20,
-                    words: 520,
-                    language: "Inglês",
-                    prazo: "20/06/2019"
-                },
-                {
-                    title: "Translation 2",
-                    language: "Inglês",
-                    context: loren_ipsun,
-                    progress: 30,
-                    words: 630,
-                    prazo: "15/07/2019"
+            // availableTranslations: [
+            //     {
+            //         title: "Translation 1",
+            //         context: loren_ipsun,
+            //         progress: 20,
+            //         words: 520,
+            //         language: "Inglês",
+            //         prazo: "20/06/2019"
+            //     },
+            //     {
+            //         title: "Translation 2",
+            //         language: "Inglês",
+            //         context: loren_ipsun,
+            //         progress: 30,
+            //         words: 630,
+            //         prazo: "15/07/2019"
 
-                },
-                {
-                    title: "Translation 3",
-                    language: "Espanhol",
-                    context: loren_ipsun,
-                    progress: 50,
-                    words: 1050,
-                    prazo: "30/06/2019"
+            //     },
+            //     {
+            //         title: "Translation 3",
+            //         language: "Espanhol",
+            //         context: loren_ipsun,
+            //         progress: 50,
+            //         words: 1050,
+            //         prazo: "30/06/2019"
 
-                },
-                {
-                    title: "Translation 4",
-                    language: "Espanhol",
-                    context: loren_ipsun,
-                    progress: 40,
-                    words: 240,
-                    prazo: "04/07/2019"
+            //     },
+            //     {
+            //         title: "Translation 4",
+            //         language: "Espanhol",
+            //         context: loren_ipsun,
+            //         progress: 40,
+            //         words: 240,
+            //         prazo: "04/07/2019"
 
-                },
-                {
-                    title: "Translation 5",
-                    language: "Inglês",
-                    context: loren_ipsun,
-                    progress: 10,
-                    words: 310,
-                    prazo: "30/07/2019"
+            //     },
+            //     {
+            //         title: "Translation 5",
+            //         language: "Inglês",
+            //         context: loren_ipsun,
+            //         progress: 10,
+            //         words: 310,
+            //         prazo: "30/07/2019"
 
-                },
-            ],
+            //     },
+            // ],
+            available: [],
+            current: [],
             pageTranslations: 1,
             pageRevisions: 1,
             pageAccept:1,
             translationsPerPage: 3,
+            loading: false
         }
         };
     truncateText(text) {
@@ -81,13 +85,37 @@ class HomepageTranslator extends Component {
         }
     }
 
+    componentDidMount(){        
+        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/1/"
+        const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/1/"
+        axios.get(available)
+        .then(res => {
+            console.log('success', res.data);
+            this.setState({available: res.data, loading: false})
+            
+        })
+        .catch(err => {
+            console.log('error', err)
+        })
+
+        axios.get(current)
+                .then(res => {
+            console.log('success', res.data);
+            this.setState({current: res.data, loading: false})
+            
+        })
+        .catch(err => {
+            console.log('error', err)
+        })
+    }
+
     renderTranslation() {
-        const { translations, pageTranslations, translationsPerPage } = this.state;
+        const { current, pageTranslations, translationsPerPage } = this.state;
         const indexOfLastTranslations = pageTranslations * translationsPerPage;
         const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
-        const currentTranslations = translations.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const currentTranslations = current.slice(indexOfFirstTranslations, indexOfLastTranslations);
         const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(translations.length / translationsPerPage); i++) {
+        for (let i = 1; i <= Math.ceil(current.length / translationsPerPage); i++) {
             pageNumbers.push(i);
         }
 
@@ -102,8 +130,11 @@ class HomepageTranslator extends Component {
                 }
                 {currentTranslations.map((item, key) => (
                     <Card style={styles.card} key={key} onClick={() => this.props.history.push("/text_editor")}>
-                        <Card.Title>{item.title}</Card.Title>
+                        <Card.Title>{item.text.title ? item.text.title : 'Titulo'}</Card.Title>
                         <Card.Subtitle>
+                            <p style={styles.prazo}> Título:
+                            {item.text.title ? item.text.title : 'Titulo'}
+                            </p>
                             <p style={styles.prazo}> Prazo:
                             {item.prazo}
                             </p>
@@ -111,7 +142,7 @@ class HomepageTranslator extends Component {
                             {item.language}
                             </p>
                         </Card.Subtitle>
-                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
+                        <Card.Body>{this.truncateText(item.text.context)}</Card.Body>
                     </Card>
                 ))}
                 {this.state.pageTranslations < pageNumbers.length ?
@@ -134,51 +165,50 @@ class HomepageTranslator extends Component {
         }
     }
 
-    renderRevisions() {
-        const { translations, pageRevisions, translationsPerPage } = this.state;
-        const indexOfLastTranslations = pageRevisions * translationsPerPage;
-        const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
-        const currentTranslations = translations.slice(indexOfFirstTranslations, indexOfLastTranslations);
-        const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(translations.length / translationsPerPage); i++) {
-            pageNumbers.push(i);
-        }
+    // renderRevisions() {
+    //     const { availableTranslations, pageRevisions, translationsPerPage } = this.state;
+    //     const indexOfLastTranslations = pageRevisions * translationsPerPage;
+    //     const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
+    //     const currentTranslations = availableTranslations.slice(indexOfFirstTranslations, indexOfLastTranslations);
+    //     const pageNumbers = [];
+    //     for (let i = 1; i <= Math.ceil(availableTranslations.length / translationsPerPage); i++) {
+    //         pageNumbers.push(i);
+    //     }
 
-        return (
-            <Row style={styles.rowdiv}>
-                {this.state.pageRevisions > 1 ?
-                    <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
-                        id={this.state.pageRevisions - 1}
-                        onClick={(e) => this.handleClickR(e)}
-                    />
-                    : null
-                }
-                {currentTranslations.map((item, key) => (
-                    <Card style={styles.card} key={key}>
-                        <Card.Title>{item.title}</Card.Title>
-                        <Card.Subtitle>
-                            <p style={styles.prazo}> Prazo:
-                            {item.prazo}
-                            </p>
-                            <p style={styles.prazo}> Lingua de Origem:
-                            {item.language}
-                            </p>
-                        </Card.Subtitle>
-                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
-                        <Button style={styles.acceptButton} onClick = {() => { if (window.confirm('Deseja realizar esta revisão?')) this.props.history.push("/revision")}} >Fazer a Revisão</Button>
-                    </Card>
-                ))}
-                {this.state.pageRevisions < pageNumbers.length ?
-                    <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
-                        id={this.state.pageRevisions + 1}
-                        onClick={(e) => this.handleClickR(e)}
-                    />
-                    : null
-                }
-            </Row>
-        );
-    }
-
+    //     return (
+    //         <Row style={styles.rowdiv}>
+    //             {this.state.pageRevisions > 1 ?
+    //                 <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
+    //                     id={this.state.pageRevisions - 1}
+    //                     onClick={(e) => this.handleClickR(e)}
+    //                 />
+    //                 : null
+    //             }
+    //             {currentTranslations.map((item, key) => (
+    //                 <Card style={styles.card} key={key}>
+    //                     <Card.Title>{item.title}</Card.Title>
+    //                     <Card.Subtitle>
+    //                         <p style={styles.prazo}> Prazo:
+    //                         {item.prazo}
+    //                         </p>
+    //                         <p style={styles.prazo}> Lingua de Origem:
+    //                         {item.language}
+    //                         </p>
+    //                     </Card.Subtitle>
+    //                     <Card.Body>{this.truncateText(item.text.context)}</Card.Body>
+    //                     <Button style={styles.acceptButton} onClick = {() => { if (window.confirm('Deseja realizar esta revisão?')) this.props.history.push("/revision")}} >Fazer a Revisão</Button>
+    //                 </Card>
+    //             ))}
+    //             {this.state.pageRevisions < pageNumbers.length ?
+    //                 <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
+    //                     id={this.state.pageRevisions + 1}
+    //                     onClick={(e) => this.handleClickR(e)}
+    //                 />
+    //                 : null
+    //             }
+    //         </Row>
+    //     );
+    // }
 
     handleClickA(event) {
         const page = Number(event.target.id)
@@ -190,12 +220,12 @@ class HomepageTranslator extends Component {
     }
 
     renderAccepts() {
-        const { translations, pageAccept, translationsPerPage } = this.state;
+        const { available, pageAccept, translationsPerPage } = this.state;
         const indexOfLastTranslations = pageAccept * translationsPerPage;
         const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
-        const currentTranslations = translations.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const availableTranslations = available.slice(indexOfFirstTranslations, indexOfLastTranslations);
         const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(translations.length / translationsPerPage); i++) {
+        for (let i = 1; i <= Math.ceil(available.length / translationsPerPage); i++) {
             pageNumbers.push(i);
         }
 
@@ -208,21 +238,25 @@ class HomepageTranslator extends Component {
                     />
                     : null
                 }
-                {currentTranslations.map((item, key) => (
+                {availableTranslations.map((item, key) => (
                     <Card style={styles.card} key={key}>
-                        <Card.Title>{item.title}</Card.Title>
+                        <Card.Title>{item.text.title ? item.text.title : 'Titulo'}</Card.Title>
                         <Card.Subtitle>
                             <p style={styles.prazo}> Prazo:
-                            {item.prazo}
+                            {item.prazo ? item.prazo : 'Indefinido'}
                             </p>
                             <p style={styles.prazo}> Lingua de Origem:
-                            {item.language}
+                                {
+                                    item.text.language == 1 ? 'Português' :
+                                    item.text.language == 2 ? 'Espanhol' :
+                                    item.text.language == 3 ? 'Inglês' :
+                                    item.text.language }
                             </p>
                             <p style={styles.prazo}> Quantidade de Palavras:
-                            {item.words}
+                            {item.total_words ? item.total_words : 'Sem palavras'}
                             </p>
                         </Card.Subtitle>
-                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
+                        <Card.Body>{this.truncateText(item.text.context)}</Card.Body>
                         {/* <Button style={styles.acceptButton} onClick={() => this.props.history.push("/text_editor")} >Trabalhar nessa Tradução</Button> */}
                         <Button style={styles.acceptButton} onClick={() => { if (window.confirm('Deseja realizar esta tradução?')) this.props.history.push("/text_editor") } } >Trabalhar nessa Tradução</Button>
                     </Card>
@@ -283,9 +317,9 @@ class HomepageTranslator extends Component {
                     <br />
                     <br />
                     <h2 style={styles.title}>Novas Revisões</h2>
-                    <Row>
+                    {/* <Row>
                         {this.renderRevisions()}
-                    </Row>
+                    </Row> */}
                     <br/>
                     <br/>
                 </Container>

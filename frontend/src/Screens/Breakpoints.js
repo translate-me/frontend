@@ -6,6 +6,7 @@ import NavBar from '../Components/NavBar';
 import { green } from '../colors';
 import { calculatePrivacyLevel } from '../Util/util';
 import SimpleFooter from '../Components/SimpleFooter';
+import axios from 'axios';
 
 const breakpoints = [];
 let styles;
@@ -13,12 +14,10 @@ let styles;
 export class Breakpoints extends React.Component {
   constructor(props) {
     super(props);
-    // must get the previous state from previous screen on user flux, actual values are placeholders
     
     const oldState = this.props.location.state
     console.log('state anterior: ', oldState)
-    // console.log('arquivo: ', oldState.files[0])
-    
+
     this.state = {
       textTitle: oldState.textTitle,
       fileName: '',
@@ -35,6 +34,7 @@ export class Breakpoints extends React.Component {
       wordcount: 0,
       breakpoints: [],
       fragments: [],
+      textFragments: []
     };
   }
 
@@ -83,6 +83,34 @@ export class Breakpoints extends React.Component {
     })    
   }
 
+  // mountSendObj(){
+
+  // }
+
+  send(){
+    var obj = {
+      context: this.state.textContext,
+      language: this.state.translateLanguage.value,
+      level: this.state.complexityLevel.value,
+      categories: [this.state.knowledgeArea.value],
+      author: "default",
+      fragments: this.state.fragments.length > 0? this.state.fragments : [{body: this.state.textContent, type: "text"}]
+    }
+    console.log(obj);
+    
+
+    const url = 'http://0.0.0.0:9000/text/api/v0/text/create/'
+    axios.post(url, obj)
+    .then(res =>{
+      console.log(res);
+      this.props.history.push("/payment", this.state)
+    })
+    .catch(err => {
+      console.log(err.response);
+      
+    })
+  }
+
   sendFragment = () => {
     const completeText = this.state.textContent;
     const fragments = completeText.split('🔴');
@@ -94,10 +122,12 @@ export class Breakpoints extends React.Component {
       wordcount: completeText.length,
     }, function () {
       console.log('Array de fragmentos enviados para o state: ', this.state);
-      console.log('Array de breakpoints enviados para o state: ', this.state.breakpoints);
+      console.log('Array de breakpoints enviados para o state: ', this.state.fragments);
       console.log('Tamanho do texto enviado para o state: ', this.state.wordcount);
-      this.props.history.push("/payment",this.state)
+      // console.log(this.state.)
+      // this.props.history.push("/payment",this.state)
     });
+    this.send()
   }
 
   onChange = (e) => {
