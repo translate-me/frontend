@@ -97,11 +97,12 @@ class Registration extends Component {
   }
 
   async send() {
-    if (this.verifyFields()) {
-      console.log('td certo');
-      await this.apiConnection();
-    }
+    // if (this.verifyFields()) {
+    //   console.log('td certo');
+    // }
+    await this.apiConnection();
   }
+    
 
   formGroup(label, placeholder, onChange, thisref, invalid, warning) {
     return (
