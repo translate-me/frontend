@@ -13,7 +13,7 @@ import 'react-rater/lib/react-rater.css'
 class FinishedText extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { trasnlatedText: '', open: false };
+    this.state = { trasnlatedText: this.props.location.state , open: false };
     this.logState = () => console.log(this.state.trasnlatedText);
     this.editorRef = React.createRef();
     this.togglePanel = this.togglePanel.bind(this);
@@ -24,6 +24,8 @@ class FinishedText extends React.Component {
   }
 
   render() {
+    console.log(this.state.trasnlatedText);
+    
     return (
       <div>
         <NavBar logged={true} author={true} />
@@ -42,7 +44,7 @@ class FinishedText extends React.Component {
                 <div>
                     <p style={styles.context}>
                         <b>Contexto: </b>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam justo arcu, lobortis non risus et, tristique suscipit elit. Vestibulum arcu justo, suscipit sed auctor id, sodales ut turpis. Curabitur feugiat est et purus viverra auctor.
+                        {this.state.trasnlatedText.context}
                     </p>
                 </div>
             ) : null
@@ -52,8 +54,8 @@ class FinishedText extends React.Component {
           <Row>
               <Col>
                 <Form.Group controlId="originalText">
-                    <Form.Label style={styles.subTitle}>Texto Traduzido</Form.Label>
-                    <Form.Control as="textarea" rows={23} value="Lorem ipsum dlq;dlkwq;kr'pq'RPhAJDolor sit amet, consectetur adipiscing elit. Maecenas massa justo, aliquet eu nibh nec, imperdiet maximus nisl. Nunc dapibus, lectus in dapibus euismod, eros ex consequat tellus, vitae placerat orci sem vel leo. Suspendisse varius tortor et elit consectetur euismod. In sit amet finibus metus. Fusce at posuere felis. Maecenas tincidunt pharetra massa. Nullam at lorem nulla. Vivamus consectetur non ligula at interdum. Suspendisse congue, est eu elementum lacinia, felis est tristique purus, nec efficitur orci nunc eget neque. Integer quis aliquet orci, a malesuada libero. Phasellus scelerisque felis et sem rhoncus, eu ultrices augue cursus. " />
+                    <Form.Label style={styles.subTitle}>{this.state.trasnlatedText.title}</Form.Label>
+                <Form.Control as="textarea" rows={23} value={this.state.trasnlatedText.translated_text} />
                 </Form.Group>
               </Col>
               <Col style={styles.center}>

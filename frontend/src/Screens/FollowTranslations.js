@@ -188,7 +188,7 @@ class FollowTranslation extends Component{
                     : null
                 }
                 {finishedTranslations.map((item, key) => (
-                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/finished_text")}>
+                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/finished_text", item)}>
                         <Card.Title>
                             <h4>{item.title}</h4>
                         </Card.Title>
