@@ -22,9 +22,9 @@ class Login extends Component {
           try {
             const response = await api.post("/user/login/api/v0/login/", { username, password });
             login(response.data.token);
-            this.props.history.push("/homepage_author");
+            this.props.history.push({pathname: '/homepage_author', state: {username: this.state.username}});
           } catch (err) {
-            console.log('Deu ruim');
+            console.log('De ruim');
           }
         }
     };

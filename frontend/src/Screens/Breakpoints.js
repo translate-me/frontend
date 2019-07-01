@@ -19,11 +19,12 @@ export class Breakpoints extends React.Component {
     console.log('state anterior: ', oldState)
 
     this.state = {
-      textTitle: oldState.textTitle,
+      title: oldState.textTitle,
       fileName: '',
       fileExtension: '',
       textContent: oldState.textContent,
       textContext: oldState.textContext,
+      username: oldState.username,
       
       complexityLevel: oldState.complexityLevel,
       knowledgeArea: oldState.knowledgeArea,
@@ -91,13 +92,13 @@ export class Breakpoints extends React.Component {
     console.log('frags', this.state.fragments);
     
     var obj = {
-      context:  this.state.textContext,
+      title: this.state.title,
+      context: this.state.textContext,
       language: this.state.translateLanguage.value,
       level: this.state.complexityLevel.value,
       categories: [this.state.knowledgeArea.value],
-      author: "default",
-      title: this.state.textTitle,
-      fragments: this.state.fragments
+      author: this.state.username,
+      fragments: this.state.fragments.length > 0? this.state.fragments : [{body: this.state.textContent, type: "text"}]
     }
     console.log("veja aquii" ,obj);
     
