@@ -1,5 +1,5 @@
 # Front-end
-<a href="https://codeclimate.com/github/translate-me/frontend/maintainability"><img src="https://api.codeclimate.com/v1/badges/870fa781f39c53f870a5/maintainability" /></a>
+<!-- <a href="https://codeclimate.com/github/translate-me/frontend/maintainability"><img src="https://api.codeclimate.com/v1/badges/870fa781f39c53f870a5/maintainability" /></a> -->
 
 ## Run project
 1. To run authenticantion at first you need verrify if you have docker and docker-compose in your machine.
