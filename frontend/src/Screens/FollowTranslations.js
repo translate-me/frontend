@@ -35,40 +35,43 @@ class FollowTranslation extends Component{
                 {
                     title: "Translation 1",
                     context: loren_ipsun,
-                    progress: 20,
+                    language: "Português",
                     prazo: "20/06/2019"
                 },
                 {
                     title: "Translation 2",
                     context: loren_ipsun,
-                    progress: 30,
+                    language: "Português",
                     prazo: "15/07/2019"
 
                 },
                 {
                     title: "Translation 3",
                     context: loren_ipsun,
-                    progress: 50,
+                    language: "Português",
                     prazo: "30/06/2019"
 
                 },
                 {
                     title: "Translation 4",
                     context: loren_ipsun,
-                    progress: 40,
+                    language: "Português",
                     prazo: "04/07/2019"
 
                 },
                 {
                     title: "Translation 5",
                     context: loren_ipsun,
-                    progress:10,
+                    language: "Português",
                     prazo: "30/07/2019"
 
                 },
             ],
             currentPage: 1,
-            translationsPerPage: 2
+            translationsPerPage: 2,
+            pageTranslations: 1,
+            pageRevisions: 1,
+            pageAccept:1,
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -130,6 +133,67 @@ class FollowTranslation extends Component{
         this.props.history.push(path);
     }
 
+    truncateText(text) {
+        if (text.length > 200) {
+            return text.substring(0, 197) + "..."
+        }
+        return text
+    }
+
+    handleClickT(event) {
+        const page = Number(event.target.id)
+        if (page > 0) {
+            this.setState({
+                pageTranslations: page
+            });
+        }
+    }
+
+    renderFinishedTranslation() {
+        const { translations, pageTranslations, translationsPerPage } = this.state;
+        const indexOfLastTranslations = pageTranslations * translationsPerPage;
+        const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
+        const finishedTranslations = translations.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(translations.length / translationsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
+        return (
+            <Row style={styles.rowdiv}>
+                {this.state.pageTranslations > 1 ?
+                    <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
+                        id={this.state.pageTranslations - 1}
+                        onClick={(e) => this.handleClickT(e)}
+                    />
+                    : null
+                }
+                {finishedTranslations.map((item, key) => (
+                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/finished_text")}>
+                        <Card.Title>{item.title}</Card.Title>
+                        <Card.Subtitle>
+                            <p style={styles.prazo}> Data de Entrega:
+                            {item.prazo}
+                            </p>
+                            <p style={styles.prazo}> Lingua de Origem:
+                            {item.language}
+                            </p>
+                        </Card.Subtitle>
+                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
+                    </Card>
+                ))}
+                {this.state.pageTranslations < pageNumbers.length ?
+                    <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
+                        id={this.state.pageTranslations + 1}
+                        onClick={(e) => this.handleClickT(e)}
+                    />
+                    : null
+                }
+            </Row>
+        );
+    }
+
+
     render(){
         const { advantages } = this.state;
 
@@ -162,6 +226,13 @@ class FollowTranslation extends Component{
                         <p style={styles.title}>Traduções em Andamento</p>
                     </div>
                     {this.renderTranslation()}
+                    <br/>
+                    <br/>
+                    <div style={styles.textdiv}>
+                        <p style={styles.title}>Traduções Concluídas</p>
+                    </div>
+                        {this.renderFinishedTranslation()}
+                    <br/>
                 </Container>
                 <AnotherSimpleFooter/>
             </div>
