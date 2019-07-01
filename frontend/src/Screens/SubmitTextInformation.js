@@ -5,6 +5,7 @@ import NavBar from '../Components/NavBar';
 import { white, green } from '../colors';
 import Select from 'react-select';
 import SimpleFooter from '../Components/SimpleFooter';
+import axios from 'axios';
 
 
 class SubmitTextInformation extends Component {
@@ -27,6 +28,8 @@ class SubmitTextInformation extends Component {
             textContextNotOk: null,
             originLanguageNotOk: null,
             translateLanguageNotOk: null,
+            categories: [],
+            loading: true,
             titleRef: React.createRef(),
             complexityLevelRef: React.createRef(),
             knowledgeAreaRef: React.createRef(),
@@ -40,6 +43,16 @@ class SubmitTextInformation extends Component {
                 show: false,
             },
         };
+    }
+
+    componentDidMount(){        
+        const url = "http://0.0.0.0:9000/text/api/v0/category/list/"
+        axios.get(url)
+        .then(res => {
+            console.log(res.data);
+            this.setState({categories: res.data, loading: false})
+            
+        })
     }
 
     verifyFields() {
@@ -159,12 +172,14 @@ class SubmitTextInformation extends Component {
 
     knowledgeArea() {
         const { knowledgeAreaNotOk, knowledgeArea } = this.state;
-        const options = [
-            { value: '1', label: 'Ciências Humanas' },
-            { value: '2', label: 'Ciências Exatas' },
-            { value: '3', label: 'Ciências da Natureza' },
-            { value: '4', label: 'Outros' }
-        ]
+        const options = []
+        this.state.categories.forEach(cat => {
+            let obj={
+                "label": cat["category_name"],
+                "value": cat["category_id"]
+            }
+            options.push(obj)
+        });
 
         return (
             <Form.Group>
@@ -275,49 +290,52 @@ class SubmitTextInformation extends Component {
         return (
           <div>
             <NavBar logged={true} />
-            <div style={styles.screen}>
-            <Row style={styles.row}>
-                <Col>
-                <p style={styles.title}>Preencha as Seguintes Informações Sobre Seu Texto</p>
-                </Col>
-                <Col>
-                    <div style={styles.buttondiv}>
-                        <Link to ={{
-                            pathname: "/breakpoints",
-                            state: { 
-                                textContent: this.state.textContent,
-                                textTitle: this.state.title,
-                                complexityLevel: this.state.complexityLevel.label,
-                                knowledgeArea: this.state.knowledgeArea.label,
-                                textContext: this.state.textContext,
-                                originLanguage: this.state.originLanguage.label,
-                                translateLanguage: this.state.translateLanguage.label,
-                            }
-                        }} >
-                            <Button type="submit" style={styles.button} onClick={() => { this.send(); }}>   
-                                Enviar
-                            </Button>
-                        </Link>
-                    </div>
-                </Col>
-            </Row>
-            <Row>
-                <Col style={styles.col}>
-                    <Form style={styles.font}>
-                        {this.textTitle()}
-                        {this.complexityLevel()}
-                        {this.knowledgeArea()}
-                        {this.originLanguage()}
-                    </Form>
-                </Col>
-                <Col style={styles.col}>
-                    <Form style={styles.font}>
-                        {this.textContext()}
-                        {this.translateLanguage()}
-                    </Form>
-                </Col>
-            </Row>
-            </div>
+            {this.state.loading? null
+            :
+                <div style={styles.screen}>
+                <Row style={styles.row}>
+                    <Col>
+                    <p style={styles.title}>Preencha as Seguintes Informações Sobre Seu Texto</p>
+                    </Col>
+                    <Col>
+                        <div style={styles.buttondiv}>
+                            <Link to ={{
+                                pathname: "/breakpoints",
+                                state: { 
+                                    textContent: this.state.textContent,
+                                    textTitle: this.state.title,
+                                    complexityLevel: this.state.complexityLevel,
+                                    knowledgeArea: this.state.knowledgeArea,
+                                    textContext: this.state.textContext,
+                                    originLanguage: this.state.originLanguage,
+                                    translateLanguage: this.state.translateLanguage,
+                                }
+                            }} >
+                                <Button type="submit" style={styles.button} onClick={() => { this.send(); }}>   
+                                    Enviar
+                                </Button>
+                            </Link>
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={styles.col}>
+                        <Form style={styles.font}>
+                            {this.textTitle()}
+                            {this.complexityLevel()}
+                            {this.knowledgeArea()}
+                            {this.originLanguage()}
+                        </Form>
+                    </Col>
+                    <Col style={styles.col}>
+                        <Form style={styles.font}>
+                            {this.textContext()}
+                            {this.translateLanguage()}
+                        </Form>
+                    </Col>
+                </Row>
+                </div>
+            }
             <SimpleFooter/>
           </div>
         );

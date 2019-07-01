@@ -29,6 +29,19 @@ export default class Routes extends React.Component {
         <AuthorizedRoute exact path="/follow_translations" component={FollowTranslation} />
         <Route exact path="/login" component={Login} />
         <Route component={NotFoundRoute} />
+        <Route exact path="/text_information" component={SubmitTextInformation} />
+        <Route exact path="/homepage_author" component={FollowTranslation} />
+        <Route exact path="/meet_us" component={WhoAreWe} />
+        <Route exact path="/how_it_works" component={HowItWorks} />
+        <Route exact path="/homepage_translator" component={HomepageTranslator} />
+        <Route exact path="/revision" component={Revision} />
+        <Route exact path="/translator_sign_in" component={TranslatorSignUp} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/finished_text" component={FinishedText} />
+        <Route exact path="/payment" component={Payment} />
+
+
+
       </Switch>
     </Router>)
   }
