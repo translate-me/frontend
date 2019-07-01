@@ -14,54 +14,9 @@ class HomepageTranslator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // availableTranslations: [
-            //     {
-            //         title: "Translation 1",
-            //         context: loren_ipsun,
-            //         progress: 20,
-            //         words: 520,
-            //         language: "Inglês",
-            //         prazo: "20/06/2019"
-            //     },
-            //     {
-            //         title: "Translation 2",
-            //         language: "Inglês",
-            //         context: loren_ipsun,
-            //         progress: 30,
-            //         words: 630,
-            //         prazo: "15/07/2019"
-
-            //     },
-            //     {
-            //         title: "Translation 3",
-            //         language: "Espanhol",
-            //         context: loren_ipsun,
-            //         progress: 50,
-            //         words: 1050,
-            //         prazo: "30/06/2019"
-
-            //     },
-            //     {
-            //         title: "Translation 4",
-            //         language: "Espanhol",
-            //         context: loren_ipsun,
-            //         progress: 40,
-            //         words: 240,
-            //         prazo: "04/07/2019"
-
-            //     },
-            //     {
-            //         title: "Translation 5",
-            //         language: "Inglês",
-            //         context: loren_ipsun,
-            //         progress: 10,
-            //         words: 310,
-            //         prazo: "30/07/2019"
-
-            //     },
-            // ],
             available: [],
             current: [],
+            revision: [],
             pageTranslations: 1,
             pageRevisions: 1,
             pageAccept:1,
@@ -86,35 +41,26 @@ class HomepageTranslator extends Component {
     }
 
     componentDidMount(){        
-        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/1/"
-        const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/1/"
+        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/default3/"
+        const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/default4/"
         const revision = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/1/"
         const addTranslator = "http://0.0.0.0:9000/text/api/v0/fragment/add_translator/" + 
         axios.get(available)
         .then(res => {
             console.log('success', res.data);
-            this.setState({available: res.data, loading: false})
-            
-        })
-        .catch(err => {
-            console.log('error', err)
-        })
-
-        axios.get(current)
+            this.setState({available: res.data})
+            axios.get(current)
                 .then(res => {
-            console.log('success', res.data);
-            this.setState({current: res.data, loading: false})
-            
+                    console.log('success', res.data);
+                    this.setState({ current: res.data, loading: false })
+                })
+                .catch(err => {
+                    console.log('error', err)
+                })
         })
         .catch(err => {
             console.log('error', err)
         })
-        
-        const getCurrentUser = {
-            fragment_translator: "Milene"
-        }
-
-        axios.patch(addTranslator, {getCurrentUser})
     }
 
     renderTranslation() {
@@ -217,6 +163,23 @@ class HomepageTranslator extends Component {
     //         </Row>
     //     );
     // }
+    
+    handleAccept(frag){
+        const url = 'http://0.0.0.0:9000/text/api/v0/fragment/add_translator/' + frag.id + '/'
+
+        if (window.confirm('Deseja realizar esta tradução?')) {
+            axios.patch(url, {
+                fragment_translator: 'default'
+            })
+            .then( () =>
+                this.props.history.push("/text_editor", { frag })
+            )
+            .catch((err) => {
+                console.log(err.response)
+                window.confirm('Não é possivel trabalhar nessa tradução.')}
+            )
+        }
+    }
 
     handleClickA(event) {
         const page = Number(event.target.id)
@@ -227,11 +190,15 @@ class HomepageTranslator extends Component {
         }
     }
 
-    handleAccept(fragmentId){
-        if (window.confirm('Deseja realizar esta tradução?')) {
-            console.log('id do fragmento: ', fragmentId)
-            this.props.history.push("/text_editor", {fragmentId})
-        }
+    renderDate(d) {
+        var data = new Date(d)
+
+        var dia = data.getDate().toString()
+        var diaF = (dia.length == 1) ? '0' + dia : dia
+        var mes = (data.getMonth() + 1).toString() //+1 pois no getMonth Janeiro começa com zero.
+        var mesF = (mes.length == 1) ? '0' + mes : mes
+        var anoF = data.getFullYear()
+        return diaF + "/" + mesF + "/" + anoF;
     }
 
     renderAccepts() {
@@ -258,7 +225,7 @@ class HomepageTranslator extends Component {
                         <Card.Title>{item.text.title ? item.text.title : 'Titulo'}</Card.Title>
                         <Card.Subtitle>
                             <p style={styles.prazo}> Prazo:
-                            {item.prazo ? item.prazo : 'Indefinido'}
+                            {item.text.deadline ? this.renderDate(item.text.deadline) : 'Indefinido'}
                             </p>
                             <p style={styles.prazo}> Lingua de Origem:
                                 {
@@ -273,7 +240,7 @@ class HomepageTranslator extends Component {
                         </Card.Subtitle>
                         <Card.Body>{this.truncateText(item.text.context)}</Card.Body>
                         {/* <Button style={styles.acceptButton} onClick={() => this.props.history.push("/text_editor")} >Trabalhar nessa Tradução</Button> */}
-                        <Button style={styles.acceptButton} onClick={() => this.handleAccept(item.id)}> Trabalhar nessa Tradução</Button>
+                        <Button style={styles.acceptButton} onClick={() => this.handleAccept(item)}> Trabalhar nessa Tradução</Button>
                     </Card>
                 ))}
                 {this.state.pageAccept < pageNumbers.length ?
@@ -287,8 +254,11 @@ class HomepageTranslator extends Component {
         );
     }
 
-
     render() {
+        console.log('available', this.state.available);
+        console.log('current', this.state.current);
+        console.log('revisions', this.state.revisions);
+        
         return (
             <div style={styles.font}>
                 <NavBar logged={true} author={false}/>
@@ -319,31 +289,45 @@ class HomepageTranslator extends Component {
                 </Container>
                 <hr/>
                 <Container>
-                    <h2 style={styles.title}>Suas traduções em andamento</h2>
-                    <Row>
-                        {this.renderTranslation()}
-                    </Row>
-                    <br/>
-                    <br/>
-                    <h2 style={styles.title}>Novas Traduções</h2>
-                    <Row>
-                        {this.renderAccepts()}
-                    </Row>
-                    <br />
-                    <br />
-                    <h2 style={styles.title}>Novas Revisões</h2>
-                    {/* <Row>
-                        {this.renderRevisions()}
-                    </Row> */}
-                    <br/>
-                    <br/>
+                    {this.state.current.length > 0?
+                        <div>
+                            <h2 style={styles.title}>Suas traduções em andamento</h2>
+                            <Row style={{width: '100%'}}>
+                                {this.renderTranslation()}
+                            </Row>
+                            <br/>
+                            <br/>
+                        </div>
+                        :null
+                    }
+                    {this.state.available.length > 0?
+                        <div>
+                            <h2 style={styles.title}>Novas Traduções</h2>
+                            <Row>
+                                {this.renderAccepts()}
+                            </Row>
+                            <br />
+                            <br />
+                        </div>
+                        : null
+                    }
+                    {this.state.revision.length > 0?
+                        <div>
+                            <h2 style={styles.title}>Novas Revisões</h2>
+                            {/* <Row>
+                                {this.renderRevisions()}
+                            </Row> */}
+                            <br/>
+                            <br/>
+                        </div>
+                        :null
+                    }
                 </Container>
                 <SimpleFooter/>
             </div>
         );
     }
 };
-            
             
 const styles = {
     card:{
@@ -428,13 +412,16 @@ const styles = {
         color: green
     },
     icon: {
-        fontSize: 50,
-        marginTop: "20vh",
-        marginRight: 10,
-        marginLeft: 10
+        fontSize: 30,
+        marginTop: "10vh",
+        marginRight: 0,
+        marginLeft: 0
     },
     acceptButton:{
         backgroundColor: green
+    },
+    rowdiv:{
+        width: '100%'
     }
 };
 const loren_ipsun = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";

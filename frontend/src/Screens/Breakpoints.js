@@ -88,6 +88,8 @@ export class Breakpoints extends React.Component {
   // }
 
   send(){
+    console.log('frags', this.state.fragments);
+    
     var obj = {
       context:  this.state.textContext,
       language: this.state.translateLanguage.value,
@@ -95,9 +97,9 @@ export class Breakpoints extends React.Component {
       categories: [this.state.knowledgeArea.value],
       author: "default",
       title: this.state.textTitle,
-      fragments: this.state.fragments.length > 0? this.state.fragments : [{body: this.state.textContent, type: "text"}]
+      fragments: this.state.fragments
     }
-    console.log(obj);
+    console.log("veja aquii" ,obj);
     
 
     const url = 'http://0.0.0.0:9000/text/api/v0/text/create/'
@@ -112,13 +114,13 @@ export class Breakpoints extends React.Component {
     })
   }
 
-  sendFragment = () => {
+  sendFragment = async() => {
     const completeText = this.state.textContent;
     const fragments = completeText.split('🔴');
 
     const fragmentsObject = fragments.map(fragment => ({ body: fragment, type: 'text' }));
 
-    this.setState({
+    await this.setState({
       fragments: fragmentsObject,
       wordcount: completeText.length,
     }, function () {
@@ -140,7 +142,7 @@ export class Breakpoints extends React.Component {
   render() {
     return (
       <div>
-        <NavBar logged={true} author={false}/>
+        <NavBar logged={true} author={true}/>
         <div style={styles.root}>
           <Container>
             <Row style={styles.center}>
