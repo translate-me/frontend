@@ -3,6 +3,7 @@ import React from 'react';
 const styles = {
   container: {
     fontFamily: 'Raleway',
+    position: 'absolute',
     right: 0,
     bottom: 0,
     left: 0,
