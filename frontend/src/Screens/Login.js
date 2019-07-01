@@ -1,59 +1,55 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from "react-router-dom";
 import {Form, Button } from 'react-bootstrap';
 import { white, green, lightgreen } from '../colors'
-import { connect } from "react-redux";
-import { login } from "../Actions/authActions";
+import { login } from "../Util/auth";
+import api from "../Util/api";
 import NavBar from '../Components/NavBar';
 
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username:"",
-            password:"",
-        }
-      this.handleChange = this.handleChange.bind(this)
-    //   this.handleSubmit = this.handleSubmit.bind(this)
-    }
+    state = {
+        username: "",
+        password: "",
+    };
     
-//   handleSubmit(event) {
-//     event.preventDefault();
-//     this.props.login(this.state)
-//   }
-
-  handleChange(event) {
-    let fieldName = event.target.name;
-    let fieldValue = event.target.value;
-    this.setState({[fieldName]: fieldValue})
-  }
+    handleSignIn = async e => {
+        e.preventDefault();
+        const { username, password } = this.state;
+        if (!username || !password) {
+          console.log('Deu ruim');
+        } else {
+          try {
+            const response = await api.post("/user/login/api/v0/login/", { username, password });
+            login(response.data.token);
+            this.props.history.push("/homepage_author");
+          } catch (err) {
+            console.log('Deu ruim');
+          }
+        }
+    };
 
 
     username_group(){
         return(
-            <Form  onSubmit={this.handleSubmit}>
+            <Form onSubmit={this.handleSignIn}>
                 <Form.Group controlId="formBasicEmail">
                     {/* <Form.Label style={styles.form_text}>Nome de Usuário</Form.Label> */}
-                    <Form.Control name="username" onChange={this.handleChange} style={styles.form_control} type="text" placeholder="Nome de Usuário" />
+                    <Form.Control name="username" onChange={e => this.setState({ username: e.target.value })} style={styles.form_control} type="text" placeholder="Nome de Usuário" />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     {/* <Form.Label style={styles.form_text}>Senha</Form.Label> */}
-                    <Form.Control name="password" onChange={this.handleChange} style={styles.form_control} type="password" placeholder="Senha" />
+                    <Form.Control name="password" onChange={e => this.setState({ password: e.target.value })} style={styles.form_control} type="password" placeholder="Senha" />
                 </Form.Group>
 
-                <Button style={styles.button} type="submit" onClick={() => this.props.history.push("/homepage_author")}>
+                <Button style={styles.button} type="submit">
                     Entrar
                 </Button>
                 <p style={styles.register_text}>Não tem conta? &nbsp; <a href="/register">Registre-se</a></p>
 
             </Form>
         )
-    }
-
-    enter() {
-        let path = `#homepage`;
-        this.props.history.push(path);
     }
 
     render(){
@@ -138,4 +134,4 @@ const styles={
 
 }
 
-export default Login;
+export default withRouter(Login);

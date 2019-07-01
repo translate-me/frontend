@@ -75,13 +75,7 @@ class Registration extends Component {
       password,
     })
       .then((response) => {
-        const newAlert = {
-          variant: 'success',
-          headding: 'Usuário criado',
-          text: 'Seu usuário foi criado com sucesso!',
-          show: true,
-        };
-        this.setState({ alert: newAlert });
+        this.props.history.push("/login");
         console.log(response);
       })
       .catch((err) => {
@@ -97,11 +91,12 @@ class Registration extends Component {
   }
 
   async send() {
-    if (this.verifyFields()) {
-      console.log('td certo');
-      await this.apiConnection();
-    }
+    // if (this.verifyFields()) {
+    //   console.log('td certo');
+    // }
+    await this.apiConnection();
   }
+    
 
   formGroup(label, placeholder, onChange, thisref, invalid, warning) {
     return (
