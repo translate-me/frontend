@@ -88,6 +88,8 @@ class HomepageTranslator extends Component {
     componentDidMount(){        
         const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/1/"
         const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/1/"
+        const revision = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/1/"
+        const addTranslator = "http://0.0.0.0:9000/text/api/v0/fragment/add_translator/" + 
         axios.get(available)
         .then(res => {
             console.log('success', res.data);
@@ -107,6 +109,12 @@ class HomepageTranslator extends Component {
         .catch(err => {
             console.log('error', err)
         })
+        
+        const getCurrentUser = {
+            fragment_translator: "Milene"
+        }
+
+        axios.patch(addTranslator, {getCurrentUser})
     }
 
     renderTranslation() {
@@ -219,6 +227,13 @@ class HomepageTranslator extends Component {
         }
     }
 
+    handleAccept(fragmentId){
+        if (window.confirm('Deseja realizar esta tradução?')) {
+            console.log('id do fragmento: ', fragmentId)
+            this.props.history.push("/text_editor", {fragmentId})
+        }
+    }
+
     renderAccepts() {
         const { available, pageAccept, translationsPerPage } = this.state;
         const indexOfLastTranslations = pageAccept * translationsPerPage;
@@ -258,7 +273,7 @@ class HomepageTranslator extends Component {
                         </Card.Subtitle>
                         <Card.Body>{this.truncateText(item.text.context)}</Card.Body>
                         {/* <Button style={styles.acceptButton} onClick={() => this.props.history.push("/text_editor")} >Trabalhar nessa Tradução</Button> */}
-                        <Button style={styles.acceptButton} onClick={() => { if (window.confirm('Deseja realizar esta tradução?')) this.props.history.push("/text_editor") } } >Trabalhar nessa Tradução</Button>
+                        <Button style={styles.acceptButton} onClick={() => this.handleAccept(item.id)}> Trabalhar nessa Tradução</Button>
                     </Card>
                 ))}
                 {this.state.pageAccept < pageNumbers.length ?
