@@ -10,6 +10,7 @@ import TextEditor from '../Screens/TextEditor';
 import Registration from '../Screens/Registration';
 import Breakpoints from '../Screens/Breakpoints';
 import FollowTranslation from '../Screens/FollowTranslations';
+import Revise from '../Screens/ReviseTranslation';
 
 
 export default class Routes extends React.Component {
@@ -27,6 +28,7 @@ export default class Routes extends React.Component {
         <Route exact path="/register" component={Registration} />
         <AuthorizedRoute exact path="/breakpoints" component={Breakpoints} />
         <AuthorizedRoute exact path="/follow_translations" component={FollowTranslation} />
+        <AuthorizedRoute exact path="/revise" component={Revise} />
         <Route exact path="/login" component={Login} />
         <Route component={NotFoundRoute} />
       </Switch>
