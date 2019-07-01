@@ -50,14 +50,14 @@ class TextEditor extends React.Component {
                 <Col>
                   <div style={styles.buttondiv}>
                     <Button
-                      onClick={this.logState}
+                      onClick={() => { if (window.confirm('Seu progresso foi salvo com sucesso!')) this.props.history.push("/homepage_translator") }}
                       style={styles.leftButton}
                     >
 Salvar progresso
                     </Button>
                     <Button
                       variant="primary"
-                      onClick={this.logState}
+                      onClick={() => { if (window.confirm('Tradução enviada para revisão.')) this.props.history.push("/homepage_translator") }}
                       style={styles.rightButton}
                     >
 Enviar tradução
