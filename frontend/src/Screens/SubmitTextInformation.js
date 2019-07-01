@@ -22,6 +22,7 @@ class SubmitTextInformation extends Component {
             originLanguage: '',
             translateLanguage: '',
             textContent: oldState.textContent,
+            username: oldState.username,
             titleNotOk: null,
             complexityLevelNotOk: null,
             knowledgeAreaNotOk: null,
@@ -309,6 +310,7 @@ class SubmitTextInformation extends Component {
                                     textContext: this.state.textContext,
                                     originLanguage: this.state.originLanguage,
                                     translateLanguage: this.state.translateLanguage,
+                                    username: this.state.username
                                 }
                             }} >
                                 <Button type="submit" style={styles.button} onClick={() => { this.send(); }}>   
