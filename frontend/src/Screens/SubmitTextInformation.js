@@ -290,7 +290,7 @@ class SubmitTextInformation extends Component {
     render() {
         return (
           <div>
-            <NavBar logged={true} />
+            <NavBar logged={true} author={true} />
             {this.state.loading? null
             :
                 <div style={styles.screen}>

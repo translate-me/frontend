@@ -11,7 +11,7 @@ class Payment extends Component{
         console.log('state anterior: ', oldState)
 
         this.state = {
-            textTitle: oldState.textTitle,
+            title: oldState.title,
             fileName: '',
             fileExtension: '',
             textContent: oldState.textContent,
@@ -46,7 +46,7 @@ class Payment extends Component{
                 <NavBar logged={true} author={true} />
                     <Row style={styles.myRow}>
                         <Col>
-                            <h2>{this.state.textTitle}</h2>
+                            <h2>{this.state.title}</h2>
                             <div style={styles.textContent}>
 
                             <p><b>Contexto: </b>{this.state.textContext}</p>

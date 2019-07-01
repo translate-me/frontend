@@ -87,6 +87,17 @@ class FollowTranslation extends Component{
         console.log(this.state.currentPage);
     }
 
+    getDate(d){
+        var data = new Date(d)
+        
+        var dia = data.getDate().toString()
+        var diaF = (dia.length == 1) ? '0' + dia : dia
+        var mes = (data.getMonth() + 1).toString() //+1 pois no getMonth Janeiro começa com zero.
+        var mesF = (mes.length == 1) ? '0' + mes : mes
+        var anoF = data.getFullYear()
+        return diaF + "/" + mesF + "/" + anoF;
+    }
+
     renderTranslation(){
         const { translationsNotFinished, currentPage, translationsPerPage } = this.state;
         const indexOfLastTranslations = currentPage * translationsPerPage;
@@ -111,6 +122,7 @@ class FollowTranslation extends Component{
                         <Card.Title>{item.title}</Card.Title>                            
                         <ProgressBar striped variant="success" now={(item["fragments_done"] * 100) / item["total_fragments"]} />
                         <Card.Subtitle style={styles.prazo}>Idioma: {this.getLanguage(item.language)}</Card.Subtitle>
+                        <Card.Subtitle style={styles.prazo}>Prazo: {this.getDate(item.deadline)}</Card.Subtitle>
                         <Card.Body>{this.truncateText(item.context)}</Card.Body>
                     </Card>
                 ))}
@@ -173,8 +185,12 @@ class FollowTranslation extends Component{
                     : null
                 }
                 {finishedTranslations.map((item, key) => (
-                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/finished_text")}>
+                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/finished_text", item)}>
+                        <Card.Title>
+                            <h4>{item.title}</h4>
+                        </Card.Title>
                         <Card.Subtitle style={styles.prazo}>Idioma: {this.getLanguage(item.language)}</Card.Subtitle>
+                        <Card.Subtitle style={styles.prazo}>Prazo: {this.getDate(item.deadline)}</Card.Subtitle>
                         <Card.Body>{this.truncateText(item.context)}</Card.Body>
                     </Card>
                 ))}
