@@ -89,11 +89,12 @@ export class Breakpoints extends React.Component {
 
   send(){
     var obj = {
-      context: this.state.textTitle + '\n' + this.state.textContext,
+      context:  this.state.textContext,
       language: this.state.translateLanguage.value,
       level: this.state.complexityLevel.value,
       categories: [this.state.knowledgeArea.value],
       author: "default",
+      title: this.state.textTitle,
       fragments: this.state.fragments.length > 0? this.state.fragments : [{body: this.state.textContent, type: "text"}]
     }
     console.log(obj);
