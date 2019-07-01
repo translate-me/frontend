@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../Components/NavBar';
-import { green } from '../colors';
+import { green, lightgreen } from '../colors';
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 
@@ -121,7 +121,8 @@ const styles = {
       fontSize: '10vh',
       display: 'inherit',
       textAlign: 'center',
-      color: green
+      reactRaterHover: lightgreen,
+      reactRaterActive: green
   },
   subTitle: {
     fontSize: 25,
