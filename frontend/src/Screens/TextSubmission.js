@@ -23,7 +23,7 @@ class TextSubmission extends React.Component {
     super(props);
     this.state = {
       files: [],
-      textContent: '',
+      textContent: 'teste',
       uploadToggle: false,
     };
     this.handleClick = this.handleClick.bind(this);

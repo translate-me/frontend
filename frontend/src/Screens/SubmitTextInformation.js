@@ -116,7 +116,7 @@ class SubmitTextInformation extends Component {
             complexityLevel: this.state.complexityLevel.label,
             knowledgeArea: this.state.knowledgeArea.label,
             textContext: this.state.textContext,
-            originLanguage: this.state.originLanguage.label,
+            originLanguage: this.state.originLanguage.value,
             translateLanguage: this.state.translateLanguage.label,
           }
           this.props.submitText(textInformation)

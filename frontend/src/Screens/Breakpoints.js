@@ -7,9 +7,14 @@ import NavBar from '../Components/NavBar';
 import { green } from '../colors';
 import { calculatePrivacyLevel } from '../Util/util';
 import SimpleFooter from '../Components/SimpleFooter';
+import { postData } from "../Utils/Requests";
+import Cookies from "universal-cookie";
 
 const breakpoints = [];
 let styles;
+
+const cookies = new Cookies();
+
 
 export class Breakpoints extends React.Component {
   constructor(props) {
@@ -25,14 +30,14 @@ export class Breakpoints extends React.Component {
       fileName: '',
       fileExtension: '',
       textContent: props.textContent,
-      textContext: props.textContext,
-      
+      context: props.textContext,
       complexityLevel: props.complexityLevel,
       knowledgeArea: props.knowledgeArea,
       textContext: props.textContext,
-      originLanguage: props.originLanguage,
+      language: props.originLanguage,
       translateLanguage: props.translateLanguage,
-
+      author: "Ford Prefect",
+      categories: [1],
       wordcount: 0,
       breakpoints: [],
       fragments: [],
@@ -98,8 +103,16 @@ export class Breakpoints extends React.Component {
       console.log('Array de breakpoints enviados para o state: ', this.state.breakpoints);
       console.log('Tamanho do texto enviado para o state: ', this.state.wordcount);
       this.props.history.push("/payment",this.state)
+        postData('/text/api/v0/text/create/',
+         this.state,
+         (data) => {
+             console.log('texto enviado', data)
+         },
+        (ok) => {console.log(ok)},
+        (error) => {console.log(error)})
     });
   }
+
 
   onChange = (e) => {
     this.setState({
