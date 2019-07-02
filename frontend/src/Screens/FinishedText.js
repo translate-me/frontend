@@ -38,12 +38,10 @@ class FinishedText extends React.Component {
         <div style={styles.root}>
           <div>
             <div>
-              <Row>
-                  <div style={styles.two_columns} onClick={e => this.togglePanel(e)}>
-                    <p style={styles.title}>Título</p>
+                  <div onClick={e => this.togglePanel(e)}>
+                  <p style={styles.title}>{this.state.trasnlatedText.title}</p>
                     <FontAwesomeIcon icon={faAngleDown} style={styles.icon} />
                   </div>
-              </Row>
             </div>
             {
             this.state.open ? (
