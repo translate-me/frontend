@@ -136,12 +136,12 @@ class HomepageTranslator extends Component {
         if (window.confirm('Deseja realizar esta revisão?')) {
             axios.post(url, {
                 fragment: frag.id,
-                review_username: "default2"
+                review_username: this.state.username
             })
                 .then((res) =>{
                     const rev = res.data
-                
-                    this.props.history.push("/revision", { frag, rev })
+                    const user = this.state.username
+                    this.props.history.push("/revision", { frag, rev, user })
                 })
                 .catch((err) => {
                     console.log(err.response)
@@ -336,7 +336,7 @@ class HomepageTranslator extends Component {
                 <Container>
                     {this.state.current.length > 0?
                         <div>
-                            <h2 style={styles.title}>Suas traduções em andamento</h2>
+                            <h2 style={styles.title}>Traduções em Andamento</h2>
                             <Row style={{width: '100%'}}>
                                 {this.renderTranslation()}
                             </Row>

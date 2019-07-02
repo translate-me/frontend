@@ -16,7 +16,8 @@ class Revision extends Component {
       open: false,
       frag : this.props.location.state.frag,
       aproved: false,
-      id: this.props.location.state.rev.id
+      id: this.props.location.state.rev.id,
+      user: this.props.location.state.user
     };
     this.editorRef = React.createRef();
     this.togglePanel = this.togglePanel.bind(this);
@@ -48,12 +49,13 @@ class Revision extends Component {
     })
     .then(()=>{
       if (window.confirm('Revisão enviada com sucesso!')) {
-        this.props.history.push("/homepage_translator")
+        this.props.history.push({ pathname: '/homepage_translator', state: { username: this.state.user } });
       }
     })
   }
 
   render() {
+    console.log(this.props.location.state.user);
     
     return(
       <div style={styles.page}>

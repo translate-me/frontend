@@ -37,7 +37,8 @@ class FollowTranslation extends Component{
             pageTranslations: 1,
             pageRevisions: 1,
             pageAccept:1,
-            loading: true
+            loading: true,
+            user: this.props.location.state.username
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -185,7 +186,7 @@ class FollowTranslation extends Component{
                     : null
                 }
                 {finishedTranslations.map((item, key) => (
-                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/finished_text", item)}>
+                    <Card style={styles.card} key={key} onClick={() => this.props.history.push({ pathname :"/finished_text",state:{ item:item,user:this.state.user }})}>
                         <Card.Title>
                             <h4>{item.title}</h4>
                         </Card.Title>
@@ -208,7 +209,8 @@ class FollowTranslation extends Component{
 
     render(){
         const { advantages } = this.state;
-
+        console.log('user',this.state.user);
+        
         return(
             <div style={styles.root}>
                 <NavBar logged={true} author={true}/>

@@ -13,7 +13,11 @@ import 'react-rater/lib/react-rater.css'
 class FinishedText extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { trasnlatedText: this.props.location.state , open: false };
+    this.state = {
+      trasnlatedText: this.props.location.state.item ,
+      open: false,
+      user: this.props.location.state.user
+    };
     this.logState = () => console.log(this.state.trasnlatedText);
     this.editorRef = React.createRef();
     this.togglePanel = this.togglePanel.bind(this);
@@ -25,6 +29,8 @@ class FinishedText extends React.Component {
 
   render() {
     console.log(this.state.trasnlatedText);
+    console.log('user', this.state.user);
+    
     
     return (
       <div>
@@ -63,6 +69,7 @@ class FinishedText extends React.Component {
                 <Rater style={styles.stars} total={5} />
                 <Link to ={{
                     pathname: "/homepage_author",
+                    state: {username: this.state.user}
                 }} >
                     <Button style={styles.button}> Avaliar </Button>
                 </Link>
