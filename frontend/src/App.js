@@ -13,6 +13,7 @@ import HowItWorks from './Screens/HowItWorks';
 import Revision from './Screens/Revision';
 import TranslatorSignUp from './Screens/TranslatorSignUp';
 import Login from './Screens/Login';
+import LoginTranslator from './Screens/LoginTranslator';
 import FinishedText from './Screens/FinishedText';
 import Payment from './Screens/Payment';
 
@@ -41,6 +42,7 @@ export const App = () => (
       <Route exact path="/login" component={Login} />
       <Route exact path="/finished_text" component={FinishedText} />
       <Route exact path="/payment" component={Payment} />
+      <Route exact path="/login_translator" component={LoginTranslator} />
     </div>
   </Router>
 );

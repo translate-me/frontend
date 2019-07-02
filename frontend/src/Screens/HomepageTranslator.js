@@ -13,6 +13,9 @@ import axios from 'axios';
 class HomepageTranslator extends Component {
     constructor(props) {
         super(props);
+
+        const oldState = this.props.location.state
+
         this.state = {
             available: [],
             current: [],
@@ -21,9 +24,11 @@ class HomepageTranslator extends Component {
             pageRevisions: 1,
             pageAccept:1,
             translationsPerPage: 3,
-            loading: false
-        }
+            loading: false,
+            username: oldState.username,
         };
+    }
+    
     truncateText(text) {
         if (text.length > 200) {
             return text.substring(0, 197) + "..."
@@ -41,10 +46,10 @@ class HomepageTranslator extends Component {
     }
 
     componentDidMount(){        
-        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/default3/"
-        const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/default4/"
+        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/" + this.state.username + "/"
+        const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/" + this.state.username + "/"
         const revision = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/1/"
-        const addTranslator = "http://0.0.0.0:9000/text/api/v0/fragment/add_translator/" + 
+        const addTranslator = "http://0.0.0.0:9000/text/api/v0/fragment/add_translator/"
         axios.get(available)
         .then(res => {
             console.log('success', res.data);
@@ -61,6 +66,10 @@ class HomepageTranslator extends Component {
         .catch(err => {
             console.log('error', err)
         })
+    }
+
+    text_editor(){
+        this.props.history.push({pathname: '/text_editor', state: {username: this.state.username}});
     }
 
     renderTranslation() {
@@ -83,7 +92,7 @@ class HomepageTranslator extends Component {
                     : null
                 }
                 {currentTranslations.map((item, key) => (
-                    <Card style={styles.card} key={key} onClick={() => this.props.history.push("/text_editor")}>
+                    <Card style={styles.card} key={key} onClick={() => this.text_editor()}>
                         <Card.Title>{item.text.title ? item.text.title : 'Titulo'}</Card.Title>
                         <Card.Subtitle>
                             <p style={styles.prazo}> Título:
@@ -166,13 +175,14 @@ class HomepageTranslator extends Component {
     
     handleAccept(frag){
         const url = 'http://0.0.0.0:9000/text/api/v0/fragment/add_translator/' + frag.id + '/'
+        const user = this.state.username
 
         if (window.confirm('Deseja realizar esta tradução?')) {
             axios.patch(url, {
-                fragment_translator: 'default'
+                fragment_translator: this.state.username
             })
             .then( () =>
-                this.props.history.push("/text_editor", { frag })
+                this.props.history.push("/text_editor", { frag , user })
             )
             .catch((err) => {
                 console.log(err.response)
@@ -269,21 +279,17 @@ class HomepageTranslator extends Component {
                     <div style={styles.user_name}>
                         <Row>
                             <Container>
-                                <h1>User Name</h1>
+                                <h1>{this.state.username}</h1>
                                 <StarRatingComponent
                                     name="rate2"
                                     editing={false}
                                     renderStarIcon={() => <span>⭐</span>}
-                                    starCount={4}
+                                    starCount={5}
                                     value={8}
                                 />
                             </Container>
                         </Row>
                         <Row style={styles.languages}>
-                                <ul>
-                                    <li>Inglês - Basico</li>
-                                    <li>Espanhol - Avançado</li>
-                                </ul>
                         </Row>
                     </div>
                 </Container>
