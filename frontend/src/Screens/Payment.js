@@ -16,6 +16,7 @@ class Payment extends Component{
             fileExtension: '',
             textContent: oldState.textContent,
             username: oldState.username,
+            price: oldState.price,
 
             complexityLevel: oldState.complexityLevel,
             knowledgeArea: oldState.knowledgeArea,
@@ -67,10 +68,10 @@ class Payment extends Component{
                                 Será enviado ao seu email de cadastro o boleto com o valor da tradução.
                             </p>
                             <p><b>Quantidade de Tradutores necessários:</b> {this.state.fragments.length}</p>
-                            <p><b>Quantidade de palavras no texto:</b> {this.state.wordcount}</p>
+                            <p><b>Quantidade de letras no texto:</b> {this.state.wordcount}</p>
                             <p style={styles.value}>
-                                <b>Valor do Tradução:</b>R$ 500,00
-                            </p>
+                            <b>Valor do Tradução:</b></p>
+                        <p style={styles.value}>R$ {this.state.price}</p>
                             <b>
                                 <Form.Check type="checkbox" checked={this.state.checked} onChange={() => this.toggleCheckbox()} label="Li e concordo com os termos de uso do translate.me" />
                             </b>

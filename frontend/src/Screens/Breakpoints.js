@@ -25,6 +25,7 @@ export class Breakpoints extends React.Component {
       textContent: oldState.textContent,
       textContext: oldState.textContext,
       username: oldState.username,
+      price: 0,
       
       complexityLevel: oldState.complexityLevel,
       knowledgeArea: oldState.knowledgeArea,
@@ -105,8 +106,9 @@ export class Breakpoints extends React.Component {
 
     const url = 'http://0.0.0.0:9000/text/api/v0/text/create/'
     axios.post(url, obj)
-    .then(res =>{
+    .then(async(res) =>{
       console.log(res);
+      await this.setState({price: res.data.price})
       this.props.history.push("/payment", this.state)
     })
     .catch(err => {
@@ -163,7 +165,7 @@ export class Breakpoints extends React.Component {
                     <h5>
                       <b>
   Título:
-                        {this.state.textTitle}
+                        {this.state.title}
                       </b>
                     </h5>
                   </Form.Label>
@@ -203,7 +205,7 @@ export class Breakpoints extends React.Component {
                     </h6>
                     <h6>
                       <b>Título do artigo: </b>
-                      {this.state.textTitle}
+                      {this.state.title}
                     </h6>
                     <h6><b>Contexto: </b></h6>
                     <p>
