@@ -12,11 +12,14 @@ import axios from 'axios';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = { 
-      frag: this.props.location.state.frag,
-      open: false,
-      trasnlatedText: this.props.location.state.frag.translated_fragment
+      frag: this.props.location.state.frag, 
+      open: false, 
+      trasnlatedText: this.props.location.state.frag.translated_fragment,
+      username: this.props.location.state.user
     };
+    
     this.logState = () => console.log(this.state.trasnlatedText);
     this.editorRef = React.createRef();
     this.togglePanel = this.togglePanel.bind(this);
@@ -47,15 +50,16 @@ class TextEditor extends React.Component {
     .then(()=>{
       if(done){
         if (window.confirm('Tradução enviada para revisão.')) {
-          this.props.history.push("/homepage_translator")
+          this.props.history.push({pathname: '/homepage_translator', state: {username: this.state.username}});
         } 
       }else{
         if (window.confirm('Seu progresso foi salvo com sucesso!')){
-          this.props.history.push("/homepage_translator")
-        } 
+          this.props.history.push({pathname: '/homepage_translator', state: {username: this.state.username}});
+        }
       }
     })
   }
+
 
   render() {    
     return (
