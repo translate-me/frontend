@@ -5,6 +5,8 @@ import {
 import NavBar from '../Components/NavBar';
 import { green } from '../colors';
 import { calculatePrivacyLevel } from '../Util/util';
+import SimpleFooter from '../Components/SimpleFooter';
+import axios from 'axios';
 
 const breakpoints = [];
 let styles;
@@ -12,18 +14,18 @@ let styles;
 export class Breakpoints extends React.Component {
   constructor(props) {
     super(props);
-    // must get the previous state from previous screen on user flux, actual values are placeholders
     
     const oldState = this.props.location.state
     console.log('state anterior: ', oldState)
-    // console.log('arquivo: ', oldState.files[0])
-    
+
     this.state = {
-      textTitle: oldState.textTitle,
+      title: oldState.textTitle,
       fileName: '',
       fileExtension: '',
       textContent: oldState.textContent,
       textContext: oldState.textContext,
+      username: oldState.username,
+      price: 0,
       
       complexityLevel: oldState.complexityLevel,
       knowledgeArea: oldState.knowledgeArea,
@@ -34,6 +36,7 @@ export class Breakpoints extends React.Component {
       wordcount: 0,
       breakpoints: [],
       fragments: [],
+      textFragments: []
     };
   }
 
@@ -82,20 +85,55 @@ export class Breakpoints extends React.Component {
     })    
   }
 
-  sendFragment = () => {
+  // mountSendObj(){
+
+  // }
+
+  send(){
+    console.log('frags', this.state.fragments);
+    
+    var obj = {
+      title: this.state.title,
+      context: this.state.textContext,
+      language: this.state.translateLanguage.value,
+      level: this.state.complexityLevel.value,
+      categories: [this.state.knowledgeArea.value],
+      author: this.state.username,
+      fragments: this.state.fragments.length > 0? this.state.fragments : [{body: this.state.textContent, type: "text"}]
+    }
+    console.log("veja aquii" ,obj);
+    
+
+    const url = 'http://0.0.0.0:9000/text/api/v0/text/create/'
+    axios.post(url, obj)
+    .then(async(res) =>{
+      console.log(res);
+      await this.setState({price: res.data.price})
+      this.props.history.push("/payment", this.state)
+    })
+    .catch(err => {
+      console.log(err.response);
+      
+    })
+  }
+
+  sendFragment = async() => {
     const completeText = this.state.textContent;
     const fragments = completeText.split('🔴');
 
     const fragmentsObject = fragments.map(fragment => ({ body: fragment, type: 'text' }));
 
-    this.setState({
+    await this.setState({
       fragments: fragmentsObject,
       wordcount: completeText.length,
     }, function () {
       console.log('Array de fragmentos enviados para o state: ', this.state);
-      console.log('Array de breakpoints enviados para o state: ', this.state.breakpoints);
+      console.log('Array de breakpoints enviados para o state: ', this.state.fragments);
       console.log('Tamanho do texto enviado para o state: ', this.state.wordcount);
+      // console.log(this.state.)
+      // this.props.history.push("/payment",this.state)
     });
+    this.send()
   }
 
   onChange = (e) => {
@@ -107,7 +145,7 @@ export class Breakpoints extends React.Component {
   render() {
     return (
       <div>
-        <NavBar logged={true} author={false}/>
+        <NavBar logged={true} author={true}/>
         <div style={styles.root}>
           <Container>
             <Row style={styles.center}>
@@ -127,7 +165,7 @@ export class Breakpoints extends React.Component {
                     <h5>
                       <b>
   Título:
-                        {this.state.textTitle}
+                        {this.state.title}
                       </b>
                     </h5>
                   </Form.Label>
@@ -167,7 +205,7 @@ export class Breakpoints extends React.Component {
                     </h6>
                     <h6>
                       <b>Título do artigo: </b>
-                      {this.state.textTitle}
+                      {this.state.title}
                     </h6>
                     <h6><b>Contexto: </b></h6>
                     <p>
@@ -197,6 +235,7 @@ export class Breakpoints extends React.Component {
             </Row>
           </Container>
         </div>
+        <SimpleFooter/>
       </div>
 
     );

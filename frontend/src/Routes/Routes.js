@@ -1,8 +1,6 @@
 import React from "react";
-import { Route, Router, Switch } from "react-router-dom";
-import history from "../Utils/history";
-import NotFoundRoute from "./NotFoundRoute";
-import AuthorizedRoute from "./AuthorizedRoute";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { isAuthenticated } from "./services/auth";
 import Login from '../Screens/Login';
 import LandingPage from '../Screens/LandingPage';
 import TextSubmission from '../Screens/TextSubmission';
@@ -11,25 +9,39 @@ import Registration from '../Screens/Registration';
 import Breakpoints from '../Screens/Breakpoints';
 import FollowTranslation from '../Screens/FollowTranslations';
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      isAuthenticated() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+      )
+    }
+  />
+);
 
-export default class Routes extends React.Component {
-  render() {
-    return (<Router history={history}>
-      <Switch>
-        <AuthorizedRoute
-          permission="allow_any"
-          exact
-          path="/"
-          component={LandingPage}
-         />
-        <AuthorizedRoute exact path="/text_submission" component={TextSubmission} />
-        <AuthorizedRoute exact path="/text_editor" component={TextEditor} />
-        <Route exact path="/register" component={Registration} />
-        <AuthorizedRoute exact path="/breakpoints" component={Breakpoints} />
-        <AuthorizedRoute exact path="/follow_translations" component={FollowTranslation} />
-        <Route exact path="/login" component={Login} />
-        <Route component={NotFoundRoute} />
-      </Switch>
-    </Router>)
-  }
-};
+const Routes = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={LandingPage} />
+      <PrivateRoute exact path="/text_submission" component={TextSubmission} />
+      <PrivateRoute exact path="/text_editor" component={TextEditor} />
+      <Route exact path="/register" component={Registration} />
+      <PrivateRoute exact path="/breakpoints" component={Breakpoints} />
+      <PrivateRoute exact path="/text_information" component={SubmitTextInformation} />
+      <PrivateRoute exact path="/homepage_author" component={FollowTranslation} />
+      <Route exact path="/meet_us" component={WhoAreWe} />
+      <Route exact path="/how_it_works" component={HowItWorks} />
+      <PrivateRoute exact path="/homepage_translator" component={HomepageTranslator} />
+      <PrivateRoute exact path="/revision" component={Revision} />
+      <PrivateRoute exact path="/translator_sign_in" component={TranslatorSignUp} />
+      <Route exact path="/login" component={Login} />
+      <PrivateRoute exact path="/finished_text" component={FinishedText} />
+      <PrivateRoute exact path="/payment" component={Payment} />
+    </Switch>
+  </BrowserRouter>
+);
+
+export default Routes;

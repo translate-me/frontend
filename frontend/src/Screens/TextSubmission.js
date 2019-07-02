@@ -4,8 +4,6 @@ import {
 } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import Image from 'react-bootstrap/Image';
-import TextareaAutosize from 'react-textarea-autosize';
-
 import { FilePond } from 'react-filepond';
 import { white, green } from '../colors';
 import Cloud from './cloud.png';
@@ -18,8 +16,12 @@ let styles;
 class TextSubmission extends React.Component {
   constructor(props) {
     super(props);
+
+    const oldState = this.props.location.state
+
     this.state = {
       files: [],
+      username: oldState.username,
       textContent: '',
       uploadToggle: false,
     };
@@ -30,6 +32,7 @@ class TextSubmission extends React.Component {
       textContent: e.target.value
     }, () => {
       console.log('handle ', this.state.textContent)
+      console.log('user', this.props.location.state.username)
     });
   }
 
@@ -115,6 +118,7 @@ class TextSubmission extends React.Component {
                       <Link to ={{
                         pathname: "/text_information",
                         state: { 
+                            username: this.props.location.state.username,
                             textContent: this.state.textContent
                         }
                       }} >

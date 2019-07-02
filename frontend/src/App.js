@@ -4,7 +4,7 @@ import LandingPage from './Screens/LandingPage';
 import TextSubmission from './Screens/TextSubmission';
 import TextEditor from './Screens/TextEditor';
 import Registration from './Screens/Registration';
-import Profile from './Screens/Profile';
+import HomepageTranslator from './Screens/HomepageTranslator';
 import Breakpoints from './Screens/Breakpoints';
 import SubmitTextInformation from './Screens/SubmitTextInformation';
 import FollowTranslation from './Screens/FollowTranslations';
@@ -13,6 +13,9 @@ import HowItWorks from './Screens/HowItWorks';
 import Revision from './Screens/Revision';
 import TranslatorSignUp from './Screens/TranslatorSignUp';
 import Login from './Screens/Login';
+import LoginTranslator from './Screens/LoginTranslator';
+import FinishedText from './Screens/FinishedText';
+import Payment from './Screens/Payment';
 
 export const App = () => (
   <Router>
@@ -33,10 +36,13 @@ export const App = () => (
       <Route exact path="/homepage_author" component={FollowTranslation} />
       <Route exact path="/meet_us" component={WhoAreWe} />
       <Route exact path="/how_it_works" component={HowItWorks} />
+      <Route exact path="/homepage_translator" component={HomepageTranslator} />
       <Route exact path="/revision" component={Revision} />
-      <Route exact path="/profile" component={Profile} />
       <Route exact path="/translator_sign_in" component={TranslatorSignUp} />
       <Route exact path="/login" component={Login} />
+      <Route exact path="/finished_text" component={FinishedText} />
+      <Route exact path="/payment" component={Payment} />
+      <Route exact path="/login_translator" component={LoginTranslator} />
     </div>
   </Router>
 );

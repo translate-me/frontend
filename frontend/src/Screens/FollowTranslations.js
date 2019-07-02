@@ -5,8 +5,8 @@ import { faAngleLeft, faAngleRight, faPlusCircle, faShieldAlt } from '@fortaweso
 import { green, white, lightgreen } from '../colors';
 import NavBar from '../Components/NavBar';
 import SimpleFooter from '../Components/SimpleFooter';
-
-const loren_ipsun = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+import AnotherSimpleFooter from '../Components/AnotherSimpleFooter';
+import axios from 'axios';
 
 class FollowTranslation extends Component{
     constructor(props){
@@ -30,46 +30,51 @@ class FollowTranslation extends Component{
                     body: 'Você pode acompanhar o progresso de suas traduções e se comunicar com os tradutores através de um chat, para retirar possíveis dúvidas.'
                 }
             ],
-            translations: [
-                {
-                    title: "Translation 1",
-                    context: loren_ipsun,
-                    progress: 20,
-                    prazo: "20/06/2019"
-                },
-                {
-                    title: "Translation 2",
-                    context: loren_ipsun,
-                    progress: 30,
-                    prazo: "15/07/2019"
-
-                },
-                {
-                    title: "Translation 3",
-                    context: loren_ipsun,
-                    progress: 50,
-                    prazo: "30/06/2019"
-
-                },
-                {
-                    title: "Translation 4",
-                    context: loren_ipsun,
-                    progress: 40,
-                    prazo: "04/07/2019"
-
-                },
-                {
-                    title: "Translation 5",
-                    context: loren_ipsun,
-                    progress:10,
-                    prazo: "30/07/2019"
-
-                },
-            ],
+            translationsNotFinished:[],
+            translationsFinished:[],
             currentPage: 1,
-            translationsPerPage: 2
+            translationsPerPage: 2,
+            pageTranslations: 1,
+            pageRevisions: 1,
+            pageAccept:1,
+            loading: true,
+            user: this.props.location.state.username
         }
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount(){
+        const url = 'http://0.0.0.0:9000/text/api/v0/text/list/texts_by_author/' + this.props.location.state.username
+        axios.get(url)
+        .then(res =>{
+            console.log(res);
+            this.separateTranslations(res.data)
+            
+        })
+        .catch(err => {
+            console.log(err.response);
+            
+        })
+    }
+
+    separateTranslations(translations){
+        var done =[]
+        var notDone = []
+        translations.forEach(tr => {
+            if (tr["fragments_done"] === tr["total_fragments"]){
+                done.push(tr)
+            }else{
+                notDone.push(tr)
+            }
+        });
+        this.setState({
+            translationsNotFinished: notDone,
+            translationsFinished: done,
+            loading:false
+        })
+        console.log("done", this.state.translationsFinished);
+        console.log("not done", this.state.translationsNotFinished);
+        
     }
 
     handleClick(event) {
@@ -83,13 +88,24 @@ class FollowTranslation extends Component{
         console.log(this.state.currentPage);
     }
 
+    getDate(d){
+        var data = new Date(d)
+        
+        var dia = data.getDate().toString()
+        var diaF = (dia.length == 1) ? '0' + dia : dia
+        var mes = (data.getMonth() + 1).toString() //+1 pois no getMonth Janeiro começa com zero.
+        var mesF = (mes.length == 1) ? '0' + mes : mes
+        var anoF = data.getFullYear()
+        return diaF + "/" + mesF + "/" + anoF;
+    }
+
     renderTranslation(){
-        const { translations, currentPage, translationsPerPage } = this.state;
+        const { translationsNotFinished, currentPage, translationsPerPage } = this.state;
         const indexOfLastTranslations = currentPage * translationsPerPage;
         const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
-        const currentTranslations = translations.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const currentTranslations = translationsNotFinished.slice(indexOfFirstTranslations, indexOfLastTranslations);
         const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(translations.length / translationsPerPage); i++) {
+        for (let i = 1; i <= Math.ceil(translationsNotFinished.length / translationsPerPage); i++) {
             pageNumbers.push(i);
         }
 
@@ -104,14 +120,11 @@ class FollowTranslation extends Component{
                 }
                 {currentTranslations.map((item, key) => (
                     <Card style={styles.card} key={key}>
-                        <Card.Title>{item.title}</Card.Title>
-                        <Card.Subtitle>
-                            <p style={styles.prazo}> Prazo: 
-                            {item.prazo}
-                            </p>
-                            <ProgressBar striped variant="success" now={item.progress}/>
-                        </Card.Subtitle>
-                        <Card.Body>{item.context}</Card.Body>
+                        <Card.Title>{item.title}</Card.Title>                            
+                        <ProgressBar striped variant="success" now={(item["fragments_done"] * 100) / item["total_fragments"]} />
+                        <Card.Subtitle style={styles.prazo}>Idioma: {this.getLanguage(item.language)}</Card.Subtitle>
+                        <Card.Subtitle style={styles.prazo}>Prazo: {this.getDate(item.deadline)}</Card.Subtitle>
+                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
                     </Card>
                 ))}
                 {this.state.currentPage < pageNumbers.length?
@@ -125,16 +138,86 @@ class FollowTranslation extends Component{
         );
     }
     newText(){
-        let path = `/text_submission`;
-        this.props.history.push(path);
+        this.props.history.push({pathname: '/text_submission', state: {username: this.props.location.state.username}});
     }
+
+    truncateText(text) {
+        if (text.length > 200) {
+            return text.substring(0, 197) + "..."
+        }
+        return text
+    }
+
+    handleClickT(event) {
+        const page = Number(event.target.id)
+        if (page > 0) {
+            this.setState({
+                pageTranslations: page
+            });
+        }
+    }
+    getLanguage(num) {
+        if (num === 1) {
+            return "Português"
+        } else if (num === 2) {
+            return "Espanhol"
+        } else {
+            return "Inglês"
+        }
+    }
+
+    renderFinishedTranslation() {
+        const { translationsFinished, pageTranslations, translationsPerPage } = this.state;
+        const indexOfLastTranslations = pageTranslations * translationsPerPage;
+        const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
+        const finishedTranslations = translationsFinished.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(translationsFinished.length / translationsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
+        return (
+            <Row style={styles.rowdiv}>
+                {this.state.pageTranslations > 1 ?
+                    <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
+                        id={this.state.pageTranslations - 1}
+                        onClick={(e) => this.handleClickT(e)}
+                    />
+                    : null
+                }
+                {finishedTranslations.map((item, key) => (
+                    <Card style={styles.card} key={key} onClick={() => this.props.history.push({ pathname :"/finished_text",state:{ item:item,user:this.state.user }})}>
+                        <Card.Title>
+                            <h4>{item.title}</h4>
+                        </Card.Title>
+                        <Card.Subtitle style={styles.prazo}>Idioma: {this.getLanguage(item.language)}</Card.Subtitle>
+                        <Card.Subtitle style={styles.prazo}>Prazo: {this.getDate(item.deadline)}</Card.Subtitle>
+                        <Card.Body>{this.truncateText(item.context)}</Card.Body>
+                    </Card>
+                ))}
+                {this.state.pageTranslations < pageNumbers.length ?
+                    <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
+                        id={this.state.pageTranslations + 1}
+                        onClick={(e) => this.handleClickT(e)}
+                    />
+                    : null
+                }
+            </Row>
+        );
+    }
+
 
     render(){
         const { advantages } = this.state;
-
+        console.log('user',this.state.user);
+        
         return(
             <div style={styles.root}>
                 <NavBar logged={true} author={true}/>
+                {this.state.loading? null
+                :
+                
+                <div>
                 <div style={styles.textdiv}>
                     <p style={styles.title}>Tradução Simples, Rápida e de Qualidade - TranslateMe</p>
                 </div>
@@ -157,12 +240,31 @@ class FollowTranslation extends Component{
                     </Button>
                 </div>
                 <Container>
-                    <div style={styles.textdiv}>
-                        <p style={styles.title}>Traduções em Andamento</p>
+                    {this.state.translationsNotFinished.length>0?
+                    <div>
+                        <div style={styles.textdiv}>
+                            <p style={styles.title}>Traduções em Andamento</p>
+                        </div>
+                        {this.renderTranslation()}
+                        <br/>
+                        <br/>
                     </div>
-                    {this.renderTranslation()}
+                    :null
+                }
+                    {this.state.translationsFinished.length>0?
+                        <div>
+                            <div style={styles.textdiv}>
+                                <p style={styles.title}>Traduções Concluídas</p>
+                            </div>
+                            {this.renderFinishedTranslation()}
+                        <br/>
+                        </div>
+                    :null
+                    }
                 </Container>
-                <SimpleFooter></SimpleFooter>
+                </div>
+                }
+                <AnotherSimpleFooter/>
             </div>
         );
     }
@@ -214,7 +316,8 @@ const styles = {
     },
     prazo:{
         textAlign: 'right',
-        color: green
+        color: green,
+        marginTop: '1%'
     },
     advantages_square: {
         backgroundColor: lightgreen,

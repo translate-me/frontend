@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignOutAlt, faSignInAlt, faGraduationCap, faCoins, faInbox, faFeatherAlt, faInfoCircle, faUsers} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSignOutAlt, faSignInAlt, faGraduationCap, faCoins, faFeatherAlt, faInfoCircle, faUsers} from '@fortawesome/free-solid-svg-icons';
 import { white, green } from '../colors';
 
 class NavBar extends Component {
@@ -42,7 +42,7 @@ class NavBar extends Component {
   author_links(){
     return(
       <Nav>
-        <Nav.Link>
+        <Nav.Link href="/translator_sign_in">
           <FontAwesomeIcon icon={faGraduationCap} style={styles.icon} title={'Espaço do Tradutor'}/>
         </Nav.Link>
       </Nav>
@@ -52,15 +52,12 @@ class NavBar extends Component {
 
   translator_links(){
     return(
-    <Nav>
-      <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
+      <Nav>
+        <Nav.Link href="/homepage_author" style={{ fontFamily: "Raleway", color: white }}>
         <FontAwesomeIcon icon={faFeatherAlt} style={styles.icon} title={'Espaço do Autor'}/>
       </Nav.Link>
       <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
         <FontAwesomeIcon icon={faCoins} style={styles.icon} title={'Carteira'}/>
-      </Nav.Link>
-      <Nav.Link style={{ fontFamily: "Raleway", color: white }}>
-        <FontAwesomeIcon icon={faInbox} style={styles.icon} title={'Trabalhos em Andamento'}/>
       </Nav.Link>
     </Nav>
     );
@@ -71,7 +68,7 @@ homepage(){
     if (this.props.author) {
       path = "/homepage_author"
     }else{
-      path = "#translator"
+      path = "/homepage_translator"
     }
   }else{
     path="/"

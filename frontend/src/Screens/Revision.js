@@ -5,15 +5,20 @@ import { faFeatherAlt, faGraduationCap} from '@fortawesome/free-solid-svg-icons'
 import NavBar from '../Components/NavBar';
 import SimpleFooter from '../Components/SimpleFooter';
 import { intro, author, translator, new_translation} from './HowItWorksTexts';
-import AnotherSimpleFooter from '../Components/AnotherSimpleFooter';
 import { green } from '../colors';
-
+import axios from 'axios';
 
 class Revision extends Component {
   constructor(props) {
     super(props);
-    this.state = { trasnlatedText: '', open: false };
-    this.logState = () => console.log(this.state.trasnlatedText);
+    this.state = {
+      trasnlatedText: '',
+      open: false,
+      frag : this.props.location.state.frag,
+      aproved: false,
+      id: this.props.location.state.rev.id,
+      user: this.props.location.state.user
+    };
     this.editorRef = React.createRef();
     this.togglePanel = this.togglePanel.bind(this);
   }
@@ -34,7 +39,24 @@ class Revision extends Component {
     }
   }
 
+  sendReview(){
+    const url = 'http://0.0.0.0:9000/text/api/v0/review/update_review/' + this.state.id + '/'
+    axios.patch(url,{
+      fragment: this.state.frag.id,
+      comment: this.state.trasnlatedText,
+      done: true,
+      approve: this.state.aproved
+    })
+    .then(()=>{
+      if (window.confirm('Revisão enviada com sucesso!')) {
+        this.props.history.push({ pathname: '/homepage_translator', state: { username: this.state.user } });
+      }
+    })
+  }
+
   render() {
+    console.log(this.props.location.state.user);
+    
     return(
       <div style={styles.page}>
       <NavBar logged={true} author={false}/>
@@ -55,7 +77,7 @@ class Revision extends Component {
         <Col>
           <Form.Group controlId="originalText">
             <Form.Label style={styles.boldTitle}>Texto Original</Form.Label>
-            <Form.Control as="textarea" rows={15} value="In software engineering, a design pattern is a general repeatable solution to a commonly occurring problem in software design. A design pattern isn't a finished design that can be transformed directly into code. It is a description or template for how to solve a problem that can be used in many different situations. " />
+            <Form.Control as="textarea" rows={15} value={this.state.frag.body}/>
             <Form.Control
             style = {styles.revisionbox}
             as="textarea"
@@ -71,20 +93,20 @@ class Revision extends Component {
         <Col>
           <Form.Group controlId="originalText">
             <Form.Label style={styles.boldTitle}>Texto Traduzido</Form.Label>
-            <Form.Control as="textarea" rows={15} value=" Na engenharia de software, um design pattern é uma solução geral repetível para um problema comumente ocorrido no projeto de software. Um design pattern não é um design acabado que pode ser transformado diretamente em código. É uma descrição ou modelo de como resolver um problema que pode ser usado em muitas situações diferentes. " />
+                <Form.Control as="textarea" rows={15} value={this.state.frag.translated_fragment}/>
           </Form.Group>
           <Form.Label style={styles.scoreTitle}> Dê uma nota para essa tradução </Form.Label>
           <div>
-          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio" checked/> 1 </label>
-          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio"/> 2 </label>
-          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio"/> 3 </label>
-          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio"/> 4 </label>
-          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio"/> 5 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio" onClick={() => {this.setState({aproved:false})}}/> 1 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio" onClick={() => {this.setState({aproved:false})}}/> 2 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio" onClick={() => {this.setState({aproved:false})}}/> 3 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio" onClick={() => {this.setState({aproved:true})}}/> 4 </label>
+          <label style = {styles.radioStyle} class="radio-inline"> <input type="radio" name="optradio" onClick={() => {this.setState({aproved:true})}}/> 5 </label>
           </div>
           <div style={styles.buttondiv}>
           <Button
           variant="primary"
-          onClick={this.logState}
+          onClick={() => this.sendReview()}
           style={styles.buttonStyle}
           >
           Enviar revisão
@@ -93,7 +115,7 @@ class Revision extends Component {
         </Col>
       </Row>
       </div>
-      <AnotherSimpleFooter/>
+      <SimpleFooter/>
   </div>
     );
   }
