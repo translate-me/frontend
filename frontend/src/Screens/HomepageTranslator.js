@@ -41,18 +41,22 @@ class HomepageTranslator extends Component {
     }
 
     componentDidMount(){        
-        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments/default1/"
+        const available = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments_translator/"
         const current = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/default/"
-        const revision = "http://0.0.0.0:9000/text/api/v0/fragment/list/translator_fragments/1/"
+        const revision = "http://0.0.0.0:9000/text/api/v0/fragment/list/available_fragments_reviewer/default5/"
         const addTranslator = "http://0.0.0.0:9000/text/api/v0/fragment/add_translator/" + 
         axios.get(available)
         .then(res => {
-            console.log('success', res.data);
             this.setState({available: res.data})
             axios.get(current)
                 .then(res => {
-                    console.log('success', res.data);
-                    this.setState({ current: res.data, loading: false })
+                    this.setState({ current: res.data})
+                    axios.get(revision)
+                    .then(res => {
+                        console.log('reviw:' ,res.data);
+                        
+                        this.setState({ revision: res.data, loading: false })
+                    })
                 })
                 .catch(err => {
                     console.log('error', err)
@@ -116,6 +120,27 @@ class HomepageTranslator extends Component {
         );
     }
 
+    handleAcceptReview(frag) {
+        const url = 'http://0.0.0.0:9000/text/api/v0/review/accept_review/'
+
+        if (window.confirm('Deseja realizar esta revisão?')) {
+            axios.post(url, {
+                fragment: frag.id,
+                review_username: "default2"
+            })
+                .then((res) =>{
+                    const rev = res.data
+                
+                    this.props.history.push("/revision", { frag, rev })
+                })
+                .catch((err) => {
+                    console.log(err.response)
+                    window.confirm('Não é possivel trabalhar nessa revisão.')
+                }
+                )
+        }
+    }
+
     handleClickR(event) {
         const page = Number(event.target.id)
         if (page > 0) {
@@ -125,50 +150,57 @@ class HomepageTranslator extends Component {
         }
     }
 
-    // renderRevisions() {
-    //     const { availableTranslations, pageRevisions, translationsPerPage } = this.state;
-    //     const indexOfLastTranslations = pageRevisions * translationsPerPage;
-    //     const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
-    //     const currentTranslations = availableTranslations.slice(indexOfFirstTranslations, indexOfLastTranslations);
-    //     const pageNumbers = [];
-    //     for (let i = 1; i <= Math.ceil(availableTranslations.length / translationsPerPage); i++) {
-    //         pageNumbers.push(i);
-    //     }
+    renderRevisions() {
+        const { revision, pageRevisions, translationsPerPage } = this.state;
+        const indexOfLastTranslations = pageRevisions * translationsPerPage;
+        const indexOfFirstTranslations = indexOfLastTranslations - translationsPerPage;
+        const currentTranslations = revision.slice(indexOfFirstTranslations, indexOfLastTranslations);
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(revision.length / translationsPerPage); i++) {
+            pageNumbers.push(i);
+        }
 
-    //     return (
-    //         <Row style={styles.rowdiv}>
-    //             {this.state.pageRevisions > 1 ?
-    //                 <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
-    //                     id={this.state.pageRevisions - 1}
-    //                     onClick={(e) => this.handleClickR(e)}
-    //                 />
-    //                 : null
-    //             }
-    //             {currentTranslations.map((item, key) => (
-    //                 <Card style={styles.card} key={key}>
-    //                     <Card.Title>{item.title}</Card.Title>
-    //                     <Card.Subtitle>
-    //                         <p style={styles.prazo}> Prazo:
-    //                         {item.prazo}
-    //                         </p>
-    //                         <p style={styles.prazo}> Lingua de Origem:
-    //                         {item.language}
-    //                         </p>
-    //                     </Card.Subtitle>
-    //                     <Card.Body>{this.truncateText(item.text.context)}</Card.Body>
-    //                     <Button style={styles.acceptButton} onClick = {() => { if (window.confirm('Deseja realizar esta revisão?')) this.props.history.push("/revision")}} >Fazer a Revisão</Button>
-    //                 </Card>
-    //             ))}
-    //             {this.state.pageRevisions < pageNumbers.length ?
-    //                 <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
-    //                     id={this.state.pageRevisions + 1}
-    //                     onClick={(e) => this.handleClickR(e)}
-    //                 />
-    //                 : null
-    //             }
-    //         </Row>
-    //     );
-    // }
+        return (
+            <Row style={styles.rowdiv}>
+                {this.state.pageRevisions > 1 ?
+                    <FontAwesomeIcon icon={faAngleLeft} style={styles.icon}
+                        id={this.state.pageRevisions - 1}
+                        onClick={(e) => this.handleClickR(e)}
+                    />
+                    : null
+                }
+                {currentTranslations.map((item, key) => (
+                    <Card style={styles.card} key={key}>
+                        <Card.Title>{item.text.title}</Card.Title>
+                        <Card.Subtitle>
+                            <p style={styles.prazo}> Prazo:
+                            {item.text.deadline ? this.renderDate(item.text.deadline) : 'Indefinido'}
+                            </p>
+                            <p style={styles.prazo}> Lingua de Origem:
+                                {
+                                    item.text.language == 1 ? 'Português' :
+                                    item.text.language == 2 ? 'Espanhol' :
+                                    item.text.language == 3 ? 'Inglês' :
+                                    item.text.language }
+                            </p>
+                            <p style={styles.prazo}> Quantidade de Palavras:
+                            {item.total_words ? item.total_words : 'Sem palavras'}
+                            </p>
+                        </Card.Subtitle>
+                        <Card.Body>{this.truncateText(item.text.context)}</Card.Body>
+                        <Button style={styles.acceptButton} onClick = {() => { this.handleAcceptReview(item)}} >Fazer a Revisão</Button>
+                    </Card>
+                ))}
+                {this.state.pageRevisions < pageNumbers.length ?
+                    <FontAwesomeIcon icon={faAngleRight} style={styles.icon}
+                        id={this.state.pageRevisions + 1}
+                        onClick={(e) => this.handleClickR(e)}
+                    />
+                    : null
+                }
+            </Row>
+        );
+    }
     
     handleAccept(frag){
         const url = 'http://0.0.0.0:9000/text/api/v0/fragment/add_translator/' + frag.id + '/'
@@ -320,9 +352,9 @@ class HomepageTranslator extends Component {
                     {this.state.revision.length > 0?
                         <div>
                             <h2 style={styles.title}>Novas Revisões</h2>
-                            {/* <Row>
+                            <Row>
                                 {this.renderRevisions()}
-                            </Row> */}
+                            </Row>
                             <br/>
                             <br/>
                         </div>
