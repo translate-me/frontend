@@ -74,7 +74,7 @@ homepage(){
     path="/"
   }
   return(
-    <Navbar.Brand href={path} style={{ fontFamily: 'Nixie One', fontWeight: 'bold', color: white }}>translate.me</Navbar.Brand>
+    <Navbar.Brand style={{ fontFamily: 'Nixie One', fontWeight: 'bold', color: white }}>translate.me</Navbar.Brand>
   )
 
 }
