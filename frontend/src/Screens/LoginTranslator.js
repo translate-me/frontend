@@ -7,7 +7,7 @@ import api from "../Util/api";
 import NavBar from '../Components/NavBar';
 
 
-class Login extends Component {
+class LoginTranslator extends Component {
     state = {
         username: "",
         password: "",
@@ -22,7 +22,7 @@ class Login extends Component {
           try {
             const response = await api.post("/user/login/api/v0/login/", { username, password });
             login(response.data.token);
-            this.props.history.push({pathname: '/homepage_author', state: {username: this.state.username}});
+            this.props.history.push({pathname: '/homepage_translator', state: {username: this.state.username}});
           } catch (err) {
             console.log('De ruim');
           }
@@ -44,10 +44,10 @@ class Login extends Component {
                 </Form.Group>
 
                 <Button style={styles.button} type="submit">
-                    Entrar Como Autor
+                    Entrar Como Tradutor
                 </Button>
                 <p style={styles.register_text}>Não tem conta? &nbsp; <a href="/register">Registre-se</a></p>
-                <p style={styles.register_text}>Deseja se logar como tradutor? &nbsp; <a href="/login_translator">Clique aqui</a></p>
+                <p style={styles.register_text}>Deseja se logar como autor? &nbsp; <a href="/login">Clique aqui</a></p>
 
             </Form>
         )
@@ -135,4 +135,4 @@ const styles={
 
 }
 
-export default withRouter(Login);
+export default withRouter(LoginTranslator);
